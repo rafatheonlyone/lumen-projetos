@@ -11,7 +11,13 @@
       "Bash(npx --version)",
       "Bash(mkdir -p \"C:/Users/rafin/Documents/projetos/site Gomes Rafa/.claude\")",
       "mcp__Claude_Preview__preview_start",
-      "Bash(git --version)"
+      "Bash(git --version)",
+      "Bash(git config *)",
+      "Bash(git remote *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git push *)"
     ]
   }
 }
