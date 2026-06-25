@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMEN — Estúdio Digital Premium</title>
+<meta name="description" content="LUMEN Digital Studio — sites, landing pages, e-commerce e sistemas web de alto padrão. Design premium, código que converte.">
+
+<!-- ============================================================
+     LUMEN DIGITAL STUDIO — TEMPLATE DE SITE PREMIUM
+     ------------------------------------------------------------
+     Arquivo único: HTML + CSS + JS (vanilla).
+     Como usar:
+       1. Cole este arquivo no VS Code como index.html
+       2. Abra com a extensão "Live Server"
+       3. Substitua os textos placeholder, links e imagens
+       4. O bloco de integração EmailJS está marcado e pronto
+          para receber as chaves (procure por EMAILJS INTEGRATION)
+     ============================================================ -->
+
+<!-- Fontes: Bricolage Grotesque (display), Plus Jakarta Sans (texto), JetBrains Mono (rótulos/dados) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<!-- EMAILJS INTEGRATION START
+     SDK do EmailJS. Já está incluído e pronto para uso.
+     Você só precisa preencher os 3 valores marcados como "COLE_AQUI"
+     mais abaixo, no bloco <script> antes do </body> (seção do formulário).
+-->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<!-- EMAILJS INTEGRATION END -->
+
+<style>
+/* ======================================================================
+   1. RESET & BASE
+   ====================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+html, body { overflow-x: hidden; }
+img, svg { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+ul, ol { list-style: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea { font: inherit; color: inherit; }
+
+/* ======================================================================
+   2. DESIGN TOKENS
+   ====================================================================== */
+:root{
+  /* --- Cor: base obsidian + acento cobre (premium/luxo) + acento glacial (tecnologia) --- */
+  --void:        #0B0C10;   /* fundo principal */
+  --void-2:      #0E1015;   /* fundo alternativo de seção */
+  --charcoal:    #15171D;   /* superfícies / cards */
+  --charcoal-2:  #1B1E26;   /* superfícies elevadas */
+  --slate:       #2A2D37;   /* bordas / divisores */
+  --hairline:    rgba(242,239,233,0.08);
+  --hairline-strong: rgba(242,239,233,0.14);
+
+  --copper:       #D4926B;  /* acento primário — cobre/bronze */
+  --copper-light: #EAB68C;
+  --copper-dim:   rgba(212,146,107,0.16);
+  --glacier:      #7FD8E3;  /* acento secundário — luz fria/tecnológica, uso pontual */
+  --glacier-dim:  rgba(127,216,227,0.14);
+
+  --bone:        #F3F0EA;  /* texto principal, branco quente */
+  --bone-80:     rgba(243,240,234,0.80);
+  --bone-60:     rgba(243,240,234,0.60);
+  --bone-40:     rgba(243,240,234,0.40);
+  --bone-15:     rgba(243,240,234,0.15);
+
+  /* --- Tipografia --- */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body:    'Plus Jakarta Sans', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* --- Layout --- */
+  --container: 1260px;
+  --container-narrow: 760px;
+  --gutter: clamp(24px, 5vw, 64px);
+  --section-pad: clamp(88px, 12vw, 160px);
+
+  /* --- Raio & sombra --- */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 100px;
+  --shadow-glow-copper: 0 0 0 1px rgba(212,146,107,0.25), 0 18px 50px -12px rgba(212,146,107,0.35);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.35);
+  --ease: cubic-bezier(.16,.84,.32,1);
+}
+
+/* ======================================================================
+   3. TIPOGRAFIA BASE
+   ====================================================================== */
+body{
+  background: var(--void);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,h2,h3,h4{
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--bone);
+}
+h1{ font-size: clamp(2.6rem, 5.4vw, 4.6rem); font-weight: 700; letter-spacing: -0.02em; }
+h2{ font-size: clamp(2.1rem, 3.6vw, 3rem); }
+h3{ font-size: clamp(1.3rem, 1.8vw, 1.6rem); }
+p{ color: var(--bone-60); }
+
+.eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--copper-light);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.eyebrow::before{
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--copper);
+  box-shadow: 0 0 12px 2px var(--copper);
+  flex-shrink: 0;
+}
+.eyebrow--alt{ color: var(--glacier); }
+.eyebrow--alt::before{ background: var(--glacier); box-shadow: 0 0 12px 2px var(--glacier); }
+
+.section-head{
+  max-width: 640px;
+  margin-bottom: clamp(48px, 7vw, 76px);
+}
+.section-head--center{ margin-inline: auto; text-align: center; }
+.section-head h2{ margin-bottom: 18px; }
+.section-head p{ font-size: 1.05rem; max-width: 540px; }
+.section-head--center p{ margin-inline: auto; }
+
+.text-gradient{
+  background: linear-gradient(95deg, var(--copper-light), var(--copper) 45%, var(--glacier) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ======================================================================
+   4. UTILITÁRIOS DE LAYOUT
+   ====================================================================== */
+.container{
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section{ padding-block: var(--section-pad); position: relative; }
+.section--alt{ background: var(--void-2); }
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease), background .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease);
+  will-change: transform;
+}
+.btn svg{ width: 16px; height: 16px; transition: transform .35s var(--ease); }
+.btn-primary{
+  background: linear-gradient(135deg, var(--copper-light), var(--copper));
+  color: #1A1208;
+  box-shadow: var(--shadow-glow-copper);
+}
+.btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(212,146,107,0.4), 0 22px 60px -10px rgba(212,146,107,0.5); }
+.btn-primary:hover svg{ transform: translateX(3px); }
+.btn-ghost{
+  background: rgba(243,240,234,0.04);
+  color: var(--bone);
+  border: 1px solid var(--hairline-strong);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost:hover{ background: rgba(243,240,234,0.08); border-color: var(--bone-40); transform: translateY(-3px); }
+.btn-block{ width: 100%; }
+.btn[disabled]{ opacity: .7; cursor: default; transform: none !important; }
+
+.glass{
+  background: linear-gradient(160deg, rgba(243,240,234,0.05), rgba(243,240,234,0.015));
+  border: 1px solid var(--hairline);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Reveal on scroll */
+[data-reveal]{
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+[data-reveal].is-visible{ opacity: 1; transform: translateY(0); }
+[data-reveal="fade"]{ transform: none; }
+[data-reveal="left"]{ transform: translateX(-32px); }
+[data-reveal="left"].is-visible{ transform: translateX(0); }
+[data-reveal="right"]{ transform: translateX(32px); }
+[data-reveal="right"].is-visible{ transform: translateX(0); }
+[data-reveal="scale"]{ transform: scale(.94); }
+[data-reveal="scale"].is-visible{ transform: scale(1); }
+
+/* Background ambience: soft blurred gradient orbs (glassmorphism backdrop) */
+.ambient{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.ambient span{
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .35;
+}
+.bg-grid{
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 40%, transparent 90%);
+  pointer-events: none;
+}
+
+::selection{ background: var(--copper); color: #1A1208; }
+:focus-visible{ outline: 2px solid var(--glacier); outline-offset: 3px; border-radius: 4px; }
+
+/* Custom scrollbar (refinamento visual) */
+::-webkit-scrollbar{ width: 10px; }
+::-webkit-scrollbar-track{ background: var(--void); }
+::-webkit-scrollbar-thumb{ background: var(--slate); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--copper); }
+
+/* ======================================================================
+   5. PRELOADER
+   ====================================================================== */
+.preloader{
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--void);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  transition: opacity .8s var(--ease), visibility .8s var(--ease);
+}
+.preloader.is-hidden{ opacity: 0; visibility: hidden; }
+.preloader-mark{ width: 64px; height: 64px; }
+.preloader-mark path{
+  fill: none;
+  stroke: var(--copper);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: draw-mark 1.6s var(--ease) forwards;
+}
+.preloader-bar{
+  width: 160px;
+  height: 1px;
+  background: var(--hairline-strong);
+  position: relative;
+  overflow: hidden;
+}
+.preloader-bar::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--copper), var(--glacier), transparent);
+  animation: bar-sweep 1.4s ease-in-out infinite;
+}
+.preloader-label{
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--bone-40);
+  text-transform: uppercase;
+}
+@keyframes draw-mark{ to{ stroke-dashoffset: 0; } }
+@keyframes bar-sweep{
+  0%{ transform: translateX(-100%); }
+  100%{ transform: translateX(260%); }
+}
+
+/* ======================================================================
+   6. CURSOR GLOW (decorativo, somente desktop/ponteiro fino)
+   ====================================================================== */
+.cursor-glow{
+  position: fixed;
+  top: 0; left: 0;
+  width: 420px; height: 420px;
+  margin-left: -210px; margin-top: -210px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,146,107,0.10), rgba(127,216,227,0.05) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity .6s ease;
+  will-change: transform;
+}
+
+/* ======================================================================
+   7. HEADER / NAVEGAÇÃO
+   ====================================================================== */
+.site-header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding-block: 22px;
+  transition: padding .4s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-scrolled{
+  padding-block: 14px;
+  background: rgba(11,12,16,0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--hairline);
+}
+.nav-inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--bone);
+}
+.logo-dot{
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--copper);
+  box-shadow: 0 0 14px 3px rgba(212,146,107,0.7);
+}
+.logo span{ color: var(--copper-light); }
+
+.nav-menu{
+  display: flex;
+  align-items: center;
+  gap: 38px;
+}
+.nav-menu a{
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--bone-80);
+  position: relative;
+  padding-bottom: 4px;
+  transition: color .3s ease;
+}
+.nav-menu a::after{
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 1px;
+  background: var(--copper);
+  transition: width .35s var(--ease);
+}
+.nav-menu a:hover{ color: var(--bone); }
+.nav-menu a:hover::after{ width: 100%; }
+
+.nav-actions{ display: flex; align-items: center; gap: 18px; }
+.nav-cta{ padding: 12px 24px; font-size: 0.88rem; }
+
+.nav-toggle{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 30px; height: 24px;
+  z-index: 110;
+}
+.nav-toggle span{
+  display: block;
+  width: 100%; height: 1.5px;
+  background: var(--bone);
+  border-radius: 2px;
+  transition: transform .35s var(--ease), opacity .35s var(--ease);
+}
+.nav-toggle.is-active span:nth-child(1){ transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.is-active span:nth-child(2){ opacity: 0; }
+.nav-toggle.is-active span:nth-child(3){ transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ======================================================================
+   8. HERO
+   ====================================================================== */
+.hero{
+  position: relative;
+  padding-top: clamp(140px, 18vw, 200px);
+  padding-bottom: clamp(80px, 10vw, 120px);
+  overflow: hidden;
+}
+.ambient .orb-1{ width: 520px; height: 520px; top: -180px; left: -120px; background: var(--copper); }
+.ambient .orb-2{ width: 460px; height: 460px; top: 120px; right: -160px; background: var(--glacier); opacity: .22; }
+.ambient .orb-3{ width: 380px; height: 380px; bottom: -160px; left: 30%; background: var(--copper); opacity: .15; }
+
+.hero-grid{
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+.hero-content h1{ margin-bottom: 22px; }
+.hero-content h1 em{ font-style: normal; font-family: inherit; }
+.hero-content p.lead{
+  font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+  color: var(--bone-80);
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+.hero-actions{ display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 40px; }
+.hero-trust{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--bone-40);
+  letter-spacing: 0.02em;
+}
+.hero-trust .avatars{ display: flex; }
+.hero-trust .avatars span{
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--void);
+  margin-left: -8px;
+  background: linear-gradient(135deg, var(--charcoal-2), var(--slate));
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-trust .avatars span:first-child{ margin-left: 0; }
+
+/* --- Visual: terminal/browser mockup com cards flutuantes (elemento de assinatura) --- */
+.hero-visual{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 440px;
+}
+.browser-window{
+  width: 100%;
+  max-width: 460px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--charcoal);
+  border: 1px solid var(--hairline-strong);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02);
+  transform: rotate(-1.4deg);
+  position: relative;
+  z-index: 2;
+}
+.browser-bar{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--charcoal-2);
+  border-bottom: 1px solid var(--hairline);
+}
+.browser-dots{ display: flex; gap: 7px; }
+.browser-dots span{ width: 9px; height: 9px; border-radius: 50%; background: var(--slate); }
+.browser-dots span:nth-child(1){ background: var(--copper); }
+.browser-url{
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--bone-40);
+  background: var(--void);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  text-align: center;
+  border: 1px solid var(--hairline);
+}
+.terminal-body{
+  padding: 24px 22px 30px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.9;
+  min-height: 230px;
+}
+.code-line{ white-space: pre; opacity: 0.5; min-height: 1.9em; }
+.code-line .tok-kw{ color: var(--glacier); }
+.code-line .tok-str{ color: var(--copper-light); }
+.code-line .tok-com{ color: var(--bone-40); }
+.type-cursor{ display: inline-block; width: 7px; height: 1em; background: var(--copper); vertical-align: middle; margin-left: 2px; animation: blink 1s step-end infinite; }
+@keyframes blink{ 50%{ opacity: 0; } }
+
+.float-card{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--bone-80);
+  white-space: nowrap;
+  z-index: 3;
+  transition: transform .25s ease-out;
+}
+.float-card strong{ font-family: var(--font-display); font-size: 1rem; color: var(--bone); display: block; }
+.float-card .ind{ width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.fc-1{ top: 6%; right: -6%; }
+.fc-1 .ind{ background: #6FE3A0; box-shadow: 0 0 10px 2px rgba(111,227,160,0.6); }
+.fc-2{ bottom: 10%; left: -10%; }
+.fc-2 .ind{ background: var(--glacier); box-shadow: 0 0 10px 2px rgba(127,216,227,0.6); }
+.fc-3{ bottom: -4%; right: 8%; }
+.fc-3 .ind{ background: var(--copper); box-shadow: 0 0 10px 2px rgba(212,146,107,0.6); }
+
+/* ======================================================================
+   9. ESTATÍSTICAS (prova social)
+   ====================================================================== */
+.stats-strip{
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  padding-block: 56px;
+  position: relative;
+}
+.stats-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+.stat-item{ text-align: left; border-left: 1px solid var(--hairline); padding-left: 24px; }
+.stat-item:first-child{ border-left: none; padding-left: 0; }
+.stat-number{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  color: var(--bone);
+}
+.stat-number .suffix{ font-size: 1.4rem; color: var(--copper-light); }
+.stat-label{
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--bone-40);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+}
+
+/* ======================================================================
+   10. SERVIÇOS — grid bento assimétrico
+   ====================================================================== */
+.services-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(220px, auto);
+  gap: 20px;
+}
+.service-card{
+  position: relative;
+  padding: 32px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(165deg, var(--charcoal), var(--charcoal-2));
+  border: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  transition: transform .5s var(--ease), border-color .4s ease, box-shadow .5s ease;
+}
+.service-card::before{
+  content: '';
+  position: absolute;
+  top: -40%; right: -30%;
+  width: 60%; height: 60%;
+  background: radial-gradient(circle, var(--copper-dim), transparent 70%);
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.service-card:hover{
+  transform: translateY(-6px);
+  border-color: var(--bone-15);
+  box-shadow: 0 24px 50px -20px rgba(0,0,0,0.5);
+}
+.service-card:hover::before{ opacity: 1; }
+.service-card--feature{ grid-column: span 2; grid-row: span 2; }
+.service-icon{
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: var(--copper-dim);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 22px;
+  position: relative; z-index: 1;
+}
+.service-icon svg{ width: 22px; height: 22px; stroke: var(--copper-light); }
+.service-card--feature .service-icon{ background: var(--glacier-dim); }
+.service-card--feature .service-icon svg{ stroke: var(--glacier); }
+.service-card h3{ margin-bottom: 10px; position: relative; z-index: 1; }
+.service-card p{ font-size: 0.92rem; position: relative; z-index: 1; }
+.service-card--feature h3{ font-size: clamp(1.5rem, 2vw, 1.9rem); }
+.service-card--feature p{ font-size: 1rem; max-width: 320px; }
+.service-tag{
+  position: absolute; top: 28px; right: 28px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--bone-40);
+  letter-spacing: 0.05em;
+}
+
+/* ======================================================================
+   11. POR QUE NOS ESCOLHER
+   ====================================================================== */
+.why-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.why-card{
+  background: var(--void);
+  padding: 40px 34px;
+  transition: background .4s ease;
+}
+.why-card:hover{ background: var(--charcoal); }
+.why-icon{
+  width: 42px; height: 42px;
+  margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--hairline-strong);
+}
+.why-icon svg{ width: 20px; height: 20px; stroke: var(--copper-light); }
+.why-card h3{ font-size: 1.1rem; margin-bottom: 10px; }
+.why-card p{ font-size: 0.9rem; }
+
+/* ======================================================================
+   12. PORTFÓLIO
+   ====================================================================== */
+.portfolio-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.portfolio-card{
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  aspect-ratio: 4/4.6;
+}
+.portfolio-card:nth-child(1){ grid-row: span 2; aspect-ratio: 4/9.6; }
+.portfolio-media{
+  position: absolute; inset: 0;
+  background: var(--mesh, linear-gradient(150deg, var(--charcoal-2), var(--charcoal)));
+  transition: transform .8s var(--ease);
+}
+.portfolio-card:hover .portfolio-media{ transform: scale(1.06); }
+.mesh-1{ --mesh: radial-gradient(circle at 20% 20%, rgba(212,146,107,0.5), transparent 55%), radial-gradient(circle at 80% 70%, rgba(127,216,227,0.4), transparent 55%), var(--charcoal); }
+.mesh-2{ --mesh: radial-gradient(circle at 75% 25%, rgba(127,216,227,0.45), transparent 55%), radial-gradient(circle at 20% 80%, rgba(212,146,107,0.35), transparent 55%), var(--charcoal); }
+.mesh-3{ --mesh: radial-gradient(circle at 50% 15%, rgba(212,146,107,0.4), transparent 60%), var(--charcoal-2); }
+.mesh-4{ --mesh: radial-gradient(circle at 30% 75%, rgba(127,216,227,0.4), transparent 55%), radial-gradient(circle at 75% 20%, rgba(212,146,107,0.3), transparent 50%), var(--charcoal); }
+.mesh-5{ --mesh: radial-gradient(circle at 60% 60%, rgba(212,146,107,0.45), transparent 55%), var(--charcoal-2); }
+
+.portfolio-overlay{
+  position: absolute; inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  background: linear-gradient(180deg, transparent 30%, rgba(11,12,16,0.92) 100%);
+}
+.portfolio-cat{
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--copper-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.portfolio-overlay h3{ font-size: 1.25rem; margin-bottom: 12px; }
+.portfolio-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--bone);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.portfolio-card:hover .portfolio-link{ opacity: 1; transform: translateY(0); }
+.portfolio-link svg{ width: 15px; height: 15px; transition: transform .3s ease; }
+.portfolio-card:hover .portfolio-link svg{ transform: translateX(3px); }
+
+/* ======================================================================
+   13. PROCESSO — timeline (sequência real, números fazem sentido aqui)
+   ====================================================================== */
+.process-timeline{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.process-timeline::before{
+  content: '';
+  position: absolute;
+  left: 29px; top: 10px; bottom: 10px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--copper), var(--slate) 80%);
+}
+.process-step{
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 28px;
+  padding-block: 36px;
+  position: relative;
+}
+.process-step:not(:last-child){ border-bottom: 1px solid var(--hairline); }
+.process-num{
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--charcoal);
+  border: 1px solid var(--hairline-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--copper-light);
+  z-index: 1;
+  flex-shrink: 0;
+}
+.process-body{ display: flex; flex-direction: column; gap: 8px; padding-top: 8px; }
+.process-body .step-tag{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--bone-40);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.process-body h3{ font-size: 1.25rem; }
+.process-body p{ max-width: 560px; font-size: 0.94rem; }
+
+/* ======================================================================
+   14. DEPOIMENTOS — carrossel com scroll-snap
+   ====================================================================== */
+.testimonial-head-row{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.testimonial-controls{ display: flex; gap: 12px; flex-shrink: 0; }
+.testimonial-nav{
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .3s ease, border-color .3s ease, transform .3s ease;
+}
+.testimonial-nav:hover{ background: var(--charcoal); border-color: var(--bone-40); transform: scale(1.06); }
+.testimonial-nav svg{ width: 17px; height: 17px; stroke: var(--bone); }
+
+.testimonial-track{
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.testimonial-track::-webkit-scrollbar{ display: none; }
+.testimonial-card{
+  scroll-snap-align: start;
+  flex: 0 0 clamp(280px, 32vw, 380px);
+  padding: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.testimonial-quote-mark{
+  font-family: var(--font-mono);
+  color: var(--copper);
+  font-size: 1.3rem;
+}
+.testimonial-card p.quote{
+  color: var(--bone-80);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  flex: 1;
+}
+.testimonial-author{ display: flex; align-items: center; gap: 14px; }
+.author-avatar{
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--slate), var(--charcoal-2));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--copper-light);
+  flex-shrink: 0;
+}
+.author-name{ font-size: 0.92rem; font-weight: 700; color: var(--bone); }
+.author-role{ font-family: var(--font-mono); font-size: 0.74rem; color: var(--bone-40); }
+.testimonial-stars{ display: flex; gap: 3px; }
+.testimonial-stars svg{ width: 13px; height: 13px; fill: var(--copper); }
+
+/* ======================================================================
+   15. FAQ — acordeão animado
+   ====================================================================== */
+.faq-list{ max-width: var(--container-narrow); margin: 0 auto; }
+.faq-item{
+  border-bottom: 1px solid var(--hairline);
+}
+.faq-item:first-child{ border-top: 1px solid var(--hairline); }
+.faq-question{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 26px;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--bone);
+  transition: color .3s ease;
+}
+.faq-item.is-open .faq-question{ color: var(--copper-light); }
+.faq-icon{
+  position: relative;
+  width: 22px; height: 22px;
+  flex-shrink: 0;
+}
+.faq-icon::before, .faq-icon::after{
+  content: '';
+  position: absolute;
+  background: var(--bone);
+  transition: transform .4s var(--ease), background .3s ease;
+}
+.faq-icon::before{ left: 0; top: 50%; width: 100%; height: 1.4px; transform: translateY(-50%); }
+.faq-icon::after{ top: 0; left: 50%; width: 1.4px; height: 100%; transform: translateX(-50%); }
+.faq-item.is-open .faq-icon::after{ transform: translateX(-50%) rotate(90deg); opacity: 0; }
+.faq-item.is-open .faq-icon::before{ background: var(--copper); }
+.faq-answer{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s var(--ease);
+}
+.faq-answer p{ padding-bottom: 26px; max-width: 600px; font-size: 0.94rem; }
+
+/* ======================================================================
+   16. CONTATO
+   ====================================================================== */
+.contact-grid{
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(40px, 6vw, 80px);
+}
+.contact-info-list{ display: flex; flex-direction: column; gap: 28px; margin-top: 36px; }
+.contact-info-item{ display: flex; gap: 16px; align-items: flex-start; }
+.contact-info-icon{
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--charcoal);
+  border: 1px solid var(--hairline);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.contact-info-icon svg{ width: 18px; height: 18px; stroke: var(--copper-light); }
+.contact-info-item h4{ font-size: 0.92rem; font-family: var(--font-body); font-weight: 700; color: var(--bone); margin-bottom: 3px; }
+.contact-info-item p{ font-size: 0.88rem; }
+.contact-socials{ display: flex; gap: 12px; margin-top: 12px; }
+.contact-socials a{
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .3s ease, background .3s ease, transform .3s ease;
+}
+.contact-socials a:hover{ background: var(--charcoal); border-color: var(--copper); transform: translateY(-2px); }
+.contact-socials svg{ width: 16px; height: 16px; stroke: var(--bone); }
+
+.contact-form-wrap{
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: var(--radius-lg);
+}
+.form-row{ display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-field{ margin-bottom: 20px; }
+.form-field label{
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bone-40);
+  margin-bottom: 9px;
+}
+.form-field input, .form-field textarea{
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(243,240,234,0.03);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-sm);
+  color: var(--bone);
+  font-size: 0.94rem;
+  transition: border-color .3s ease, background .3s ease;
+}
+.form-field input::placeholder, .form-field textarea::placeholder{ color: var(--bone-40); }
+.form-field input:focus, .form-field textarea:focus{
+  outline: none;
+  border-color: var(--copper);
+  background: rgba(243,240,234,0.05);
+}
+.form-field textarea{ resize: vertical; min-height: 120px; }
+.form-submit{ margin-top: 6px; }
+.form-note{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--bone-40);
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* ======================================================================
+   17. CTA FINAL
+   ====================================================================== */
+.final-cta{
+  position: relative;
+  border-radius: var(--radius-lg);
+  margin-inline: var(--gutter);
+  padding: clamp(56px, 9vw, 100px) clamp(28px, 6vw, 80px);
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(150deg, var(--charcoal), var(--void) 70%);
+  border: 1px solid var(--hairline-strong);
+}
+.final-cta .ambient span{ opacity: .3; }
+.final-cta h2{ max-width: 680px; margin-inline: auto; margin-bottom: 20px; }
+.final-cta p{ max-width: 480px; margin-inline: auto; margin-bottom: 36px; font-size: 1.02rem; }
+.final-cta .hero-actions{ justify-content: center; margin-bottom: 0; }
+
+/* ======================================================================
+   18. RODAPÉ
+   ====================================================================== */
+.site-footer{
+  border-top: 1px solid var(--hairline);
+  padding-top: clamp(60px, 8vw, 96px);
+  padding-bottom: 32px;
+  margin-top: clamp(40px, 6vw, 80px);
+}
+.footer-grid{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--hairline);
+}
+.footer-brand p{ margin-block: 18px 22px; max-width: 280px; font-size: 0.92rem; }
+.footer-col h4{
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bone-40);
+  margin-bottom: 20px;
+}
+.footer-col ul{ display: flex; flex-direction: column; gap: 13px; }
+.footer-col a{ font-size: 0.92rem; color: var(--bone-80); transition: color .3s ease; }
+.footer-col a:hover{ color: var(--copper-light); }
+.footer-col p{ font-size: 0.92rem; }
+.footer-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 28px;
+  flex-wrap: wrap;
+}
+.footer-bottom p{ font-size: 0.82rem; color: var(--bone-40); }
+.footer-legal{ display: flex; gap: 24px; }
+.footer-legal a{ font-size: 0.82rem; color: var(--bone-40); }
+.footer-legal a:hover{ color: var(--bone); }
+.footer-socials{ display: flex; gap: 10px; }
+.footer-socials a{
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .3s ease, transform .3s ease;
+}
+.footer-socials a:hover{ border-color: var(--copper); transform: translateY(-2px); }
+.footer-socials svg{ width: 15px; height: 15px; stroke: var(--bone); }
+
+/* ======================================================================
+   19. RESPONSIVO
+   ====================================================================== */
+@media (max-width: 1100px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .hero-visual{ margin-top: 40px; min-height: 380px; }
+  .services-grid{ grid-template-columns: repeat(2, 1fr); }
+  .service-card--feature{ grid-column: span 2; grid-row: span 1; }
+  .why-grid{ grid-template-columns: repeat(2, 1fr); }
+  .portfolio-grid{ grid-template-columns: repeat(2, 1fr); }
+  .portfolio-card:nth-child(1){ grid-row: span 1; aspect-ratio: 4/4.6; }
+  .contact-grid{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr 1fr; gap: 40px 24px; }
+}
+
+@media (max-width: 880px){
+  .nav-menu{
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(78vw, 360px);
+    height: 100vh;
+    background: var(--charcoal);
+    border-left: 1px solid var(--hairline-strong);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+    transform: translateX(100%);
+    transition: transform .5s var(--ease);
+  }
+  .nav-menu.is-open{ transform: translateX(0); }
+  .nav-menu a{ font-size: 1.1rem; }
+  .nav-cta{ display: none; }
+  .nav-toggle{ display: flex; }
+  body.nav-open{ overflow: hidden; }
+
+  .stats-grid{ grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
+  .stat-item:nth-child(3){ border-left: none; padding-left: 0; }
+  .stat-item:nth-child(odd){ border-left: none; padding-left: 0; }
+
+  .testimonial-head-row{ flex-direction: column; align-items: flex-start; gap: 20px; }
+}
+
+@media (max-width: 720px){
+  .services-grid, .why-grid, .portfolio-grid{ grid-template-columns: 1fr; }
+  .service-card--feature{ grid-column: span 1; }
+  .portfolio-card, .portfolio-card:nth-child(1){ aspect-ratio: 4/4.2; }
+  .form-row{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr; }
+  .process-step{ grid-template-columns: 46px 1fr; gap: 18px; }
+  .process-num{ width: 46px; height: 46px; font-size: 0.82rem; }
+  .process-timeline::before{ left: 22px; }
+  .footer-bottom{ flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px){
+  .hero-actions, .final-cta .hero-actions{ flex-direction: column; align-items: stretch; }
+  .btn{ width: 100%; }
+  .testimonial-card{ flex: 0 0 84vw; }
+  .browser-window{ transform: rotate(0); }
+  .float-card{ display: none; }
+}
+
+/* ======================================================================
+   20. ACESSIBILIDADE — prefers-reduced-motion
+   ====================================================================== */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  [data-reveal]{ opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================== PRELOADER ============================== -->
+<div class="preloader" aria-hidden="true">
+  <svg class="preloader-mark" viewBox="0 0 64 64" fill="none">
+    <path d="M8 44 L8 12 L20 12 L32 34 L44 12 L56 12 L56 44" />
+  </svg>
+  <div class="preloader-bar"></div>
+  <p class="preloader-label">Carregando experiência</p>
+</div>
+
+<!-- Glow decorativo que segue o cursor (desktop) -->
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<!-- ============================== HEADER ============================== -->
+<header class="site-header" id="topo">
+  <div class="container nav-inner">
+    <a href="#topo" class="logo" aria-label="LUMEN — página inicial">
+      <span class="logo-dot" aria-hidden="true"></span>
+      LUMEN<span>.</span>
+    </a>
+
+    <nav class="nav-menu" id="navMenu" aria-label="Navegação principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#processo">Processo</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="#contato" class="btn btn-primary nav-cta">Iniciar Projeto</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo-principal">
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero">
+    <div class="ambient" aria-hidden="true">
+      <span class="orb-1"></span>
+      <span class="orb-2"></span>
+      <span class="orb-3"></span>
+    </div>
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <p class="eyebrow" data-reveal="fade">// Estúdio Digital Premium</p>
+        <h1 data-reveal="fade" style="--reveal-delay:.08s">
+          Sites que parecem <span class="text-gradient">caros</span>.<br>
+          Porque foram feitos para <span class="text-gradient">converter</span>.
+        </h1>
+        <p class="lead" data-reveal="fade" style="--reveal-delay:.16s">
+          Criamos sites institucionais, landing pages, e-commerces e sistemas web sob medida — com design de agência premium e performance de verdade. [Substitua por sua proposta de valor]
+        </p>
+        <div class="hero-actions" data-reveal="fade" style="--reveal-delay:.24s">
+          <a href="#contato" class="btn btn-primary">
+            Solicitar Proposta
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#portfolio" class="btn btn-ghost">Ver Portfólio</a>
+        </div>
+        <div class="hero-trust" data-reveal="fade" style="--reveal-delay:.32s">
+          <div class="avatars" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span>Equipes em +12 cidades confiam no nosso trabalho</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-reveal="scale" style="--reveal-delay:.2s">
+        <!-- Elemento de assinatura: janela de navegador/terminal com efeito de digitação + cards flutuantes de métricas -->
+        <div class="browser-window">
+          <div class="browser-bar">
+            <div class="browser-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="browser-url">novaempresa.com.br</div>
+          </div>
+          <div class="terminal-body" aria-hidden="true">
+            <div class="code-line" data-text="// construindo sua próxima conversão"></div>
+            <div class="code-line" data-text="const projeto = iniciar('cliente');"></div>
+            <div class="code-line" data-text="status: 'em desenvolvimento' → 'no ar';"></div>
+            <div class="code-line" data-text="deploy(projeto).then(crescer);"></div>
+          </div>
+        </div>
+
+        <div class="float-card glass fc-1">
+          <span class="ind" aria-hidden="true"></span>
+          <div><strong>98</strong>Performance</div>
+        </div>
+        <div class="float-card glass fc-2">
+          <span class="ind" aria-hidden="true"></span>
+          <div><strong>+43%</strong>Conversão</div>
+        </div>
+        <div class="float-card glass fc-3">
+          <span class="ind" aria-hidden="true"></span>
+          <div><strong>14 dias</strong>Entrega média</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ESTATÍSTICAS ============================== -->
+  <section class="stats-strip">
+    <div class="container stats-grid">
+      <div class="stat-item" data-reveal="fade">
+        <div class="stat-number"><span data-counter="150">0</span><span class="suffix">+</span></div>
+        <p class="stat-label">Projetos entregues</p>
+      </div>
+      <div class="stat-item" data-reveal="fade" style="--reveal-delay:.08s">
+        <div class="stat-number"><span data-counter="60">0</span><span class="suffix">+</span></div>
+        <p class="stat-label">Clientes atendidos</p>
+      </div>
+      <div class="stat-item" data-reveal="fade" style="--reveal-delay:.16s">
+        <div class="stat-number"><span data-counter="8">0</span><span class="suffix">anos</span></div>
+        <p class="stat-label">De experiência</p>
+      </div>
+      <div class="stat-item" data-reveal="fade" style="--reveal-delay:.24s">
+        <div class="stat-number"><span data-counter="98">0</span><span class="suffix">%</span></div>
+        <p class="stat-label">Satisfação dos clientes</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== SERVIÇOS ============================== -->
+  <section class="section" id="servicos">
+    <div class="container">
+      <div class="section-head" data-reveal="fade">
+        <p class="eyebrow">Serviços</p>
+        <h2>Soluções digitais sob medida para cada estágio do seu negócio</h2>
+        <p>[Substitua pela descrição real] Da primeira landing page ao sistema web completo, entregamos o que sua marca precisa para crescer online.</p>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card service-card--feature" data-reveal="fade">
+          <span class="service-tag">01 / Mais procurado</span>
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+          </div>
+          <h3>Landing Pages de Alta Conversão</h3>
+          <p>Páginas focadas em performance e copy estratégica, construídas para transformar visitantes em clientes. [Edite esta descrição]</p>
+        </article>
+
+        <article class="service-card" data-reveal="fade" style="--reveal-delay:.06s">
+          <span class="service-tag">02</span>
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9h18M9 21V9"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </div>
+          <h3>Sites Institucionais</h3>
+          <p>Presença digital sólida e profissional que comunica a credibilidade da sua marca. [Edite esta descrição]</p>
+        </article>
+
+        <article class="service-card" data-reveal="fade" style="--reveal-delay:.12s">
+          <span class="service-tag">03</span>
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+          </div>
+          <h3>E-commerce</h3>
+          <p>Lojas virtuais rápidas e intuitivas, prontas para escalar suas vendas. [Edite esta descrição]</p>
+        </article>
+
+        <article class="service-card" data-reveal="fade" style="--reveal-delay:.18s">
+          <span class="service-tag">04</span>
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>Sistemas Web</h3>
+          <p>Plataformas e painéis personalizados para automatizar processos internos. [Edite esta descrição]</p>
+        </article>
+
+        <article class="service-card" data-reveal="fade" style="--reveal-delay:.24s">
+          <span class="service-tag">05</span>
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Soluções Personalizadas</h3>
+          <p>Projetos especiais que não se encaixam em uma caixa — construídos do zero para sua necessidade. [Edite esta descrição]</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== POR QUE NOS ESCOLHER ============================== -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal="fade">
+        <p class="eyebrow eyebrow--alt">Diferenciais</p>
+        <h2>Por que marcas escolhem a LUMEN</h2>
+        <p>[Substitua pela descrição real] Não vendemos apenas sites — entregamos uma experiência completa, do briefing ao pós-lançamento.</p>
+      </div>
+
+      <div class="why-grid" data-reveal="fade">
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+          <h3>Design premium</h3>
+          <p>Identidade visual exclusiva, nunca um template genérico. [Edite este texto]</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+          <h3>Performance & SEO</h3>
+          <p>Sites rápidos, otimizados e prontos para ranquear no Google. [Edite este texto]</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>Entrega rápida</h3>
+          <p>Prazos claros e processos ágeis, sem comprometer a qualidade. [Edite este texto]</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <h3>Suporte dedicado</h3>
+          <p>Acompanhamento próximo antes, durante e depois do lançamento. [Edite este texto]</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3>Código limpo & escalável</h3>
+          <p>Base técnica sólida, preparada para crescer junto com seu negócio. [Edite este texto]</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18M7 14l4-4 4 4 5-6"/></svg></div>
+          <h3>Foco em conversão</h3>
+          <p>Cada decisão de design pensada para gerar resultado, não só estética. [Edite este texto]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PORTFÓLIO ============================== -->
+  <section class="section" id="portfolio">
+    <div class="container">
+      <div class="section-head" data-reveal="fade">
+        <p class="eyebrow">Portfólio</p>
+        <h2>Projetos que combinam estética e resultado</h2>
+        <p>[Substitua pelos seus projetos reais] Uma seleção de trabalhos recentes — substitua pelas imagens e estudos de caso dos seus próprios clientes.</p>
+      </div>
+
+      <div class="portfolio-grid">
+        <article class="portfolio-card" data-reveal="fade">
+          <div class="portfolio-media mesh-1"></div>
+          <div class="portfolio-overlay">
+            <p class="portfolio-cat">Landing Page</p>
+            <h3>Projeto Aurora</h3>
+            <a href="#" class="portfolio-link">Ver projeto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+        <article class="portfolio-card" data-reveal="fade" style="--reveal-delay:.06s">
+          <div class="portfolio-media mesh-2"></div>
+          <div class="portfolio-overlay">
+            <p class="portfolio-cat">E-commerce</p>
+            <h3>Projeto Meridian</h3>
+            <a href="#" class="portfolio-link">Ver projeto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+        <article class="portfolio-card" data-reveal="fade" style="--reveal-delay:.12s">
+          <div class="portfolio-media mesh-3"></div>
+          <div class="portfolio-overlay">
+            <p class="portfolio-cat">Institucional</p>
+            <h3>Projeto Solstice</h3>
+            <a href="#" class="portfolio-link">Ver projeto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+        <article class="portfolio-card" data-reveal="fade" style="--reveal-delay:.18s">
+          <div class="portfolio-media mesh-4"></div>
+          <div class="portfolio-overlay">
+            <p class="portfolio-cat">Sistema Web</p>
+            <h3>Projeto Nimbus</h3>
+            <a href="#" class="portfolio-link">Ver projeto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+        <article class="portfolio-card" data-reveal="fade" style="--reveal-delay:.24s">
+          <div class="portfolio-media mesh-5"></div>
+          <div class="portfolio-overlay">
+            <p class="portfolio-cat">Landing Page</p>
+            <h3>Projeto Vertex</h3>
+            <a href="#" class="portfolio-link">Ver projeto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PROCESSO ============================== -->
+  <section class="section section--alt" id="processo">
+    <div class="container">
+      <div class="section-head" data-reveal="fade">
+        <p class="eyebrow eyebrow--alt">Processo</p>
+        <h2>Como transformamos um briefing em um site no ar</h2>
+        <p>[Substitua pela descrição real] Um fluxo de trabalho claro, em 5 etapas, do primeiro contato ao suporte contínuo.</p>
+      </div>
+
+      <div class="process-timeline">
+        <div class="process-step" data-reveal="left">
+          <div class="process-num">01</div>
+          <div class="process-body">
+            <p class="step-tag">Etapa 01</p>
+            <h3>Descoberta</h3>
+            <p>Entendemos seu negócio, objetivos e público para alinhar expectativas desde o início. [Edite este texto]</p>
+          </div>
+        </div>
+        <div class="process-step" data-reveal="left" style="--reveal-delay:.06s">
+          <div class="process-num">02</div>
+          <div class="process-body">
+            <p class="step-tag">Etapa 02</p>
+            <h3>Estratégia & Design</h3>
+            <p>Criamos wireframes e identidade visual exclusiva, validando cada decisão com você. [Edite este texto]</p>
+          </div>
+        </div>
+        <div class="process-step" data-reveal="left" style="--reveal-delay:.12s">
+          <div class="process-num">03</div>
+          <div class="process-body">
+            <p class="step-tag">Etapa 03</p>
+            <h3>Desenvolvimento</h3>
+            <p>Codificamos o projeto com tecnologia moderna, performance e boas práticas. [Edite este texto]</p>
+          </div>
+        </div>
+        <div class="process-step" data-reveal="left" style="--reveal-delay:.18s">
+          <div class="process-num">04</div>
+          <div class="process-body">
+            <p class="step-tag">Etapa 04</p>
+            <h3>Testes & Refinamento</h3>
+            <p>Revisamos cada detalhe em diferentes dispositivos antes de qualquer entrega. [Edite este texto]</p>
+          </div>
+        </div>
+        <div class="process-step" data-reveal="left" style="--reveal-delay:.24s">
+          <div class="process-num">05</div>
+          <div class="process-body">
+            <p class="step-tag">Etapa 05</p>
+            <h3>Lançamento & Suporte</h3>
+            <p>Publicamos o projeto e continuamos por perto para ajustes e evolução contínua. [Edite este texto]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== DEPOIMENTOS ============================== -->
+  <section class="section" id="depoimentos">
+    <div class="container">
+      <div class="testimonial-head-row">
+        <div class="section-head" style="margin-bottom:0;" data-reveal="fade">
+          <p class="eyebrow">Depoimentos</p>
+          <h2>O que nossos clientes dizem</h2>
+        </div>
+        <div class="testimonial-controls" data-reveal="fade">
+          <button class="testimonial-nav prev" aria-label="Depoimento anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="testimonial-nav next" aria-label="Próximo depoimento">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="testimonial-track" data-reveal="fade">
+        <article class="testimonial-card glass">
+          <span class="testimonial-quote-mark">&gt;</span>
+          <div class="testimonial-stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+          </div>
+          <p class="quote">"O resultado superou completamente nossas expectativas. O site ficou muito acima do que imaginávamos." [Substitua por um depoimento real]</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" aria-hidden="true">MF</div>
+            <div>
+              <p class="author-name">Mariana Ferraz</p>
+              <p class="author-role">CEO, Empresa Placeholder</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card glass">
+          <span class="testimonial-quote-mark">&gt;</span>
+          <div class="testimonial-stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+          </div>
+          <p class="quote">"Profissionalismo do início ao fim. A comunicação foi clara durante todo o projeto." [Substitua por um depoimento real]</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" aria-hidden="true">RT</div>
+            <div>
+              <p class="author-name">Rafael Tavares</p>
+              <p class="author-role">Fundador, Empresa Placeholder</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card glass">
+          <span class="testimonial-quote-mark">&gt;</span>
+          <div class="testimonial-stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+          </div>
+          <p class="quote">"Depois do novo site, nossa taxa de conversão aumentou de forma visível já no primeiro mês." [Substitua por um depoimento real]</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" aria-hidden="true">CL</div>
+            <div>
+              <p class="author-name">Camila Lopes</p>
+              <p class="author-role">Diretora de Marketing, Empresa Placeholder</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card glass">
+          <span class="testimonial-quote-mark">&gt;</span>
+          <div class="testimonial-stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.8 5.7 6.2.9-4.5 4.4 1 6.2L10 15.3 4.5 18.2l1-6.2L1 7.6l6.2-.9z"/></svg>
+          </div>
+          <p class="quote">"Equipe extremamente atenta aos detalhes. Recomendamos para qualquer empresa que queira se destacar." [Substitua por um depoimento real]</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" aria-hidden="true">PG</div>
+            <div>
+              <p class="author-name">Pedro Guimarães</p>
+              <p class="author-role">CTO, Empresa Placeholder</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FAQ ============================== -->
+  <section class="section section--alt" id="faq">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal="fade">
+        <p class="eyebrow eyebrow--alt">FAQ</p>
+        <h2>Perguntas frequentes</h2>
+        <p>[Substitua pelas perguntas reais dos seus clientes] Reunimos as dúvidas mais comuns sobre nosso processo e serviços.</p>
+      </div>
+
+      <div class="faq-list" data-reveal="fade">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Quanto tempo leva para desenvolver um site?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <p>O prazo varia conforme a complexidade do projeto, mas a maioria dos sites institucionais e landing pages são entregues em 2 a 4 semanas. [Edite esta resposta]</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Quais tecnologias vocês utilizam?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Trabalhamos com as tecnologias mais modernas do mercado, escolhendo a melhor stack para cada tipo de projeto. [Edite esta resposta]</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Vocês oferecem suporte após a entrega?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Sim, oferecemos planos de manutenção e suporte contínuo para garantir que seu site continue funcionando perfeitamente. [Edite esta resposta]</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Como funciona o processo de pagamento?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Trabalhamos com pagamento dividido em etapas, alinhado às fases do projeto. [Edite esta resposta]</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Posso solicitar alterações no projeto?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Sim, incluímos rodadas de ajustes durante o processo para garantir que o resultado final atenda às suas expectativas. [Edite esta resposta]</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Vocês desenvolvem para e-commerce?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Sim, desenvolvemos lojas virtuais completas, integradas a meios de pagamento e gestão de estoque. [Edite esta resposta]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CONTATO ============================== -->
+  <section class="section" id="contato">
+    <div class="container contact-grid">
+      <div class="contact-info" data-reveal="left">
+        <p class="eyebrow">Contato</p>
+        <h2>Vamos construir seu próximo projeto</h2>
+        <p>[Substitua pela descrição real] Conte um pouco sobre sua ideia e retornamos com uma proposta personalizada em até 24 horas.</p>
+
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-info-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+            </div>
+            <div>
+              <h4>E-mail</h4>
+              <p>contato@lumendigital.com.br</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
+            </div>
+            <div>
+              <h4>Telefone / WhatsApp</h4>
+              <p>(00) 00000-0000</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h4>Localização</h4>
+              <p>Sua Cidade, Estado — Brasil</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-socials" aria-label="Redes sociais">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A6 6 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap glass" data-reveal="right">
+        <!-- EMAILJS INTEGRATION START
+             O SDK do EmailJS já está incluído no <head>.
+             Preencha os 3 valores (SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY) no
+             bloco <script> no final da página — procure por "COLE_AQUI".
+        -->
+        <form class="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Nome completo</label>
+              <input type="text" id="name" name="user_name" placeholder="Seu nome" required>
+            </div>
+            <div class="form-field">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="user_email" placeholder="seu@email.com" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="phone">Telefone / WhatsApp</label>
+            <input type="tel" id="phone" name="user_phone" placeholder="(00) 00000-0000">
+          </div>
+          <div class="form-field">
+            <label for="message">Descreva seu projeto</label>
+            <textarea id="message" name="message" placeholder="Conte um pouco sobre o que você precisa..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block form-submit">
+            Enviar mensagem
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="form-note form-note--error" style="display:none;color:#e08a7c;">Não foi possível enviar. Tente novamente ou use o e-mail/telefone ao lado.</p>
+          <p class="form-note">Respondemos em até 24 horas úteis.</p>
+        </form>
+        <!-- EMAILJS INTEGRATION END -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CTA FINAL ============================== -->
+  <section class="section">
+    <div class="container">
+      <div class="final-cta" data-reveal="scale">
+        <div class="ambient" aria-hidden="true">
+          <span class="orb-1" style="top:-100px;left:10%;"></span>
+          <span class="orb-2" style="top:auto;bottom:-120px;right:10%;"></span>
+        </div>
+        <p class="eyebrow" style="justify-content:center;">// Pronto para começar?</p>
+        <h2>Sua marca merece um site que <span class="text-gradient">impressiona</span></h2>
+        <p>[Substitua pela descrição real] Vamos conversar sobre seu projeto e construir algo que realmente representa o seu negócio.</p>
+        <div class="hero-actions">
+          <a href="#contato" class="btn btn-primary">
+            Solicitar Proposta
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================== RODAPÉ ============================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#topo" class="logo">
+          <span class="logo-dot" aria-hidden="true"></span>
+          LUMEN<span>.</span>
+        </a>
+        <p>Estúdio digital premium especializado em sites, landing pages e sistemas web de alto padrão. [Edite esta descrição]</p>
+        <div class="footer-socials" aria-label="Redes sociais">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A6 6 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Navegação">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#portfolio">Portfólio</a></li>
+          <li><a href="#processo">Processo</a></li>
+          <li><a href="#depoimentos">Depoimentos</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Serviços">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#servicos">Landing Pages</a></li>
+          <li><a href="#servicos">Sites Institucionais</a></li>
+          <li><a href="#servicos">E-commerce</a></li>
+          <li><a href="#servicos">Sistemas Web</a></li>
+          <li><a href="#servicos">Soluções Personalizadas</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <p>contato@lumendigital.com.br</p>
+        <p>(00) 00000-0000</p>
+        <p>Sua Cidade, Estado — Brasil</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span data-year>2026</span> LUMEN Digital Studio. Todos os direitos reservados.</p>
+      <div class="footer-legal">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ======================================================================
+   JAVASCRIPT — interações e animações (vanilla, sem dependências)
+   ====================================================================== */
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+  /* ---------- 1. Preloader ---------- */
+  var preloader = document.querySelector('.preloader');
+  function hidePreloader() {
+    if (!preloader) return;
+    setTimeout(function () {
+      preloader.classList.add('is-hidden');
+      setTimeout(function () {
+        if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+      }, 850);
+    }, 550);
+  }
+  if (document.readyState === 'complete') {
+    hidePreloader();
+  } else {
+    window.addEventListener('load', hidePreloader);
+  }
+
+  /* ---------- 2. Menu mobile ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var navMenu = document.getElementById('navMenu');
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function () {
+      var isOpen = navMenu.classList.toggle('is-open');
+      navToggle.classList.toggle('is-active', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('nav-open', isOpen);
+    });
+    navMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navMenu.classList.remove('is-open');
+        navToggle.classList.remove('is-active');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
+      });
+    });
+  }
+
+  /* ---------- 3. Header com estado de scroll ---------- */
+  var header = document.querySelector('.site-header');
+  function onScrollHeader() {
+    if (!header) return;
+    header.classList.toggle('is-scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', onScrollHeader, { passive: true });
+  onScrollHeader();
+
+  /* ---------- 4. Glow que segue o cursor (desktop apenas) ---------- */
+  var cursorGlow = document.querySelector('.cursor-glow');
+  if (cursorGlow) {
+    if (hasFinePointer && !reduceMotion) {
+      var mx = window.innerWidth / 2, my = window.innerHeight / 2, cx = mx, cy = my;
+      window.addEventListener('mousemove', function (e) {
+        mx = e.clientX; my = e.clientY;
+        cursorGlow.style.opacity = '1';
+      });
+      (function raf() {
+        cx += (mx - cx) * 0.12;
+        cy += (my - cy) * 0.12;
+        cursorGlow.style.transform = 'translate(' + cx + 'px, ' + cy + 'px)';
+        requestAnimationFrame(raf);
+      })();
+    } else {
+      cursorGlow.parentNode.removeChild(cursorGlow);
+    }
+  }
+
+  /* ---------- 5. Revelar elementos ao rolar a página ---------- */
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+  }
+
+  /* ---------- 6. Contadores animados (estatísticas) ---------- */
+  function animateCounter(el) {
+    var raw = el.getAttribute('data-counter');
+    var target = parseFloat(raw);
+    var decimals = (raw.split('.')[1] || '').length;
+    var duration = 1500;
+    var start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var value = target * eased;
+      el.textContent = decimals ? value.toFixed(decimals) : Math.floor(value);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = decimals ? target.toFixed(decimals) : target;
+    }
+    if (reduceMotion) {
+      el.textContent = decimals ? target.toFixed(decimals) : target;
+    } else {
+      requestAnimationFrame(step);
+    }
+  }
+  var counters = document.querySelectorAll('[data-counter]');
+  if ('IntersectionObserver' in window) {
+    var counterObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function (c) { counterObserver.observe(c); });
+  } else {
+    counters.forEach(animateCounter);
+  }
+
+  /* ---------- 7. Efeito de digitação no terminal do hero ---------- */
+  var codeLines = document.querySelectorAll('.terminal-body .code-line');
+  function typeLines() {
+    var i = 0;
+    function typeOneLine() {
+      if (i >= codeLines.length) return;
+      var line = codeLines[i];
+      var text = line.getAttribute('data-text') || '';
+      line.style.opacity = '1';
+      var charIndex = 0;
+      function typeChar() {
+        line.textContent = text.slice(0, charIndex);
+        charIndex++;
+        if (charIndex <= text.length) {
+          setTimeout(typeChar, 16 + Math.random() * 26);
+        } else {
+          i++;
+          setTimeout(typeOneLine, 260);
+        }
+      }
+      typeChar();
+    }
+    typeOneLine();
+  }
+  if (codeLines.length) {
+    if (reduceMotion) {
+      codeLines.forEach(function (l) { l.textContent = l.getAttribute('data-text'); l.style.opacity = '1'; });
+    } else {
+      setTimeout(typeLines, 900);
+    }
+  }
+
+  /* ---------- 8. Paralaxe sutil nos cards flutuantes do hero ---------- */
+  var heroVisual = document.querySelector('.hero-visual');
+  var floatCards = document.querySelectorAll('.float-card');
+  if (heroVisual && floatCards.length && hasFinePointer && !reduceMotion) {
+    heroVisual.addEventListener('mousemove', function (e) {
+      var rect = heroVisual.getBoundingClientRect();
+      var px = (e.clientX - rect.left) / rect.width - 0.5;
+      var py = (e.clientY - rect.top) / rect.height - 0.5;
+      floatCards.forEach(function (card, idx) {
+        var depth = 1 + idx * 0.4;
+        card.style.transform = 'translate(' + (px * 16 * depth) + 'px, ' + (py * 16 * depth) + 'px)';
+      });
+    });
+    heroVisual.addEventListener('mouseleave', function () {
+      floatCards.forEach(function (card) { card.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  /* ---------- 9. Acordeão de FAQ ---------- */
+  document.querySelectorAll('.faq-item').forEach(function (item) {
+    var btn = item.querySelector('.faq-question');
+    var panel = item.querySelector('.faq-answer');
+    btn.addEventListener('click', function () {
+      var willOpen = !item.classList.contains('is-open');
+
+      document.querySelectorAll('.faq-item.is-open').forEach(function (openItem) {
+        if (openItem !== item) {
+          openItem.classList.remove('is-open');
+          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          openItem.querySelector('.faq-answer').style.maxHeight = null;
+        }
+      });
+
+      item.classList.toggle('is-open', willOpen);
+      btn.setAttribute('aria-expanded', String(willOpen));
+      panel.style.maxHeight = willOpen ? panel.scrollHeight + 'px' : null;
+    });
+  });
+
+  /* ---------- 10. Carrossel de depoimentos ---------- */
+  var track = document.querySelector('.testimonial-track');
+  var prevBtn = document.querySelector('.testimonial-nav.prev');
+  var nextBtn = document.querySelector('.testimonial-nav.next');
+  if (track && prevBtn && nextBtn) {
+    function cardScrollAmount() {
+      var card = track.querySelector('.testimonial-card');
+      return card ? card.offsetWidth + 24 : 320;
+    }
+    nextBtn.addEventListener('click', function () {
+      track.scrollBy({ left: cardScrollAmount(), behavior: 'smooth' });
+    });
+    prevBtn.addEventListener('click', function () {
+      track.scrollBy({ left: -cardScrollAmount(), behavior: 'smooth' });
+    });
+  }
+
+  /* ---------- 11. Formulário de contato — integração com EmailJS ---------- */
+  /* EMAILJS INTEGRATION START
+     Preencha os 3 valores abaixo depois de criar sua conta gratuita em
+     https://www.emailjs.com — substitua exatamente onde está escrito "COLE_AQUI".
+  */
+  var EMAILJS_SERVICE_ID  = 'COLE_AQUI_SEU_SERVICE_ID';
+  var EMAILJS_TEMPLATE_ID = 'COLE_AQUI_SEU_TEMPLATE_ID';
+  var EMAILJS_PUBLIC_KEY  = 'COLE_AQUI_SUA_PUBLIC_KEY';
+
+  if (window.emailjs && EMAILJS_PUBLIC_KEY.indexOf('COLE_AQUI') === -1) {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }
+  /* EMAILJS INTEGRATION END */
+
+  var form = document.querySelector('.contact-form');
+  if (form) {
+    var errorNote = form.querySelector('.form-note--error');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('.form-submit');
+      var originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      if (errorNote) errorNote.style.display = 'none';
+
+      var keysConfigured = EMAILJS_PUBLIC_KEY.indexOf('COLE_AQUI') === -1
+        && EMAILJS_SERVICE_ID.indexOf('COLE_AQUI') === -1
+        && EMAILJS_TEMPLATE_ID.indexOf('COLE_AQUI') === -1;
+
+      function showSuccess() {
+        btn.innerHTML = 'Mensagem enviada ✓';
+        form.reset();
+        setTimeout(function () {
+          btn.disabled = false;
+          btn.innerHTML = originalHTML;
+        }, 2600);
+      }
+      function showError() {
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+        if (errorNote) errorNote.style.display = 'block';
+      }
+
+      if (keysConfigured && window.emailjs) {
+        /* Envio real via EmailJS */
+        emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+          .then(showSuccess)
+          .catch(function (err) {
+            console.error('EmailJS error:', err);
+            showError();
+          });
+      } else {
+        /* As chaves do EmailJS ainda não foram configuradas — simula o envio
+           para que o formulário continue demonstrável durante o desenvolvimento. */
+        console.warn('EmailJS não configurado: preencha EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID e EMAILJS_PUBLIC_KEY no <script> para ativar o envio real.');
+        setTimeout(showSuccess, 1100);
+      }
+    });
+  }
+
+  /* ---------- 12. Ano automático no rodapé ---------- */
+  var yearEl = document.querySelector('[data-year]');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+})();
+</script>
+
+</body>
+</html>
