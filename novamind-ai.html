@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaMind AI — Build intelligence into everything you ship</title>
+<meta name="description" content="NovaMind gives your product a reasoning engine — natural-language APIs, autonomous agents, and infrastructure that scales from prototype to millions of requests, in minutes not months.">
+<meta name="theme-color" content="#08070A">
+
+<meta property="og:title" content="NovaMind AI — Build intelligence into everything you ship">
+<meta property="og:description" content="Natural-language APIs, autonomous agents, and infrastructure that scales from prototype to millions of requests.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="design-system/main.css">
+
+<style>
+  /* ==========================================================================
+     PAGE-LEVEL COMPOSITION — NovaMind AI
+     No new visual language: everything below composes existing Lumen
+     tokens/components. Only additive, one-off layout glue lives here.
+     ========================================================================== */
+
+  /* ---- Hero visual: a CSS-only "reasoning orb" replacing a product
+     screenshot — keeps the page dependency-free and doubles as a literal
+     illustration of "intelligence" for a company with no product shots yet. */
+  .orb-panel {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-border-subtle);
+    box-shadow: var(--shadow-2xl);
+    background: var(--color-surface-1);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .orb-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-duotone);
+  }
+  .orb-panel__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--color-border-subtle) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border-subtle) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(circle at 50% 42%, black 45%, transparent 78%);
+    mask-image: radial-gradient(circle at 50% 42%, black 45%, transparent 78%);
+  }
+  .orb {
+    position: relative;
+    width: 62%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, rgba(223,162,60,0.9), rgba(223,162,60,0.05) 55%),
+                radial-gradient(circle at 68% 74%, rgba(98,73,221,0.85), rgba(98,73,221,0.04) 60%),
+                var(--color-surface-2);
+    box-shadow: var(--glow-gold-lg), var(--glow-violet-md), var(--shadow-inner);
+    animation: lumen-float 7s var(--ease-in-out-quart) infinite;
+  }
+  .orb::before, .orb::after {
+    content: '';
+    position: absolute;
+    inset: -14%;
+    border-radius: 50%;
+    border: 1px solid var(--color-border-default);
+  }
+  .orb::after { inset: -28%; border-color: var(--color-border-subtle); }
+  .orb-chip {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    z-index: 2;
+  }
+  .orb-chip__value { font-family: var(--font-mono); font-size: var(--text-body); font-weight: var(--weight-medium); color: var(--color-text-primary); }
+  .orb-chip__label { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-text-tertiary); }
+  .orb-chip--a { top: 10%; left: 6%; }
+  .orb-chip--b { bottom: 12%; right: 5%; animation: lumen-float 6s var(--ease-in-out-quart) infinite 0.6s; }
+  .orb-chip--c { top: 46%; right: -2%; animation: lumen-float 8s var(--ease-in-out-quart) infinite 1.2s; }
+
+  /* ---- Trust marquee band ------------------------------------------------- */
+  .trust-band { padding-block: var(--space-10); border-bottom: 1px solid var(--color-border-subtle); }
+  .trust-band__label { text-align: center; margin-bottom: var(--space-8); }
+  .marquee__track .wordmark {
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-tertiary);
+    opacity: 0.6;
+    white-space: nowrap;
+    transition: opacity var(--duration-base);
+  }
+  .marquee__track:hover .wordmark { opacity: 0.35; }
+  .marquee__track .wordmark:hover { opacity: 1 !important; }
+
+  /* ---- Feature bento: monogram icon tiles -------------------------------- */
+  .feature-tile__icon svg { width: 22px; height: 22px; }
+  .feature-tile--hero { display: flex; flex-direction: column; justify-content: space-between; }
+  .feature-tile--hero .feature-tile__visual {
+    margin-top: var(--space-8);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    background: var(--gradient-mesh);
+    border: 1px solid var(--color-border-subtle);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-body);
+  }
+  .feature-tile--hero .feature-tile__visual .prompt-line { color: var(--color-primary); }
+
+  /* ---- Integrations grid --------------------------------------------------- */
+  .integration-tile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+  }
+  .integration-tile__mark {
+    width: 40px; height: 40px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-2);
+    font-family: var(--font-display);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    transition: background var(--duration-base) var(--ease-out-expo), color var(--duration-base) var(--ease-out-expo);
+  }
+  .integration-tile:hover .integration-tile__mark { background: var(--color-primary); color: var(--color-primary-text); }
+  .integration-tile__name { font-weight: var(--weight-semibold); font-size: var(--text-body-sm); }
+  .integration-tile__type { font-size: var(--text-caption); color: var(--color-text-tertiary); }
+
+  /* ---- How it works step numerals ------------------------------------------ */
+  .step-num {
+    font-family: var(--font-display);
+    font-size: var(--text-display-lg);
+    font-weight: var(--weight-semibold);
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: var(--space-4);
+  }
+
+  /* ---- Pricing highlight badge position fix on mobile ----------------------- */
+  .pricing-grid { align-items: stretch; }
+
+  @media (max-width: 700px) {
+    .orb-panel { aspect-ratio: 1/1; }
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="navbar navbar--solid" data-scrolled="false" data-menu-open="false">
+  <a href="#top" class="navbar__brand"><span class="navbar__brand-mark" aria-hidden="true"></span>NovaMind</a>
+  <div class="navbar__links">
+    <a class="navbar__link" href="#features">Product</a>
+    <a class="navbar__link" href="#how-it-works">How it works</a>
+    <a class="navbar__link" href="#integrations">Integrations</a>
+    <a class="navbar__link" href="#pricing">Pricing</a>
+    <a class="navbar__link" href="#faq">FAQ</a>
+  </div>
+  <div class="navbar__actions">
+    <button class="btn btn--icon btn--ghost hide-mobile" data-theme-toggle aria-label="Toggle color theme">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 1.5v2M10 16.5v2M18.5 10h-2M3.5 10h-2M15.9 4.1l-1.4 1.4M5.5 14.5l-1.4 1.4M15.9 15.9l-1.4-1.4M5.5 5.5 4.1 4.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <a href="#" class="btn btn--ghost btn--sm hide-mobile">Sign in</a>
+    <a href="#pricing" class="btn btn--primary btn--sm">Start free</a>
+    <button class="navbar__toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="navbar__mobile-panel">
+    <a class="navbar__link" href="#features">Product</a>
+    <a class="navbar__link" href="#how-it-works">How it works</a>
+    <a class="navbar__link" href="#integrations">Integrations</a>
+    <a class="navbar__link" href="#pricing">Pricing</a>
+    <a class="navbar__link" href="#faq">FAQ</a>
+    <a href="#pricing" class="btn btn--primary">Start free</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero hero--split" id="top">
+    <div class="container">
+      <div class="layout-split">
+        <div data-reveal="up">
+          <span class="text-eyebrow hero__eyebrow">NovaMind AI · v3 now live</span>
+          <h1 class="text-display-lg hero__title">Build <span class="text-gradient">intelligence</span> into everything you ship.</h1>
+          <p class="text-body-lg hero__subtitle">NovaMind gives your product a reasoning engine — natural-language APIs, autonomous agents, and infrastructure that scales from prototype to millions of requests, in minutes, not months.</p>
+          <div class="hero__actions">
+            <a href="#pricing" class="btn btn--primary btn--lg">Start building free</a>
+            <a href="#how-it-works" class="btn btn--secondary btn--lg">Book a demo</a>
+          </div>
+          <div class="hero__meta">
+            <span>No credit card required</span>
+            <span>SOC 2 Type II</span>
+            <span>99.99% uptime SLA</span>
+          </div>
+        </div>
+
+        <div class="orb-panel" data-reveal="scale" data-parallax data-spotlight>
+          <div class="orb-panel__grid" aria-hidden="true"></div>
+          <div class="orb" aria-hidden="true"></div>
+          <div class="orb-chip glass orb-chip--a">
+            <span class="orb-chip__value"><span data-counter="42">0</span>ms</span>
+            <span class="orb-chip__label">Median latency</span>
+          </div>
+          <div class="orb-chip glass orb-chip--b">
+            <span class="orb-chip__value"><span data-counter="99">0</span>.99%</span>
+            <span class="orb-chip__label">Uptime</span>
+          </div>
+          <div class="orb-chip glass orb-chip--c">
+            <span class="orb-chip__value"><span data-counter="12">0</span>M+</span>
+            <span class="orb-chip__label">Requests / day</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST MARQUEE ============ -->
+  <div class="trust-band">
+    <div class="container">
+      <p class="text-caption trust-band__label">Powering intelligent products at</p>
+    </div>
+    <div class="marquee">
+      <div class="marquee__track marquee__track--slow">
+        <span class="wordmark">Continuum</span>
+        <span class="wordmark">Fenwick</span>
+        <span class="wordmark">Hedera Labs</span>
+        <span class="wordmark">Vantage</span>
+        <span class="wordmark">Northline</span>
+        <span class="wordmark">Solace</span>
+        <span class="wordmark">Kepler</span>
+        <span class="wordmark">Orbital</span>
+        <!-- duplicate set for seamless loop -->
+        <span class="wordmark">Continuum</span>
+        <span class="wordmark">Fenwick</span>
+        <span class="wordmark">Hedera Labs</span>
+        <span class="wordmark">Vantage</span>
+        <span class="wordmark">Northline</span>
+        <span class="wordmark">Solace</span>
+        <span class="wordmark">Kepler</span>
+        <span class="wordmark">Orbital</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="text-eyebrow">Platform</span>
+        <h2>Everything an intelligent product needs</h2>
+        <p>One platform for reasoning, automation and scale — so your team ships AI features instead of stitching together infrastructure.</p>
+      </div>
+
+      <div class="layout-bento" data-reveal-group>
+        <div class="card card--feature card--gradient-border feature-tile--hero span-2 span-row-2" data-reveal="up" style="--stagger-index:0;">
+          <div>
+            <div class="card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2v3M11 17v3M2 11h3M17 11h3M4.6 4.6l2.1 2.1M15.3 15.3l2.1 2.1M4.6 17.4l2.1-2.1M15.3 6.7l2.1-2.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="11" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <h3 class="card__title">Adaptive reasoning engine</h3>
+            <p class="card__text">A context-aware model layer that plans, decides and self-corrects — not a single-shot completion. It gets better the more your product uses it.</p>
+          </div>
+          <div class="feature-tile__visual">
+            <span class="prompt-line">&gt; nova.reason("triage this ticket")</span><br>
+            "Billing issue, high priority — routing to support, drafting reply."
+          </div>
+        </div>
+
+        <div class="card card--feature span-2" data-reveal="up" style="--stagger-index:1;">
+          <div class="card__icon feature-tile__icon"><svg viewBox="0 0 22 22" fill="none"><path d="M7 4 3 11l4 7M15 4l4 7-4 7M13 3l-4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 class="card__title">Natural-language API</h3>
+          <p class="card__text">Describe behavior in plain English. Ship in an afternoon what used to take a sprint of prompt engineering.</p>
+        </div>
+
+        <div class="card card--feature" data-reveal="up" style="--stagger-index:2;">
+          <div class="card__icon feature-tile__icon"><svg viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M8 9h.01M14 9h.01M8 14c1 1 5 1 6 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <h3 class="card__title">Autonomous agents</h3>
+          <p class="card__text">Agents that reason, decide and act across your stack — unattended.</p>
+        </div>
+
+        <div class="card card--feature" data-reveal="up" style="--stagger-index:3;">
+          <div class="card__icon feature-tile__icon"><svg viewBox="0 0 22 22" fill="none"><path d="M11 2 3 6v6c0 5 3.5 7.5 8 8 4.5-.5 8-3 8-8V6l-8-4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 11l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 class="card__title">Enterprise-grade security</h3>
+          <p class="card__text">SOC 2 Type II, private VPC deployment, zero data retention by default.</p>
+        </div>
+
+        <div class="card card--feature span-2" data-reveal="up" style="--stagger-index:4;">
+          <div class="card__icon feature-tile__icon"><svg viewBox="0 0 22 22" fill="none"><path d="M3 18V9M9 18V4M15 18v-7M21 18v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <h3 class="card__title">Predictive analytics</h3>
+          <p class="card__text">Every request feeds a live model of your product's usage — surfacing what to build next before your users ask for it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section bg-secondary" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="text-eyebrow">How it works</span>
+        <h2>From idea to intelligent in four steps</h2>
+        <p>No ML team required. NovaMind handles the reasoning, orchestration and scaling — your team focuses on the product.</p>
+      </div>
+
+      <div class="timeline-horizontal" data-reveal-group>
+        <div class="timeline-horizontal__item" data-reveal="up" style="--stagger-index:0;">
+          <div class="step-num">01</div>
+          <h4 class="card__title">Connect</h4>
+          <p class="text-body-sm text-muted">Point NovaMind at your data, docs or APIs with a single line of code.</p>
+        </div>
+        <div class="timeline-horizontal__item" data-reveal="up" style="--stagger-index:1;">
+          <div class="step-num">02</div>
+          <h4 class="card__title">Configure</h4>
+          <p class="text-body-sm text-muted">Define behavior in natural language instead of brittle rule trees.</p>
+        </div>
+        <div class="timeline-horizontal__item" data-reveal="up" style="--stagger-index:2;">
+          <div class="step-num">03</div>
+          <h4 class="card__title">Automate</h4>
+          <p class="text-body-sm text-muted">Deploy agents that reason, decide and act on their own.</p>
+        </div>
+        <div class="timeline-horizontal__item" data-reveal="up" style="--stagger-index:3;">
+          <div class="step-num">04</div>
+          <h4 class="card__title">Scale</h4>
+          <p class="text-body-sm text-muted">Ship to production on infrastructure built for millions of calls a day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTEGRATIONS ============ -->
+  <section class="section" id="integrations">
+    <div class="container">
+      <div class="section-header">
+        <span class="text-eyebrow">Integrations</span>
+        <h2>Plays well with your stack</h2>
+        <p>Connect NovaMind to the tools your team already lives in — no migration required.</p>
+      </div>
+
+      <div class="grid grid--4" data-reveal-group>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:0;"><div class="integration-tile__mark">S</div><div><div class="integration-tile__name">Slack</div><div class="integration-tile__type">Messaging</div></div></div>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:1;"><div class="integration-tile__mark">G</div><div><div class="integration-tile__name">GitHub</div><div class="integration-tile__type">Version control</div></div></div>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:2;"><div class="integration-tile__mark">N</div><div><div class="integration-tile__name">Notion</div><div class="integration-tile__type">Docs</div></div></div>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:3;"><div class="integration-tile__mark">Z</div><div><div class="integration-tile__name">Zapier</div><div class="integration-tile__type">Automation</div></div></div>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:4;"><div class="integration-tile__mark">W</div><div><div class="integration-tile__name">Google Workspace</div><div class="integration-tile__type">Productivity</div></div></div>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:5;"><div class="integration-tile__mark">H</div><div><div class="integration-tile__name">HubSpot</div><div class="integration-tile__type">CRM</div></div></div>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:6;"><div class="integration-tile__mark">J</div><div><div class="integration-tile__name">Jira</div><div class="integration-tile__type">Project mgmt</div></div></div>
+        <div class="card card--minimal integration-tile" data-reveal="up" style="--stagger-index:7;"><div class="integration-tile__mark">SF</div><div><div class="integration-tile__name">Salesforce</div><div class="integration-tile__type">CRM</div></div></div>
+      </div>
+      <p class="text-body-sm text-muted mt-8" style="text-align:center;">+200 more via our open REST API and Zapier.</p>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section bg-secondary" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="text-eyebrow">Testimonials</span>
+        <h2>Loved by teams building what's next</h2>
+      </div>
+
+      <div class="testimonial-featured mb-16" data-reveal="scale">
+        <div class="testimonial-featured__mark">&ldquo;</div>
+        <p class="testimonial-featured__quote">NovaMind didn't just add AI to our product — it became the product. We shipped an autonomous support agent in a week that used to be a two-quarter roadmap item.</p>
+        <div class="testimonial-featured__author">
+          <div class="card__avatar"></div>
+          <div><div class="card__author-name">Alex Rowan</div><div class="card__author-role">CTO, Continuum</div></div>
+        </div>
+      </div>
+
+      <div class="testimonial-wall" data-reveal-group>
+        <div class="card card--testimonial" data-reveal="up" style="--stagger-index:0;">
+          <p class="card__quote">&ldquo;The natural-language API cut our integration time from weeks to a single afternoon.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Priya Nair</div><div class="card__author-role">Founder, Solace</div></div></div>
+        </div>
+        <div class="card card--testimonial" data-reveal="up" style="--stagger-index:1;">
+          <p class="card__quote">&ldquo;Latency and reliability we can put in front of enterprise customers without caveats.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Marcus Chen</div><div class="card__author-role">VP Engineering, Fenwick</div></div></div>
+        </div>
+        <div class="card card--testimonial" data-reveal="up" style="--stagger-index:2;">
+          <p class="card__quote">&ldquo;Our agents handle triage, drafting and escalation — the team now works on judgment calls only.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Ige Osei</div><div class="card__author-role">Head of Product, Hedera Labs</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="text-eyebrow">Pricing</span>
+        <h2>Start free. Scale when you're ready.</h2>
+        <p>Every plan includes the full reasoning API. Pay for volume, not for features.</p>
+      </div>
+
+      <div class="cluster" style="justify-content:center; margin-bottom: var(--space-12);">
+        <div class="billing-toggle" data-billing-target="#pricing-grid">
+          <button class="billing-toggle__option" data-billing-value="monthly" aria-pressed="true">Monthly</button>
+          <button class="billing-toggle__option" data-billing-value="yearly" aria-pressed="false">Yearly <span class="billing-toggle__save">−20%</span></button>
+        </div>
+      </div>
+
+      <div id="pricing-grid" class="grid grid--3 pricing-grid" data-reveal-group>
+        <div class="card card--pricing" data-reveal="up" style="--stagger-index:0;">
+          <span class="text-label">Starter</span>
+          <div class="card--pricing__price"><span data-price-monthly>$0<span>/mo</span></span><span data-price-yearly>$0<span>/mo, billed yearly</span></span></div>
+          <p class="text-body-sm text-muted">For side projects and proof-of-concepts.</p>
+          <ul class="card--pricing__list">
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>10,000 requests / mo</li>
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>1 autonomous agent</li>
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Community support</li>
+          </ul>
+          <a href="#" class="btn btn--secondary btn--block">Start free</a>
+        </div>
+
+        <div class="card card--pricing card--highlight card--gradient-border" data-reveal="up" style="--stagger-index:1;">
+          <span class="badge badge--primary card--pricing__badge">Most popular</span>
+          <span class="text-label">Growth</span>
+          <div class="card--pricing__price"><span data-price-monthly>$149<span>/mo</span></span><span data-price-yearly>$119<span>/mo, billed yearly</span></span></div>
+          <p class="text-body-sm text-muted">For teams shipping AI features in production.</p>
+          <ul class="card--pricing__list">
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>2M requests / mo</li>
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited agents</li>
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority support &amp; SLA</li>
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>SOC 2 Type II</li>
+          </ul>
+          <a href="#" class="btn btn--primary btn--block">Choose Growth</a>
+        </div>
+
+        <div class="card card--pricing" data-reveal="up" style="--stagger-index:2;">
+          <span class="text-label">Enterprise</span>
+          <div class="card--pricing__price"><span>Custom</span></div>
+          <p class="text-body-sm text-muted">Dedicated infrastructure, private VPC, custom models.</p>
+          <ul class="card--pricing__list">
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited volume</li>
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Private VPC deployment</li>
+            <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedicated solutions team</li>
+          </ul>
+          <a href="#" class="btn btn--secondary btn--block">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section bg-secondary" id="faq">
+    <div class="container container--narrow">
+      <div class="section-header">
+        <span class="text-eyebrow">FAQ</span>
+        <h2>Questions, answered</h2>
+      </div>
+
+      <div class="faq-columns">
+        <div class="accordion">
+          <details class="accordion-item" open>
+            <summary class="accordion-item__trigger">What can I build with the NovaMind API?<span class="accordion-item__icon"></span></summary>
+            <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Anything that needs reasoning over your data — support agents, research copilots, workflow automation, and custom in-product AI features, all through one natural-language API.</div></div></div>
+          </details>
+          <details class="accordion-item">
+            <summary class="accordion-item__trigger">How is my data handled?<span class="accordion-item__icon"></span></summary>
+            <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Zero data retention by default. Enterprise plans support private VPC deployment so nothing leaves your infrastructure.</div></div></div>
+          </details>
+          <details class="accordion-item">
+            <summary class="accordion-item__trigger">Do you offer a free tier?<span class="accordion-item__icon"></span></summary>
+            <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Yes — Starter includes 10,000 requests a month, no credit card required.</div></div></div>
+          </details>
+        </div>
+        <div class="accordion">
+          <details class="accordion-item">
+            <summary class="accordion-item__trigger">Can I fine-tune models on my own data?<span class="accordion-item__icon"></span></summary>
+            <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Growth and Enterprise plans support custom fine-tuning and retrieval over your proprietary data sources.</div></div></div>
+          </details>
+          <details class="accordion-item">
+            <summary class="accordion-item__trigger">What's your uptime guarantee?<span class="accordion-item__icon"></span></summary>
+            <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">99.99% uptime SLA on Growth and Enterprise, backed by multi-region failover.</div></div></div>
+          </details>
+          <details class="accordion-item">
+            <summary class="accordion-item__trigger">How fast can I get to production?<span class="accordion-item__icon"></span></summary>
+            <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Most teams ship a first working integration within a day — the natural-language API removes most of the setup work.</div></div></div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band" data-reveal="scale">
+        <span class="text-eyebrow" style="justify-content:center;">Get started</span>
+        <h2 class="cta-band__title">Ready to make your product intelligent?</h2>
+        <p class="cta-band__subtitle">Start free, ship your first agent today, and scale on the same infrastructure that handles millions of requests a day.</p>
+        <div class="hero__actions">
+          <a href="#pricing" class="btn btn--primary btn--lg">Start building free</a>
+          <a href="#" class="btn btn--secondary btn--lg">Talk to sales</a>
+        </div>
+        <p class="text-caption mt-6">Free tier · No credit card required · Deploy in minutes</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer footer--newsletter">
+  <div class="container">
+    <div class="footer__signup">
+      <div>
+        <h4>Get product updates</h4>
+        <p class="text-body-sm text-muted mt-2">New capabilities, API changes and platform notes — a few times a month.</p>
+      </div>
+      <form class="input-with-action" onsubmit="return false;">
+        <input class="input" type="email" placeholder="you@company.com" aria-label="Email address">
+        <button class="btn btn--primary" type="submit">Subscribe</button>
+      </form>
+    </div>
+
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="#top" class="navbar__brand"><span class="navbar__brand-mark" aria-hidden="true"></span>NovaMind</a>
+        <p class="text-body-sm text-muted mt-4">The reasoning engine for intelligent products. Build, automate and scale — all on one platform.</p>
+      </div>
+      <div>
+        <div class="footer__heading">Product</div>
+        <div class="footer__links">
+          <a href="#features">Features</a>
+          <a href="#integrations">Integrations</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#">Changelog</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__heading">Developers</div>
+        <div class="footer__links">
+          <a href="#">Documentation</a>
+          <a href="#">API reference</a>
+          <a href="#">Status</a>
+          <a href="#">Security</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__heading">Company</div>
+        <div class="footer__links">
+          <a href="#">About</a>
+          <a href="#">Careers</a>
+          <a href="#faq">FAQ</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; 2026 NovaMind AI, Inc.</span>
+      <div class="footer__social">
+        <a href="#" aria-label="NovaMind on X"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M2 2l16 16M18 2 2 18" stroke="currentColor" stroke-width="0" /><path d="M3 2h3.2l4 5.4L14.5 2H17l-6 7.1L17.5 18H14.3l-4.4-5.9L4.9 18H2.5l6.4-7.6L3 2Z" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="NovaMind on GitHub"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 1a9 9 0 0 0-2.85 17.54c.45.08.6-.2.6-.43v-1.68c-2.5.55-3.03-1.2-3.03-1.2-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.8 1.38 2.11.98 2.63.75.08-.58.32-.98.57-1.2-2-.23-4.1-1-4.1-4.44 0-.98.35-1.79.92-2.42-.09-.23-.4-1.15.09-2.4 0 0 .75-.24 2.47.92a8.5 8.5 0 0 1 4.5 0c1.72-1.16 2.47-.92 2.47-.92.5 1.25.18 2.17.1 2.4.57.63.91 1.44.91 2.42 0 3.45-2.1 4.2-4.1 4.43.33.28.62.85.62 1.7v2.53c0 .24.15.52.6.43A9 9 0 0 0 10 1Z" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="NovaMind on LinkedIn"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 8.5v5M6.5 6.5v.01M10 13.5v-3c0-1 .6-1.8 1.8-1.8 1.2 0 1.7.9 1.7 1.9v2.9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="design-system/main.js"></script>
+</body>
+</html>
