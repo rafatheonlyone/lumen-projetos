@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Performance — Academia de Alta Performance</title>
+<meta name="description" content="Atlas Performance — treino de alta performance em São Paulo. Musculação, funcional e personal training para quem não aceita menos que o próprio limite.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design-system/main.css">
+<style>
+  /* ---- Page-level composition only — every raw value still resolves
+     back to a design-system token. No new visual language. ---- */
+
+  :root {
+    --split-ratio-a: 1.15fr 1fr;
+  }
+
+  .hero--atlas { min-height: 100vh; border-radius: 0; align-items: flex-start; }
+  .hero--atlas .hero__bg img { transform: scale(1.06); filter: grayscale(0.15) contrast(1.08); }
+  .hero--atlas::after {
+    content: '';
+    position: absolute; inset: 0;
+    z-index: -1;
+    background: linear-gradient(100deg, rgba(8,7,10,0.94) 15%, rgba(8,7,10,0.55) 55%, rgba(8,7,10,0.25) 100%);
+    pointer-events: none;
+  }
+  .hero--atlas .hero__title {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-black);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-tightest);
+    font-size: clamp(3rem, 1.6rem + 7vw, 7.5rem);
+    line-height: 0.96;
+    max-width: 14ch;
+  }
+  .hero--atlas .hero__title em {
+    font-style: normal;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero__scroll-cue {
+    position: absolute;
+    left: var(--space-container-x);
+    bottom: var(--space-10);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: rgba(255,255,255,0.6);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+  }
+  .hero__scroll-cue span:first-child {
+    width: 1px; height: 32px;
+    background: linear-gradient(180deg, var(--color-primary), transparent);
+    display: inline-block;
+    animation: lumen-float 2.6s var(--ease-in-out-quart) infinite;
+  }
+
+  /* ---- Marquee band under hero (discipline / strength keywords) ---- */
+  .keyword-band {
+    border-top: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
+    background: var(--color-bg-primary);
+  }
+  .keyword-band .marquee__track span {
+    font-family: var(--font-sans);
+    font-weight: var(--weight-black);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-tight);
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+    color: var(--color-text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    white-space: nowrap;
+  }
+  .keyword-band .marquee__track span::after {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  /* ---- Program tiles (bento) ---- */
+  .program-tile {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    min-height: 260px;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+  }
+  .program-tile img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out-expo);
+    z-index: -2;
+  }
+  .program-tile:hover img { transform: scale(1.08); }
+  .program-tile::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gradient-scrim-top);
+    z-index: -1;
+  }
+  .program-tile__index {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    letter-spacing: var(--tracking-widest);
+    color: var(--gold-300);
+    margin-bottom: var(--space-2);
+    display: block;
+  }
+  .program-tile__title { color: var(--gray-0); font-size: var(--text-h3); margin-bottom: var(--space-2); }
+  .program-tile__text { color: rgba(255,255,255,0.75); font-size: var(--text-body-sm); max-width: 34ch; }
+
+  /* ---- Results — big stat + transformation strip ---- */
+  .results-media {
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    box-shadow: var(--shadow-2xl);
+  }
+  .results-media img { width: 100%; height: 100%; object-fit: cover; }
+  .results-media__badge {
+    position: absolute;
+    bottom: var(--space-6); left: var(--space-6); right: var(--space-6);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .results-media__badge strong { font-family: var(--font-display); font-size: var(--text-h3); color: var(--gray-0); }
+  .results-media__badge span { font-size: var(--text-caption); color: rgba(255,255,255,0.75); }
+
+  /* ---- Coach card footer overlay ---- */
+  .coach-card { padding: 0; overflow: hidden; text-align: left; }
+  .coach-card__media { aspect-ratio: 3/4; overflow: hidden; }
+  .coach-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-slow) var(--ease-out-expo); }
+  .coach-card:hover .coach-card__media img { transform: scale(1.06); }
+  .coach-card__body { padding: var(--space-6); }
+
+  /* ---- Pricing tweaks ---- */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); align-items: stretch; }
+  @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  .whatsapp-panel {
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    padding: var(--space-10);
+    min-height: 100%;
+  }
+  .whatsapp-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .whatsapp-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,7,10,0.5), rgba(8,7,10,0.92)); z-index: -1; }
+  .whatsapp-panel .contact-info__item .value { color: var(--gray-0); }
+  .whatsapp-panel .contact-info__item .label { color: rgba(255,255,255,0.55); }
+
+  @media (max-width: 640px) {
+    .results-media__badge { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+  }
+
+  /* ==========================================================================
+     MOTION REFINEMENTS — page-scoped only. Elevates hover/entrance/micro-
+     interaction quality without touching the shared design-system files or
+     any layout/branding. Every rule here degrades gracefully and is muted
+     under prefers-reduced-motion (see the query at the very end).
+     ========================================================================== */
+
+  /* ---- Page-ready cross-fade — avoids an abrupt flash of unstyled state
+     while fonts finish loading; near-instant, not a "loading screen". ------ */
+  html:not(.fonts-ready) body { opacity: 0; }
+  body {
+    opacity: 1;
+    transition: opacity 420ms var(--ease-signature);
+  }
+
+  /* ---- Hero: slow ambient Ken Burns drift on the backdrop image, and a
+     per-word title reveal (the h1 itself stays visually static — only its
+     word-spans animate — so it doesn't double-animate against [data-reveal]). */
+  .hero--atlas .hero__bg img {
+    animation: atlas-kenburns 22s var(--ease-in-out-quart) infinite alternate;
+  }
+  @keyframes atlas-kenburns {
+    from { transform: scale(1.06); }
+    to   { transform: scale(1.14) translate(-1%, -1%); }
+  }
+  .hero__title[data-text-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .hero__title[data-text-reveal] [data-reveal-word] { transition-delay: calc(120ms + var(--word-index, 0) * 55ms); }
+
+  /* ---- Buttons: soft shine sweep on primary CTAs (hover-triggered only,
+     never looping) + a slightly richer press feel across all variants. ---- */
+  .btn--primary { overflow: hidden; }
+  .btn--primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -60%;
+    width: 35%; height: 100%;
+    background: linear-gradient(115deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-18deg);
+    transition: left 650ms var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .btn--primary:hover::before { left: 130%; }
+  .btn:active { transform: scale(0.96); }
+
+  /* ---- Badge pulse — reserved for the single "most chosen" plan badge;
+     a very low-amplitude breathing glow, not a distracting blink. --------- */
+  .badge--pulse { animation: atlas-badge-pulse 2.8s ease-in-out infinite; }
+  @keyframes atlas-badge-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(223, 162, 60, 0.35); }
+    50%      { box-shadow: 0 0 0 6px rgba(223, 162, 60, 0); }
+  }
+
+  /* ---- Pricing highlight: intensify the glow on hover instead of a
+     static shadow, so the "recommended" plan feels alive under the cursor. */
+  .card--pricing.card--highlight {
+    transition: box-shadow var(--duration-moderate) var(--ease-out-expo),
+                transform var(--duration-base) var(--ease-out-expo),
+                border-color var(--duration-base) var(--ease-out-expo);
+  }
+  .card--pricing.card--highlight:hover { box-shadow: var(--glow-gold-md); }
+
+  /* ---- Program tiles / coach cards / results media: refine the existing
+     image-scale hover with a touch of brightness for a "polished lens"
+     feel, and ease the tile itself upward slightly on hover. -------------- */
+  .program-tile, .coach-card, .results-media { transition: transform var(--duration-moderate) var(--ease-out-expo), box-shadow var(--duration-moderate) var(--ease-out-expo); }
+  .program-tile:hover, .coach-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+  .program-tile img, .coach-card__media img, .results-media img {
+    transition: transform 700ms var(--ease-out-expo), filter 700ms var(--ease-out-expo);
+  }
+  .program-tile:hover img, .coach-card:hover .coach-card__media img { filter: brightness(1.05) saturate(1.05); }
+  .results-media:hover img { transform: scale(1.035); filter: brightness(1.04); }
+
+  /* ---- Testimonial cards: subtle lift already inherited from .card; add
+     a slightly longer, calmer curve so the wall doesn't feel bouncy. ------ */
+  .card--testimonial { transition: transform 480ms var(--ease-out-expo), border-color 480ms var(--ease-out-expo), box-shadow 480ms var(--ease-out-expo); }
+
+  /* ---- Accordion (FAQ): fade + rise the answer text in as the panel
+     opens, instead of appearing at full opacity the instant height grows. */
+  .accordion-item__panel-inner {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 320ms var(--ease-out-quart) 60ms, transform 320ms var(--ease-out-quart) 60ms;
+  }
+  .accordion-item[open] .accordion-item__panel-inner { opacity: 1; transform: translateY(0); }
+  .accordion-item__trigger { transition: color var(--duration-fast) var(--ease-out-quart); }
+  .accordion-item:hover .accordion-item__trigger { color: var(--color-primary); }
+
+  /* ---- Images: blur-up fade-in as each one finishes loading — the
+     enhancer script toggles [data-img-loaded]; until then a very soft
+     placeholder blur avoids a jarring pop-in once scrolled into view. ----- */
+  main img:not([data-img-loaded]) { opacity: 0; filter: blur(14px); }
+  main img[data-img-loaded] {
+    opacity: 1; filter: blur(0);
+    transition: opacity 620ms var(--ease-out-quart), filter 620ms var(--ease-out-quart);
+  }
+
+  /* ---- Counters: tabular numerals so digits don't jitter horizontally
+     while counting up. ------------------------------------------------------ */
+  [data-nc] { font-variant-numeric: tabular-nums; }
+
+  /* ---- Form: focus rings get a touch more presence, and the submit
+     button gets a brief, tasteful success state instead of just resetting. */
+  .input, .textarea, .select { transition: border-color var(--duration-fast) var(--ease-out-quart), box-shadow var(--duration-fast) var(--ease-out-quart), background-color var(--duration-fast) var(--ease-out-quart), transform var(--duration-fast) var(--ease-out-quart); }
+  .input:focus, .textarea:focus, .select:focus { transform: translateY(-1px); }
+  #contact-submit[data-success='true'] { background: var(--color-success); box-shadow: none; }
+  #contact-submit[data-success='true']::before { display: none; }
+
+  /* ---- Nav links: nudge the existing underline timing to the signature
+     curve so it matches the rest of the page's easing language. ----------- */
+  .navbar__link::after { transition: transform var(--duration-base) var(--ease-signature) !important; }
+
+  /* ---- Footer links: consistent underline micro-interaction. ------------ */
+  .footer__links a { position: relative; }
+  .footer__links a::after {
+    content: '';
+    position: absolute; left: 0; bottom: -2px;
+    width: 100%; height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--duration-base) var(--ease-out-expo);
+  }
+  .footer__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  /* ---- Respect reduced motion: strip every animation/transition added
+     above (the design system's own reset already neutralizes its base
+     durations, but keyframe animations bypass that, so we stop them here). */
+  @media (prefers-reduced-motion: reduce) {
+    html:not(.fonts-ready) body { opacity: 1; }
+    .hero--atlas .hero__bg img { animation: none; }
+    .badge--pulse { animation: none; }
+    .btn--primary::before { display: none; }
+    main img:not([data-img-loaded]) { opacity: 1; filter: none; }
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="navbar navbar--bordered" data-menu-open="false">
+  <a href="#main" class="navbar__brand"><span class="navbar__brand-mark" aria-hidden="true"></span>ATLAS PERFORMANCE</a>
+  <div class="navbar__links">
+    <a class="navbar__link" href="#programas">Programas</a>
+    <a class="navbar__link" href="#coaches">Coaches</a>
+    <a class="navbar__link" href="#resultados">Resultados</a>
+    <a class="navbar__link" href="#planos">Planos</a>
+    <a class="navbar__link" href="#faq">FAQ</a>
+  </div>
+  <div class="navbar__actions">
+    <a href="#contato" class="btn btn--primary btn--sm">Treino experimental</a>
+    <button class="btn btn--icon btn--ghost" data-theme-toggle aria-label="Alternar tema claro/escuro">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+    <button class="navbar__toggle" aria-label="Alternar menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="navbar__mobile-panel">
+    <a class="navbar__link" href="#programas">Programas</a>
+    <a class="navbar__link" href="#coaches">Coaches</a>
+    <a class="navbar__link" href="#resultados">Resultados</a>
+    <a class="navbar__link" href="#planos">Planos</a>
+    <a class="navbar__link" href="#faq">FAQ</a>
+    <a href="#contato" class="btn btn--primary">Treino experimental</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero hero--media hero--atlas">
+    <div class="hero__bg" data-parallax="0.18">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=2400&q=80" alt="Atleta realizando levantamento de peso intenso em academia de alta performance com iluminação dramática">
+    </div>
+    <div>
+      <span class="text-eyebrow hero__eyebrow" data-reveal="blur">Treino de alta performance · São Paulo</span>
+      <h1 class="hero__title" data-reveal="up" data-text-reveal style="transition-delay:60ms;"><span data-reveal-word>Disciplina</span> <span data-reveal-word>é</span> <span data-reveal-word>o</span> <span data-reveal-word>único</span> <em><span data-reveal-word>atalho</span></em>.</h1>
+      <p class="hero__subtitle" data-reveal="blur" style="transition-delay:260ms;">Musculação, funcional e performance sob um só teto — programas construídos por quem vive de resultado, para quem não aceita menos que o próprio limite.</p>
+      <div class="hero__actions" data-reveal="up" style="transition-delay:360ms;">
+        <a href="#contato" class="btn btn--primary btn--lg">Comece seu treino</a>
+        <a href="#planos" class="btn btn--glass btn--lg">Ver planos</a>
+      </div>
+      <div class="hero__meta" data-reveal="up" style="transition-delay:440ms; justify-content:flex-start;">
+        <span>★★★★★ <span data-nc="4.9" data-nc-decimals="1">0</span>/5 — <span data-nc="2100" data-nc-suffix="+">0</span> avaliações</span>
+        <span><span data-nc="12400" data-nc-suffix="+">0</span> alunos transformados</span>
+      </div>
+    </div>
+    <div class="hero__scroll-cue"><span></span>Role para explorar</div>
+  </section>
+
+  <!-- ============ KEYWORD MARQUEE ============ -->
+  <div class="keyword-band">
+    <div class="marquee">
+      <div class="marquee__track">
+        <span>Energia</span><span>Performance</span><span>Disciplina</span><span>Força</span>
+        <span>Energia</span><span>Performance</span><span>Disciplina</span><span>Força</span>
+        <span>Energia</span><span>Performance</span><span>Disciplina</span><span>Força</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROGRAMS ============ -->
+  <section class="section" id="programas">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Programas</span>
+        <h2>Seis caminhos. Um único padrão de exigência.</h2>
+        <p>Cada programa foi desenhado por especialistas para atacar um objetivo específico — sem fórmulas genéricas, sem planilha de academia de shopping.</p>
+      </div>
+
+      <div class="layout-bento" data-reveal-group>
+        <div class="program-tile span-2 span-row-2" data-reveal="up">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80" alt="Atleta realizando agachamento com barra em treino de musculação de alta performance">
+          <div>
+            <span class="program-tile__index">01</span>
+            <h3 class="program-tile__title">Musculação de Alta Performance</h3>
+            <p class="program-tile__text">Periodização individual, cargas progressivas e acompanhamento técnico em cada série — construído para hipertrofia e força real.</p>
+          </div>
+        </div>
+        <div class="program-tile" data-reveal="up" style="transition-delay:80ms;">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80" alt="Grupo em treino funcional de alta intensidade">
+          <div>
+            <span class="program-tile__index">02</span>
+            <h3 class="program-tile__title">Treino Funcional</h3>
+            <p class="program-tile__text">Potência, mobilidade e condicionamento em circuitos de alta intensidade.</p>
+          </div>
+        </div>
+        <div class="program-tile" data-reveal="up" style="transition-delay:120ms;">
+          <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1200&q=80" alt="Personal trainer orientando aluno durante exercício de força">
+          <div>
+            <span class="program-tile__index">03</span>
+            <h3 class="program-tile__title">Personal Training</h3>
+            <p class="program-tile__text">Atenção 1:1, metas claras e ajuste fino de técnica a cada sessão.</p>
+          </div>
+        </div>
+        <div class="program-tile span-2" data-reveal="up" style="transition-delay:160ms;">
+          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1600&q=80" alt="Preparação de refeição saudável e balanceada para performance esportiva">
+          <div>
+            <span class="program-tile__index">04</span>
+            <h3 class="program-tile__title">Nutrição Esportiva</h3>
+            <p class="program-tile__text">Plano alimentar integrado ao seu treino, ajustado por nutricionista esportivo a cada 4 semanas.</p>
+          </div>
+        </div>
+        <div class="program-tile" data-reveal="up" style="transition-delay:200ms;">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80" alt="Avaliação física com bioimpedância em ambiente clínico da academia">
+          <div>
+            <span class="program-tile__index">05</span>
+            <h3 class="program-tile__title">Avaliação Física Completa</h3>
+            <p class="program-tile__text">Bioimpedância, testes de força e mobilidade a cada ciclo de treino.</p>
+          </div>
+        </div>
+        <div class="program-tile" data-reveal="up" style="transition-delay:240ms;">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80" alt="Sessão de alongamento e mobilidade para recuperação muscular">
+          <div>
+            <span class="program-tile__index">06</span>
+            <h3 class="program-tile__title">Recovery &amp; Mobilidade</h3>
+            <p class="program-tile__text">Liberação miofascial, mobilidade guiada e protocolos de recuperação ativa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COACHES ============ -->
+  <section class="section" id="coaches" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Coaches</span>
+        <h2>Quem exige mais de você, exige mais de si mesmo primeiro.</h2>
+        <p>Nossa equipe reúne ex-atletas de alto rendimento e especialistas certificados — cada um com um domínio específico dentro da performance humana.</p>
+      </div>
+
+      <div class="grid grid--4" data-reveal-group>
+        <div class="card coach-card" data-reveal="up">
+          <div class="coach-card__media"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80" alt="Bruno Castro, Head Coach da Atlas Performance"></div>
+          <div class="coach-card__body">
+            <h3 class="card__title">Bruno Castro</h3>
+            <div class="card__role">Head Coach · Força &amp; Performance</div>
+            <p class="card__text">Ex-atleta de levantamento olímpico, 14 anos formando alunos de alto rendimento.</p>
+          </div>
+        </div>
+        <div class="card coach-card" data-reveal="up" style="transition-delay:80ms;">
+          <div class="coach-card__media"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=80" alt="Marina Duarte, coach de força e powerlifting da Atlas Performance"></div>
+          <div class="coach-card__body">
+            <h3 class="card__title">Marina Duarte</h3>
+            <div class="card__role">Powerlifting &amp; Força</div>
+            <p class="card__text">Recordista estadual de powerlifting, especialista em periodização de cargas.</p>
+          </div>
+        </div>
+        <div class="card coach-card" data-reveal="up" style="transition-delay:160ms;">
+          <div class="coach-card__media"><img src="https://images.unsplash.com/photo-1571388208497-71bedc66e932?auto=format&fit=crop&w=800&q=80" alt="Diego Farias, coach de treino funcional e HIIT da Atlas Performance"></div>
+          <div class="coach-card__body">
+            <h3 class="card__title">Diego Farias</h3>
+            <div class="card__role">Funcional &amp; HIIT</div>
+            <p class="card__text">Especialista em condicionamento metabólico e treino de alta intensidade.</p>
+          </div>
+        </div>
+        <div class="card coach-card" data-reveal="up" style="transition-delay:240ms;">
+          <div class="coach-card__media"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=80" alt="Camila Rocha, nutricionista esportiva da Atlas Performance"></div>
+          <div class="coach-card__body">
+            <h3 class="card__title">Camila Rocha</h3>
+            <div class="card__role">Nutrição Esportiva</div>
+            <p class="card__text">Nutricionista clínica com foco em performance e composição corporal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="section" id="resultados">
+    <div class="container">
+      <div class="layout-split">
+        <div data-reveal="left">
+          <span class="text-eyebrow">Resultados</span>
+          <h2 style="margin-bottom: var(--space-6);">Números que só existem porque o treino é levado a sério.</h2>
+          <div class="stats-featured" style="margin-bottom: var(--space-8);">
+            <div class="stats-featured__value"><span data-nc="12.4" data-nc-decimals="1" data-nc-suffix="k">0</span></div>
+            <div class="stats-featured__list">
+              <div class="item"><span>Alunos transformados</span><strong>Desde 2011</strong></div>
+              <div class="item"><span>Atingem a meta em 90 dias</span><strong><span data-nc="89" data-nc-suffix="%">0</span></strong></div>
+              <div class="item"><span>Avaliação média dos alunos</span><strong><span data-nc="4.9" data-nc-decimals="1">0</span> / 5</strong></div>
+            </div>
+          </div>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-8); max-width: 52ch;">Acompanhamento constante, metas mensuráveis e reavaliação a cada 30 dias — é assim que a Atlas transforma esforço em resultado visível.</p>
+          <a href="#contato" class="btn btn--primary btn--lg">Quero meus resultados</a>
+        </div>
+        <div class="results-media" data-reveal="right">
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80" alt="Aluno da Atlas Performance com corpo definido após ciclo de treino">
+          <div class="results-media__badge">
+            <div><strong><span data-nc="-14" data-nc-suffix="kg">0</span></strong><br><span>em 5 meses</span></div>
+            <div><strong><span data-nc="22" data-nc-prefix="+" data-nc-suffix="kg">0</span></strong><br><span>de força no supino</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Depoimentos</span>
+        <h2>Quem treina aqui, fala por nós.</h2>
+      </div>
+
+      <div class="testimonial-featured" data-reveal="scale">
+        <div class="testimonial-featured__mark">&ldquo;</div>
+        <p class="testimonial-featured__quote">Entrei na Atlas pesando 96kg e sem nenhuma disciplina. Em oito meses baixei para 79kg, levanto mais peso do que jamais imaginei e principalmente entendi que constância vale mais que motivação.</p>
+        <div class="testimonial-featured__author">
+          <div class="card__avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="Rodrigo Alves, aluno da Atlas Performance"></div>
+          <div><div class="card__author-name">Rodrigo Alves</div><div class="card__author-role">Aluno desde 2023</div></div>
+        </div>
+      </div>
+
+      <div class="testimonial-wall" style="margin-top: var(--space-16);" data-reveal-group>
+        <div class="card card--testimonial" data-reveal="up">
+          <p class="card__quote">&ldquo;O acompanhamento de perto faz toda a diferença. Nunca me senti só uma matrícula.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="Larissa Nunes, aluna da Atlas Performance"></div><div><div class="card__author-name">Larissa Nunes</div><div class="card__author-role">Musculação de Alta Performance</div></div></div>
+        </div>
+        <div class="card card--testimonial" data-reveal="up" style="transition-delay:80ms;">
+          <p class="card__quote">&ldquo;Fiz o funcional aqui por seis meses e minha capacidade cardiorrespiratória mudou completamente.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"><img src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?auto=format&fit=crop&w=200&q=80" alt="Thiago Souza, aluno da Atlas Performance"></div><div><div class="card__author-name">Thiago Souza</div><div class="card__author-role">Treino Funcional</div></div></div>
+        </div>
+        <div class="card card--testimonial" data-reveal="up" style="transition-delay:160ms;">
+          <p class="card__quote">&ldquo;O personal training aqui é o único que já me fez respeitar o processo em vez de correr atrás de atalho.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=200&q=80" alt="Patrícia Lima, aluna da Atlas Performance"></div><div><div class="card__author-name">Patrícia Lima</div><div class="card__author-role">Personal Training</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="section" id="planos">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Planos</span>
+        <h2>Escolha o nível de compromisso, não o nível de desconto.</h2>
+        <p>Sem taxa de matrícula. Cancele quando quiser, sem multa.</p>
+      </div>
+
+      <div class="pricing-grid" data-reveal-group>
+        <div class="card card--pricing" data-reveal="up">
+          <span class="text-eyebrow">Start</span>
+          <div class="card--pricing__price">R$ 189<span>/mês</span></div>
+          <p class="card__text">Para quem está começando e quer acesso completo à estrutura, sem compromisso de longo prazo.</p>
+          <ul class="card--pricing__list">
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Acesso completo à musculação</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>2 aulas de funcional por semana</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Avaliação física trimestral</li>
+          </ul>
+          <a href="#contato" class="btn btn--secondary btn--block" style="margin-top:auto;">Começar agora</a>
+        </div>
+
+        <div class="card card--pricing card--highlight" data-reveal="up" style="transition-delay:80ms;">
+          <span class="badge badge--primary card--pricing__badge badge--pulse">Mais escolhido</span>
+          <span class="text-eyebrow">Performance</span>
+          <div class="card--pricing__price">R$ 289<span>/mês</span></div>
+          <p class="card__text">O plano completo — treino, avaliação e acompanhamento nutricional em um só lugar.</p>
+          <ul class="card--pricing__list">
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Acesso ilimitado a todos os programas</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>1 sessão de personal por semana</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Plano nutricional mensal</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Avaliação física mensal</li>
+          </ul>
+          <a href="#contato" class="btn btn--primary btn--block" style="margin-top:auto;">Quero esse plano</a>
+        </div>
+
+        <div class="card card--pricing" data-reveal="up" style="transition-delay:160ms;">
+          <span class="text-eyebrow">Elite</span>
+          <div class="card--pricing__price">R$ 549<span>/mês</span></div>
+          <p class="card__text">Para quem busca o máximo de atenção individual e resultado em ciclos curtos.</p>
+          <ul class="card--pricing__list">
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Tudo do plano Performance</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>3 sessões de personal por semana</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Recovery &amp; mobilidade incluídos</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Acesso prioritário aos coaches</li>
+          </ul>
+          <a href="#contato" class="btn btn--secondary btn--block" style="margin-top:auto;">Falar com um coach</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq" style="background: var(--color-bg-secondary);">
+    <div class="container container--narrow">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Perguntas frequentes</span>
+        <h2>Tudo o que você precisa saber antes de começar.</h2>
+      </div>
+
+      <div class="accordion" data-reveal="up">
+        <details class="accordion-item" open>
+          <summary class="accordion-item__trigger">Preciso ter experiência prévia com musculação?<span class="accordion-item__icon"></span></summary>
+          <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Não. Todo aluno passa por uma avaliação física e uma primeira semana guiada por um coach, independente do nível. Ajustamos a carga e a progressão ao seu ponto de partida.</div></div></div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-item__trigger">Como funciona o treino experimental?<span class="accordion-item__icon"></span></summary>
+          <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">É uma sessão gratuita e sem compromisso, com um coach da Atlas, para você conhecer a estrutura e entender qual programa faz mais sentido para o seu objetivo.</div></div></div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-item__trigger">Existe fidelidade ou multa de cancelamento?<span class="accordion-item__icon"></span></summary>
+          <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Não. Todos os planos são mês a mês, sem taxa de matrícula e sem multa de cancelamento. Você pede o cancelamento com 7 dias de antecedência.</div></div></div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-item__trigger">Qual o horário de funcionamento?<span class="accordion-item__icon"></span></summary>
+          <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Segunda a sexta, das 6h às 23h. Sábados, das 8h às 18h. Domingos e feriados, das 9h às 14h.</div></div></div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-item__trigger">Vocês oferecem acompanhamento nutricional separado do treino?<span class="accordion-item__icon"></span></summary>
+          <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Sim. A consultoria com nossa nutricionista esportiva pode ser contratada separadamente ou incluída automaticamente nos planos Performance e Elite.</div></div></div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-item__trigger">Posso trocar de plano depois de começar?<span class="accordion-item__icon"></span></summary>
+          <div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Sim, a qualquer momento. Basta falar com a recepção ou com seu coach — o ajuste vale a partir do próximo ciclo de cobrança.</div></div></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section" id="contato">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Comece agora</span>
+        <h2>Seu treino experimental está a um formulário de distância.</h2>
+        <p>Preencha seus dados e um coach entra em contato em até 24h para agendar sua primeira sessão gratuita.</p>
+      </div>
+
+      <div class="layout-split">
+        <form class="stack" id="contact-form" style="--stack-gap: var(--space-5);" data-reveal="left">
+          <div class="grid grid--2">
+            <div class="field">
+              <label class="field__label" for="c-name">Nome completo</label>
+              <input class="input" id="c-name" type="text" placeholder="Seu nome" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="c-phone">WhatsApp</label>
+              <input class="input" id="c-phone" type="tel" placeholder="(11) 99999-0000" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="c-email">E-mail</label>
+            <input class="input" id="c-email" type="email" placeholder="voce@email.com" required>
+          </div>
+          <div class="field">
+            <label class="field__label" for="c-goal">Objetivo principal</label>
+            <select class="select" id="c-goal" required>
+              <option value="">Escolher</option>
+              <option>Hipertrofia / ganho de massa</option>
+              <option>Emagrecimento</option>
+              <option>Condicionamento físico</option>
+              <option>Performance esportiva</option>
+              <option>Reabilitação / retorno ao treino</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="c-notes">Observações</label>
+            <textarea class="textarea" id="c-notes" placeholder="Conte um pouco sobre sua rotina de treino atual..."></textarea>
+          </div>
+          <button class="btn btn--primary btn--lg btn--block" type="submit" id="contact-submit"><span data-btn-label>Agendar treino experimental</span></button>
+        </form>
+
+        <div class="whatsapp-panel" data-reveal="right">
+          <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1400&q=80" alt="Coach da Atlas Performance orientando aluno durante treino de força">
+          <div class="contact-info" style="position:relative; z-index:1;">
+            <div class="contact-info__item"><span class="label">Endereço</span><span class="value">Av. Brigadeiro Faria Lima, 2900 — Itaim Bibi, São Paulo, SP</span></div>
+            <div class="contact-info__item"><span class="label">Funcionamento</span><span class="value">Seg–Sex 6h–23h · Sáb 8h–18h</span></div>
+            <div class="contact-info__item"><span class="label">WhatsApp</span><a class="value" href="https://wa.me/5511970001122">+55 (11) 97000-1122</a></div>
+            <div class="contact-info__item"><span class="label">E-mail</span><a class="value" href="mailto:contato@atlasperformance.com.br">contato@atlasperformance.com.br</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a href="#main" class="navbar__brand"><span class="navbar__brand-mark" aria-hidden="true"></span>ATLAS PERFORMANCE</a>
+        <p class="text-body-sm text-muted mt-4" style="max-width:32ch;">Treino de alta performance no Itaim Bibi, São Paulo. Energia, disciplina e força — sem atalhos.</p>
+      </div>
+      <div><div class="footer__heading">Navegação</div><div class="footer__links"><a href="#programas">Programas</a><a href="#coaches">Coaches</a><a href="#resultados">Resultados</a><a href="#planos">Planos</a><a href="#faq">FAQ</a></div></div>
+      <div><div class="footer__heading">Visite</div><div class="footer__links"><a href="#contato">Av. Faria Lima, 2900</a><a href="https://wa.me/5511970001122">+55 (11) 97000-1122</a><a href="#contato">Seg–Sáb, 6h–23h</a></div></div>
+      <div><div class="footer__heading">Redes</div><div class="footer__links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div></div>
+    </div>
+    <div class="footer__bottom">
+      <span class="text-caption">&copy; 2026 Atlas Performance. Todos os direitos reservados.</span>
+      <span class="text-caption">Feito para quem treina de verdade.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="design-system/main.js"></script>
+<script>
+  /* ==========================================================================
+     ATLAS PERFORMANCE — page-scoped motion enhancer.
+     Does not touch design-system/main.js; everything here only reads
+     attributes already present in this page's markup. Every module no-ops
+     if its markup isn't found and every animated module checks
+     prefers-reduced-motion before doing any work.
+     ========================================================================== */
+  (() => {
+    'use strict';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- Page-ready fade: flip once fonts have finished loading (or
+       immediately if the Font Loading API isn't available). ---------------- */
+    const revealPage = () => document.documentElement.classList.add('fonts-ready');
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(revealPage).catch(revealPage);
+      setTimeout(revealPage, 900); // safety net so a slow font never blocks the page
+    } else {
+      revealPage();
+    }
+
+    /* ---- Image blur-up: fade each <img> in once it has actually loaded,
+       instead of popping in the instant its scroll-reveal parent triggers. */
+    document.querySelectorAll('main img').forEach((img) => {
+      const mark = () => img.setAttribute('data-img-loaded', 'true');
+      if (img.complete && img.naturalWidth > 0) mark();
+      else img.addEventListener('load', mark, { once: true });
+      img.addEventListener('error', mark, { once: true });
+    });
+
+    /* ---- Numeric counters — supports decimals, +/- prefix, suffix, and
+       pt-BR thousands separators. Namespaced to [data-nc] so it never
+       collides with design-system/main.js's own [data-counter] module. ---- */
+    const counters = document.querySelectorAll('[data-nc]');
+    if (counters.length) {
+      const animateCounter = (el) => {
+        const end = parseFloat(el.getAttribute('data-nc'));
+        const decimals = parseInt(el.getAttribute('data-nc-decimals') || '0', 10);
+        const prefix = el.getAttribute('data-nc-prefix') || (end < 0 ? '-' : '');
+        const suffix = el.getAttribute('data-nc-suffix') || '';
+        const magnitude = Math.abs(end);
+
+        const format = (value) => {
+          const fixed = value.toFixed(decimals);
+          const [whole, frac] = fixed.split('.');
+          const withSeparators = whole.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          return prefix + withSeparators + (frac ? ',' + frac : '') + suffix;
+        };
+
+        if (reduceMotion) {
+          el.textContent = format(magnitude);
+          return;
+        }
+
+        const duration = 1500;
+        const start = performance.now();
+        const step = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = format(magnitude * eased);
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+
+      if (reduceMotion) {
+        counters.forEach(animateCounter);
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        counters.forEach((el) => observer.observe(el));
+      }
+    }
+
+    /* ---- Contact form: a brief, tasteful loading → success sequence on
+       submit instead of an abrupt no-op, since this page has no backend
+       to actually call yet. ------------------------------------------------ */
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('contact-submit');
+    if (form && submitBtn) {
+      const label = submitBtn.querySelector('[data-btn-label]');
+      const originalText = label ? label.textContent : submitBtn.textContent;
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (submitBtn.getAttribute('data-loading') === 'true') return;
+
+        submitBtn.setAttribute('data-loading', 'true');
+        setTimeout(() => {
+          submitBtn.removeAttribute('data-loading');
+          submitBtn.setAttribute('data-success', 'true');
+          if (label) label.textContent = 'Recebido — em breve entramos em contato';
+          window.Lumen?.toast({
+            variant: 'success',
+            title: 'Solicitação enviada',
+            text: 'Um coach da Atlas Performance vai te chamar no WhatsApp em até 24h.',
+          });
+          setTimeout(() => {
+            submitBtn.removeAttribute('data-success');
+            if (label) label.textContent = originalText;
+            form.reset();
+          }, 2600);
+        }, 900);
+      });
+    }
+  })();
+</script>
+</body>
+</html>
