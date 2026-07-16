@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brasa &amp; Sal — Alta Gastronomia</title>
+<meta name="description" content="Brasa &amp; Sal — restaurante de alta gastronomia. Fogo, sal e tempo transformando o ingrediente em memória. Reserve sua mesa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design-system/main.css">
+<link rel="stylesheet" href="brasa-motion.css">
+<noscript><style>img.img-fade{opacity:1 !important;}</style></noscript>
+<style>
+  /* ---- Page-level composition only — every raw value here still
+     resolves back to a design-system token. No new visual language. ---- */
+
+  .hero--brasa {
+    min-height: 100vh;
+    border-radius: 0;
+  }
+  .hero--brasa .hero__bg { z-index: -2; }
+  .hero__flame {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--gradient-scrim-top), radial-gradient(circle at 15% 100%, rgba(223, 162, 60, 0.28), transparent 55%);
+    pointer-events: none;
+  }
+  .hero--brasa .hero__title { font-size: var(--text-display-2xl); }
+  .hero__scroll-cue {
+    position: absolute;
+    left: var(--space-container-x);
+    bottom: var(--space-10);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: rgba(255,255,255,0.65);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+  }
+  .hero__scroll-cue span:first-child {
+    width: 1px; height: 32px;
+    background: linear-gradient(180deg, var(--color-primary), transparent);
+    display: inline-block;
+    animation: lumen-float 2.6s var(--ease-in-out-quart) infinite;
+  }
+
+  /* ---- Menu dish row — a bespoke composition of existing card +
+     border-token vocabulary, not a new component: numbered rows with a
+     leading rule, price in mono, matches the "tasting menu" convention. */
+  .menu-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .menu-row:last-child { border-bottom: none; }
+  .menu-row__index {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-tertiary);
+    letter-spacing: var(--tracking-widest);
+    padding-top: 0.3em;
+  }
+  .menu-row__title { font-family: var(--font-display); font-size: var(--text-h4); margin-bottom: var(--space-2); }
+  .menu-row__text { color: var(--color-text-secondary); font-size: var(--text-body-sm); max-width: 52ch; }
+  .menu-row__price {
+    font-family: var(--font-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  .tasting-panel {
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    min-height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-10);
+    color: var(--gray-0);
+    box-shadow: var(--shadow-2xl);
+  }
+  .tasting-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .tasting-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gradient-scrim-top);
+    z-index: -1;
+  }
+  .tasting-panel__price { font-family: var(--font-display); font-size: var(--text-display-lg); color: var(--gray-0); margin-bottom: var(--space-2); }
+
+  .reservation-panel {
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    padding: var(--space-10);
+    min-height: 100%;
+  }
+  .reservation-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .reservation-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,7,10,0.55), rgba(8,7,10,0.92)); z-index: -1; }
+  .reservation-panel .contact-info__item .value { color: var(--gray-0); }
+  .reservation-panel .contact-info__item .label { color: rgba(255,255,255,0.55); }
+
+  .press-mark {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+
+  @media (max-width: 640px) {
+    .menu-row { grid-template-columns: auto 1fr; }
+    .menu-row__price { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="preloader" aria-hidden="true">
+  <span class="preloader__mark"></span>
+  <span class="preloader__label">Brasa &amp; Sal</span>
+</div>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="navbar navbar--centered navbar--bordered" data-menu-open="false">
+  <div class="navbar__links">
+    <a class="navbar__link" href="#chef">Chef</a>
+    <a class="navbar__link" href="#menu">Menu</a>
+    <a class="navbar__link" href="#galeria">Galeria</a>
+  </div>
+  <a href="#main" class="navbar__brand"><span class="navbar__brand-mark" aria-hidden="true"></span>Brasa &amp; Sal</a>
+  <div class="navbar__actions">
+    <div class="navbar__links">
+      <a class="navbar__link" href="#local">Local</a>
+      <a href="#reservas" class="btn btn--primary btn--sm">Reservar mesa</a>
+    </div>
+    <button class="btn btn--icon btn--ghost" data-theme-toggle aria-label="Alternar tema claro/escuro">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+    <button class="navbar__toggle" aria-label="Alternar menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="navbar__mobile-panel">
+    <a class="navbar__link" href="#chef">Chef</a>
+    <a class="navbar__link" href="#menu">Menu</a>
+    <a class="navbar__link" href="#galeria">Galeria</a>
+    <a class="navbar__link" href="#local">Local</a>
+    <a href="#reservas" class="btn btn--primary">Reservar mesa</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero hero--media hero--brasa">
+    <div class="hero__bg" data-parallax="0.18">
+      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=2400&q=80" alt="Prato de alta gastronomia servido sobre carvão em ambiente escuro" fetchpriority="high">
+    </div>
+    <div class="hero__flame"></div>
+    <div>
+      <span class="text-eyebrow hero__eyebrow" data-reveal="up">1 Estrela Michelin · São Paulo, desde 2016</span>
+      <h1 class="hero__title" id="hero-title">Fogo. Sal. Tempo.</h1>
+      <p class="hero__subtitle" data-reveal="up" style="transition-delay:380ms;">Uma cozinha construída sobre dois elementos apenas — a brasa e o sal — e o tempo necessário para deixar o ingrediente falar. Menu degustação servido em nove tempos, todas as noites.</p>
+      <div class="hero__actions" data-reveal="up" style="transition-delay:520ms;">
+        <a href="#reservas" class="btn btn--primary btn--lg">Reservar mesa</a>
+        <a href="#menu" class="btn btn--glass btn--lg">Ver o menu</a>
+      </div>
+    </div>
+    <div class="hero__scroll-cue" data-reveal="up" style="transition-delay:700ms;"><span></span>Role para explorar</div>
+  </section>
+
+  <!-- ============ CHEF ============ -->
+  <section class="section" id="chef">
+    <div class="container">
+      <div class="layout-split">
+        <div class="about-split__media" data-reveal="left" data-spotlight>
+          <img class="img-fade img-reveal-zoom" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=80" alt="Chef Rafael Mendes concentrado preparando um prato na cozinha do Brasa &amp; Sal">
+        </div>
+        <div data-reveal="right">
+          <span class="text-eyebrow about-split__eyebrow">O chef</span>
+          <h2 class="about-split__title">Rafael Mendes acredita que a brasa nunca mente.</h2>
+          <p class="about-split__text">Formado em Lyon e temperado em Copenhague, Rafael voltou ao Brasil com uma convicção simples: o fogo direto e o sal são os únicos temperos que um ingrediente de verdade precisa. Cada prato do Brasa &amp; Sal nasce de uma pergunta — o que esse ingrediente se torna quando você tira tudo o que não é essencial?</p>
+          <p class="about-split__text" style="margin-top: var(--space-4);">Doze anos depois, essa pergunta ainda guia cada tempo do menu degustação — da vieira dourada na manteiga marrom ao cordeiro defumado por dezoito horas sob sal grosso.</p>
+          <div class="about-stats__row">
+            <div class="about-stats__item"><span class="value"><span data-counter="1">0</span></span><span class="label">Estrela Michelin</span></div>
+            <div class="about-stats__item"><span class="value">#<span data-counter="14">0</span></span><span class="label">50 Melhores da América Latina</span></div>
+            <div class="about-stats__item"><span class="value"><span data-counter="12">0</span></span><span class="label">Anos de brasa</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MENU HIGHLIGHTS ============ -->
+  <section class="section" id="menu" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Menu degustação</span>
+        <h2>Nove tempos, um só fio condutor.</h2>
+        <p>Uma seleção do menu degustação que muda a cada estação, sempre em torno do mesmo princípio: fogo direto, sal e paciência.</p>
+      </div>
+
+      <div class="layout-split" style="align-items: start;">
+        <div data-reveal="left">
+          <div class="menu-row">
+            <span class="menu-row__index">01</span>
+            <div><h3 class="menu-row__title">Vieiras Douradas</h3><p class="menu-row__text">Manteiga marrom, couve-flor em texturas, caviar de ervas finas.</p></div>
+            <span class="menu-row__price">R$ 89</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-row__index">02</span>
+            <div><h3 class="menu-row__title">Risoto de Trufa Negra</h3><p class="menu-row__text">Arbório maturado, trufa negra de Périgord, parmesão 36 meses.</p></div>
+            <span class="menu-row__price">R$ 98</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-row__index">03</span>
+            <div><h3 class="menu-row__title">Robalo em Crosta de Sal</h3><p class="menu-row__text">Robalo selvagem, fundo de erva-doce, azeite de limão siciliano.</p></div>
+            <span class="menu-row__price">R$ 118</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-row__index">04</span>
+            <div><h3 class="menu-row__title">Bife Maturado 45 Dias</h3><p class="menu-row__text">Brasa de carvão de jequitibá, chimichurri de ervas, medula tostada.</p></div>
+            <span class="menu-row__price">R$ 145</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-row__index">05</span>
+            <div><h3 class="menu-row__title">Cordeiro ao Sal Defumado</h3><p class="menu-row__text">Cordeiro sob sal grosso por 18 horas, purê de raízes, jus de alecrim.</p></div>
+            <span class="menu-row__price">R$ 132</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-row__index">06</span>
+            <div><h3 class="menu-row__title">Esfera de Chocolate 72%</h3><p class="menu-row__text">Ganache de chocolate Valrhona, caramelo salgado, sorvete de fava tonka.</p></div>
+            <span class="menu-row__price">R$ 58</span>
+          </div>
+        </div>
+
+        <div class="tasting-panel" data-reveal="right">
+          <img class="img-fade img-reveal-zoom" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80" alt="Corte de carne maturada grelhado na brasa, servido em pedra escura">
+          <div>
+            <span class="text-eyebrow" style="color: var(--gold-300);">Experiência completa</span>
+            <h3 style="color: var(--gray-0); margin-bottom: var(--space-4);">Menu Degustação Brasa &amp; Sal</h3>
+            <div class="tasting-panel__price">R$ <span data-counter="480">0</span><span style="font-family: var(--font-sans); font-size: var(--text-body-sm); color: rgba(255,255,255,0.6);"> / pessoa</span></div>
+            <p style="color: rgba(255,255,255,0.75); margin-bottom: var(--space-6);">Nove tempos guiados pelo chef, com opção de harmonização de vinhos autorais (+R$ 220).</p>
+            <a href="#reservas" class="btn btn--primary btn--lg">Reservar o menu degustação</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="section" id="galeria">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Galeria</span>
+        <h2>Uma sala que arde baixo e fala pouco.</h2>
+        <p>Concreto queimado, luz de vela e a brasa sempre visível — o salão foi desenhado para que nada compita com o prato.</p>
+      </div>
+
+      <div class="gallery-lightbox" data-reveal-group>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Salão principal do Brasa &amp; Sal com iluminação baixa e mesas de madeira escura"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=700&q=75" alt="Salão principal do Brasa &amp; Sal com iluminação baixa"></button>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Prato de alta gastronomia emplatado com precisão"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=700&q=75" alt="Prato de alta gastronomia emplatado com precisão"></button>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Detalhe de prato escuro com molho reduzido"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=700&q=75" alt="Detalhe de prato escuro com molho reduzido"></button>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Corte de carne grelhado na brasa"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=700&q=75" alt="Corte de carne grelhado na brasa"></button>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1581873372796-635b67ca2008?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Prato fino com guarnições delicadas"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1581873372796-635b67ca2008?auto=format&fit=crop&w=700&q=75" alt="Prato fino com guarnições delicadas"></button>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Interior do restaurante em tons quentes"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=75" alt="Interior do restaurante em tons quentes"></button>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Prato escuro com textura de ervas e flores comestíveis"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=700&q=75" alt="Prato escuro com textura de ervas e flores comestíveis"></button>
+        <button data-reveal data-lightbox-src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1600&q=80" data-lightbox-alt="Taça de vinho sendo servida à mesa"><img class="img-fade" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=700&q=75" alt="Taça de vinho sendo servida à mesa"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="testimonial-featured" data-reveal="scale">
+        <div class="testimonial-featured__mark">&ldquo;</div>
+        <p class="testimonial-featured__quote">Uma cozinha de rara disciplina — dois ingredientes, fogo e sal, transformados em algo que soa quase inevitável. Brasa &amp; Sal não decora o prato: ele o revela.</p>
+        <div class="testimonial-featured__author">
+          <div class="card__avatar"></div>
+          <div><div class="card__author-name">Guia Michelin</div><div class="card__author-role">Edição São Paulo</div></div>
+        </div>
+      </div>
+
+      <div class="testimonial-wall" style="margin-top: var(--space-16);" data-reveal-group>
+        <div class="card card--testimonial" data-reveal="up">
+          <span class="press-mark">Veja Comer &amp; Beber</span>
+          <p class="card__quote">&ldquo;O cordeiro ao sal defumado é, sozinho, motivo para atravessar a cidade.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Camila Torres</div><div class="card__author-role">Crítica gastronômica</div></div></div>
+        </div>
+        <div class="card card--testimonial" data-reveal="up" style="transition-delay:80ms;">
+          <span class="press-mark">O Globo</span>
+          <p class="card__quote">&ldquo;Um dos poucos restaurantes de São Paulo em que o silêncio à mesa é elogio, não distração.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Fernando Assis</div><div class="card__author-role">Jornal O Globo</div></div></div>
+        </div>
+        <div class="card card--testimonial" data-reveal="up" style="transition-delay:160ms;">
+          <span class="press-mark">50 Best</span>
+          <p class="card__quote">&ldquo;Rafael Mendes cozinha como quem sabe exatamente o que tirar do prato, não o que colocar.&rdquo;</p>
+          <div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">50 Melhores da América Latina</div><div class="card__author-role">#14 em 2025</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESERVATIONS ============ -->
+  <section class="section" id="reservas">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Reservas</span>
+        <h2>Sua mesa junto à brasa.</h2>
+        <p>Reservamos com até 60 dias de antecedência. Grupos acima de 8 pessoas, escreva para reservas@brasaesal.com.br.</p>
+      </div>
+
+      <div class="layout-split">
+        <form id="reservation-form" class="stack" style="--stack-gap: var(--space-5);" data-reveal="left">
+          <div class="grid grid--2">
+            <div class="field">
+              <label class="field__label" for="r-name">Nome completo</label>
+              <input class="input" id="r-name" type="text" placeholder="Seu nome" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="r-phone">Telefone</label>
+              <input class="input" id="r-phone" type="tel" placeholder="(11) 99999-0000" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="r-email">E-mail</label>
+            <input class="input" id="r-email" type="email" placeholder="voce@email.com" required>
+          </div>
+          <div class="grid grid--3">
+            <div class="field">
+              <label class="field__label" for="r-date">Data</label>
+              <input class="input" id="r-date" type="date" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="r-time">Horário</label>
+              <select class="select" id="r-time" required>
+                <option value="">Escolher</option>
+                <option>19:00</option>
+                <option>19:30</option>
+                <option>20:00</option>
+                <option>20:30</option>
+                <option>21:00</option>
+                <option>21:30</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="r-party">Pessoas</label>
+              <select class="select" id="r-party" required>
+                <option value="">Escolher</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="r-notes">Observações</label>
+            <textarea class="textarea" id="r-notes" placeholder="Restrições alimentares, ocasião especial, preferência de mesa..."></textarea>
+          </div>
+          <button class="btn btn--primary btn--lg btn--block" type="submit">Confirmar reserva</button>
+        </form>
+
+        <div class="reservation-panel" data-reveal="right">
+          <img class="img-fade img-reveal-zoom" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=1400&q=80" alt="Mesa reservada com luz de vela no salão do Brasa &amp; Sal">
+          <div class="contact-info" style="position:relative; z-index:1;">
+            <div class="contact-info__item"><span class="label">Funcionamento</span><span class="value">Terça a sábado, 19h às 00h</span></div>
+            <div class="contact-info__item"><span class="label">Traje</span><span class="value">Esporte fino</span></div>
+            <div class="contact-info__item"><span class="label">Cancelamento</span><span class="value">Gratuito até 24h antes</span></div>
+            <div class="contact-info__item"><span class="label">Telefone</span><a class="value" href="tel:+551130405060">+55 (11) 3040-5060</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOCATION ============ -->
+  <section class="section" id="local" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header" data-reveal="up">
+        <span class="text-eyebrow">Onde estamos</span>
+        <h2>Pinheiros, São Paulo.</h2>
+      </div>
+
+      <div class="grid grid--3" style="margin-bottom: var(--space-12);" data-reveal-group>
+        <div class="contact-method" data-reveal="up">
+          <div class="contact-method__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 18s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Z" stroke="currentColor" stroke-width="1.3"/><circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.3"/></svg></div>
+          <h4 class="contact-method__title">Endereço</h4>
+          <p class="contact-method__text">Rua dos Pinheiros, 1420 — Pinheiros, São Paulo, SP</p>
+        </div>
+        <div class="contact-method" data-reveal="up" style="transition-delay:80ms;">
+          <div class="contact-method__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L13 12l5 2v4a2 2 0 0 1-2 2C8.5 20 0 11.5 0 5a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.3"/></svg></div>
+          <h4 class="contact-method__title">Telefone</h4>
+          <p class="contact-method__text">+55 (11) 3040-5060</p>
+        </div>
+        <div class="contact-method" data-reveal="up" style="transition-delay:160ms;">
+          <div class="contact-method__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5l8 6 8-6M2 5v10h16V5" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <h4 class="contact-method__title">E-mail</h4>
+          <p class="contact-method__text">reservas@brasaesal.com.br</p>
+        </div>
+      </div>
+
+      <div class="contact-map" data-reveal="scale" style="aspect-ratio: 21/9;">
+        <img class="img-fade img-reveal-zoom" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80" alt="Vista do bairro de Pinheiros, São Paulo, próximo ao Brasa &amp; Sal" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer footer--newsletter" style="border:none; padding:0;">
+      <div class="footer__signup">
+        <div><h4>Reservas e novidades da cozinha</h4><p class="text-body-sm text-muted">Um e-mail ocasional sobre novos menus de temporada e noites especiais.</p></div>
+        <form id="newsletter-form" class="input-with-action"><input class="input" type="email" placeholder="voce@email.com" required><button class="btn btn--primary" type="submit">Assinar</button></form>
+      </div>
+      <div class="footer__grid">
+        <div>
+          <a href="#main" class="navbar__brand"><span class="navbar__brand-mark" aria-hidden="true"></span>Brasa &amp; Sal</a>
+          <p class="text-body-sm text-muted mt-4" style="max-width:32ch;">Alta gastronomia em Pinheiros, São Paulo. Fogo, sal e tempo — nada além disso.</p>
+        </div>
+        <div><div class="footer__heading">Navegação</div><div class="footer__links"><a href="#chef">Chef</a><a href="#menu">Menu</a><a href="#galeria">Galeria</a><a href="#reservas">Reservas</a></div></div>
+        <div><div class="footer__heading">Visite</div><div class="footer__links"><a href="#local">Rua dos Pinheiros, 1420</a><a href="tel:+551130405060">+55 (11) 3040-5060</a><a href="#local">Ter–Sáb, 19h–00h</a></div></div>
+        <div><div class="footer__heading">Redes</div><div class="footer__links"><a href="#">Instagram</a><a href="#">Facebook</a></div></div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="text-caption">&copy; 2026 Brasa &amp; Sal. Todos os direitos reservados.</span>
+      <span class="text-caption">Feito com fogo, sal e tempo.</span>
+    </div>
+  </div>
+</footer>
+
+<dialog class="lightbox"><img src="" alt=""><button class="lightbox__close" data-modal-close><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1l14 14M15 1 1 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></dialog>
+
+<script src="design-system/main.js"></script>
+<script src="brasa-motion.js"></script>
+</body>
+</html>

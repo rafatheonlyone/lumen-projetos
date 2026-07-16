@@ -1,0 +1,333 @@
+/* ==========================================================================
+   BRASA & SAL — MOTION LAYER
+   Page-scoped interaction/animation polish on top of the Lumen Design
+   System. No new colors, spacing, radii or components are introduced —
+   every value below resolves to an existing design-system token. This
+   file only refines timing, sequencing and micro-interactions.
+   Load order: design-system/main.css → brasa-motion.css → page <style>.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------
+   GLOBAL FEEL — smooth anchor scrolling, anchor offset for the sticky
+   nav, and a quieter scrollbar that still reads as "on brand".
+   -------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+#chef, #menu, #galeria, #reservas, #local {
+  scroll-margin-top: 88px;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-bg-canvas);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+
+:focus-visible {
+  transition: outline-offset var(--duration-fast) var(--ease-out-quart);
+}
+
+/* --------------------------------------------------------------------
+   PRELOADER — a brief, elegant curtain. Never blocks longer than
+   necessary; JS enforces a small minimum + hard timeout, see
+   brasa-motion.js. Purely decorative, so it's hidden from AT.
+   -------------------------------------------------------------------- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  background: var(--color-bg-canvas);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--duration-slow) var(--ease-signature),
+              visibility var(--duration-slow) var(--ease-signature);
+}
+.preloader[data-hidden='true'] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.preloader__mark {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-text);
+  animation: brasa-preloader-breathe 1.6s var(--ease-in-out-quart) infinite;
+}
+.preloader__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+@keyframes brasa-preloader-breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.92); }
+}
+
+/* --------------------------------------------------------------------
+   SCROLL REVEAL — tuned amplitude. The design-system default (28px
+   translate) reads a little heavy at this content density; a shorter
+   throw feels more restrained and "expensive" while keeping the same
+   signature easing curve.
+   -------------------------------------------------------------------- */
+[data-reveal='up']    { transform: translateY(18px); }
+[data-reveal='down']  { transform: translateY(-18px); }
+[data-reveal='left']  { transform: translateX(-22px); }
+[data-reveal='right'] { transform: translateX(22px); }
+
+/* Section header accent rule — draws in just after the header settles,
+   a small recurring signature that marks each new "chapter" of the
+   page as it enters (the "section transition" cue). */
+.section-header::after {
+  content: '';
+  width: 0;
+  height: 2px;
+  margin-top: var(--space-5);
+  background: var(--gradient-text);
+  transition: width var(--duration-slower) var(--ease-out-expo) 160ms;
+}
+.section-header[data-revealed]::after { width: 48px; }
+
+/* --------------------------------------------------------------------
+   IMAGE TREATMENT — a slow, cinematic settle (scale + fade) on the
+   handful of "hero-weight" images, and a graceful fade-once-decoded
+   for every lazy image so nothing ever pops in raw.
+   -------------------------------------------------------------------- */
+img.img-fade { opacity: 0; }
+img.img-fade.is-loaded {
+  opacity: 1;
+  transition: opacity var(--duration-slow) var(--ease-out-expo);
+}
+
+.img-reveal-zoom {
+  transform: scale(1.1);
+  transition: transform 1100ms var(--ease-out-expo);
+}
+[data-revealed] .img-reveal-zoom,
+.img-reveal-zoom[data-revealed] {
+  transform: scale(1);
+}
+/* Ancestor carries [data-reveal]/[data-revealed]; cover both cases
+   (element itself, or a wrapping card/panel). */
+[data-revealed] > .img-reveal-zoom,
+[data-revealed] .img-reveal-zoom {
+  transform: scale(1);
+}
+
+@keyframes brasa-hero-settle {
+  from { transform: scale(1.16); }
+  to   { transform: scale(1.08); }
+}
+.hero--brasa .hero__bg img {
+  animation: brasa-hero-settle 1800ms var(--ease-out-expo) both;
+}
+
+/* Gallery — same signature easing as the rest of the system, just a
+   touch slower + a soft glow lift so the zoom reads as "glossy" rather
+   than mechanical. */
+.gallery-lightbox img {
+  transition: transform 650ms var(--ease-out-expo), filter 650ms var(--ease-out-expo);
+  filter: saturate(1) brightness(1);
+}
+.gallery-lightbox button:hover img {
+  filter: saturate(1.08) brightness(1.05);
+}
+.gallery-lightbox button {
+  transition: box-shadow var(--duration-base) var(--ease-out-expo);
+}
+.gallery-lightbox button:hover {
+  box-shadow: var(--glow-gold-sm);
+}
+
+/* --------------------------------------------------------------------
+   CARDS — a shorter lift with a whisper-thin gold outline instead of
+   a heavier translate; reads closer to Linear/Stripe card hovers.
+   -------------------------------------------------------------------- */
+.card {
+  transition: transform var(--duration-base) var(--ease-out-expo),
+              border-color var(--duration-base) var(--ease-out-expo),
+              box-shadow var(--duration-base) var(--ease-out-expo);
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(223, 162, 60, 0.28);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Testimonial quote + author nudge slightly on hover for a touch of
+   depth without moving the whole card twice. */
+.card--testimonial .card__quote {
+  transition: color var(--duration-base) var(--ease-out-expo);
+}
+
+.contact-method__icon {
+  transition: background var(--duration-base) var(--ease-out-expo),
+              color var(--duration-base) var(--ease-out-expo),
+              transform var(--duration-base) var(--ease-out-expo);
+}
+.contact-method:hover .contact-method__icon {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  transform: scale(1.08);
+}
+
+/* --------------------------------------------------------------------
+   MENU ROWS — a quiet highlight bar: background tint, index + title
+   nudge right, price warms to gold. All transform-based (no reflow).
+   -------------------------------------------------------------------- */
+.menu-row {
+  transition: background-color var(--duration-base) var(--ease-out-expo);
+  border-radius: var(--radius-sm);
+}
+.menu-row__index,
+.menu-row__title,
+.menu-row__price {
+  display: inline-block;
+  transition: transform var(--duration-base) var(--ease-out-expo),
+              color var(--duration-base) var(--ease-out-expo);
+}
+.menu-row:hover {
+  background: var(--glass-bg);
+}
+.menu-row:hover .menu-row__index,
+.menu-row:hover .menu-row__title,
+.menu-row:hover .menu-row__price {
+  transform: translateX(4px);
+}
+.menu-row:hover .menu-row__index {
+  color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------
+   BUTTONS — a slow, low-opacity light sweep on primary CTAs (the
+   "expensive" Stripe/Linear tell), plus a slightly springier press.
+   -------------------------------------------------------------------- */
+.btn--primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn--primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.32) 50%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform var(--duration-slower) var(--ease-out-expo);
+  pointer-events: none;
+}
+.btn--primary:hover::before {
+  transform: translateX(130%);
+}
+.btn {
+  transition: transform var(--duration-base) var(--ease-spring),
+              box-shadow var(--duration-base) var(--ease-out-expo),
+              background-color var(--duration-fast) var(--ease-out-quart),
+              border-color var(--duration-fast) var(--ease-out-quart),
+              color var(--duration-fast) var(--ease-out-quart);
+}
+
+/* --------------------------------------------------------------------
+   NAVBAR — soft elevation once scrolled, brand mark responds to
+   hover, mobile panel links cascade in instead of appearing at once.
+   -------------------------------------------------------------------- */
+.navbar {
+  transition: background-color var(--duration-moderate) var(--ease-signature),
+              border-color var(--duration-moderate) var(--ease-signature),
+              backdrop-filter var(--duration-moderate) var(--ease-signature),
+              padding var(--duration-moderate) var(--ease-signature),
+              box-shadow var(--duration-moderate) var(--ease-signature);
+}
+.navbar[data-scrolled='true'] {
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar__brand-mark {
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+.navbar__brand:hover .navbar__brand-mark {
+  transform: rotate(8deg) scale(1.1);
+}
+
+.navbar__mobile-panel > a {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--duration-moderate) var(--ease-signature),
+              transform var(--duration-moderate) var(--ease-signature);
+}
+.navbar[data-menu-open='true'] .navbar__mobile-panel > a {
+  opacity: 1;
+  transform: translateY(0);
+}
+.navbar__mobile-panel > a:nth-child(1) { transition-delay: 60ms; }
+.navbar__mobile-panel > a:nth-child(2) { transition-delay: 110ms; }
+.navbar__mobile-panel > a:nth-child(3) { transition-delay: 160ms; }
+.navbar__mobile-panel > a:nth-child(4) { transition-delay: 210ms; }
+.navbar__mobile-panel > a:nth-child(5) { transition-delay: 260ms; }
+
+/* --------------------------------------------------------------------
+   LIGHTBOX — separate the backdrop fade from the image scale-in so
+   the two layers feel choreographed rather than simultaneous.
+   -------------------------------------------------------------------- */
+.lightbox::backdrop {
+  animation: lumen-fade-in var(--duration-moderate) var(--ease-out-quart);
+}
+.lightbox__close {
+  transition: transform var(--duration-base) var(--ease-out-expo),
+              background var(--duration-fast) var(--ease-out-quart);
+}
+.lightbox__close:hover {
+  transform: scale(1.08) rotate(90deg);
+}
+
+/* --------------------------------------------------------------------
+   FORMS — the label warms to gold while its field is focused; a
+   small, purposeful confirmation that input has focus.
+   -------------------------------------------------------------------- */
+.field__label {
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+.field:focus-within .field__label {
+  color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------
+   COUNTERS — tabular numerals so digits don't jitter in width while
+   counting up.
+   -------------------------------------------------------------------- */
+[data-counter] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------
+   REDUCED MOTION — belt-and-suspenders for the handful of literal
+   (non-token) durations above; every --duration-* token already
+   collapses to 0ms globally via tokens.css.
+   -------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .preloader { transition: none !important; }
+  .preloader__mark { animation: none; }
+  .hero--brasa .hero__bg img { animation: none; transform: scale(1.08); }
+  .img-reveal-zoom { transition: none; transform: none; }
+  .gallery-lightbox img { transition: none; }
+  .btn--primary::before { display: none; }
+  .btn[data-loading='true']::after { animation: none; }
+  .navbar__brand-mark { transition: none; }
+  .lightbox__close:hover { transform: none; }
+}
