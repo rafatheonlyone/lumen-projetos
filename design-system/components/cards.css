@@ -1,0 +1,315 @@
+/* ==========================================================================
+   COMPONENT — CARDS
+   One base .card + purpose-built extensions (feature, pricing, team,
+   blog, service, testimonial, stat). All inherit the same elevation and
+   motion language so a page mixing card types still feels cohesive.
+   ========================================================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  transition: transform var(--duration-moderate) var(--ease-luxury),
+              border-color var(--duration-moderate) var(--ease-luxury),
+              box-shadow var(--duration-moderate) var(--ease-luxury);
+}
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-border-default);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---- Feature card ------------------------------------------------------- */
+.card--feature .card__icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  color: var(--color-primary);
+  margin-bottom: var(--space-6);
+  transition: background var(--duration-base) var(--ease-out-expo), color var(--duration-base) var(--ease-out-expo);
+}
+.card--feature:hover .card__icon {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+.card__title { margin-bottom: var(--space-3); }
+.card__text { color: var(--color-text-secondary); }
+
+/* ---- Service card (numbered) -------------------------------------------- */
+.card--service {
+  position: relative;
+}
+.card--service .card__index {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-8);
+}
+
+/* ---- Pricing card --------------------------------------------------------- */
+.card--pricing {
+  align-items: stretch;
+  gap: var(--space-6);
+}
+.card--pricing.card--highlight {
+  border-color: var(--color-primary);
+  box-shadow: var(--glow-gold-sm);
+  position: relative;
+}
+.card--pricing__badge {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+}
+.card--pricing__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  font-weight: var(--weight-semibold);
+}
+.card--pricing__price span {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-tertiary);
+  font-weight: var(--weight-regular);
+}
+.card--pricing__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-block: var(--space-2) var(--space-4);
+}
+.card--pricing__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+}
+.card--pricing__list svg {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: var(--color-primary);
+  margin-top: 2px;
+}
+
+/* ---- Testimonial ---------------------------------------------------------- */
+.card--testimonial {
+  gap: var(--space-6);
+}
+.card--testimonial .card__quote {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-heading);
+  color: var(--color-text-primary);
+}
+.card--testimonial .card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+}
+.card--testimonial .card__avatar {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-3);
+  overflow: hidden;
+}
+.card--testimonial .card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.card--testimonial .card__author-name { font-weight: var(--weight-semibold); font-size: var(--text-body-sm); }
+.card--testimonial .card__author-role { font-size: var(--text-caption); color: var(--color-text-tertiary); }
+
+/* ---- Team card -------------------------------------------------------------- */
+.card--team { text-align: center; align-items: center; }
+.card--team .card__avatar {
+  width: 96px; height: 96px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+  background: var(--color-surface-3);
+}
+.card--team .card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.card--team .card__role { color: var(--color-primary); font-size: var(--text-caption); margin-bottom: var(--space-4); }
+.card--team .card__social { display: flex; gap: var(--space-3); }
+
+/* ---- Blog card ---------------------------------------------------------------- */
+.card--blog { padding: 0; overflow: hidden; }
+.card--blog .card__media {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.card--blog .card__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1100ms var(--ease-out-quint);
+}
+.card--blog:hover .card__media img { transform: scale(1.06); }
+.card--blog .card__body { padding: var(--space-6); }
+.card--blog .card__meta {
+  display: flex; gap: var(--space-3); align-items: center;
+  font-size: var(--text-caption); color: var(--color-text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+/* ---- Portfolio / gallery grid item -------------------------------------------- */
+.card--portfolio {
+  padding: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4/3;
+}
+.card--portfolio img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1100ms var(--ease-out-quint);
+}
+.card--portfolio:hover img { transform: scale(1.08); }
+.card--portfolio .card__overlay {
+  position: absolute; inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-6);
+  background: var(--gradient-scrim);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-expo);
+}
+.card--portfolio:hover .card__overlay { opacity: 1; }
+.card--portfolio .card__overlay-title { color: var(--gray-0); font-weight: var(--weight-semibold); }
+.card--portfolio .card__overlay-tag { color: var(--gold-300); font-size: var(--text-caption); }
+
+/* ---- Stat card ------------------------------------------------------------------ */
+.card--stat {
+  padding: var(--space-6);
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.card--stat .card__value {
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  font-weight: var(--weight-semibold);
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card--stat .card__label {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* ---- Empty state ------------------------------------------------------------------ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-20) var(--space-8);
+  color: var(--color-text-tertiary);
+}
+.empty-state__icon {
+  width: 64px; height: 64px;
+  display: grid; place-items: center;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2);
+  margin-bottom: var(--space-6);
+  color: var(--color-text-tertiary);
+}
+.empty-state__title { color: var(--color-text-primary); margin-bottom: var(--space-2); }
+
+/* ==========================================================================
+   GENERIC CARD MODIFIERS  (v2.0)
+   Cross-cutting modifiers that combine with any .card / .card--* type
+   above (e.g. .card.card--feature.card--glass) rather than being their
+   own card family.
+   ========================================================================== */
+
+/* ---- Horizontal — media/icon column beside content instead of above
+   it. Works with .card--blog or .card--feature by adding this modifier
+   and wrapping content in .card__row. --------------------------------------- */
+.card--horizontal .card__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+.card--horizontal.card--blog .card__row { grid-template-columns: 180px 1fr; }
+.card--horizontal.card--blog .card__media { aspect-ratio: 1; }
+@media (max-width: 560px) {
+  .card--horizontal .card__row { grid-template-columns: 1fr; }
+}
+
+/* ---- Glass — translucent surface instead of solid, for cards placed
+   over imagery or gradient backdrops. --------------------------------------- */
+.card--glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-color: var(--glass-border);
+}
+
+/* ---- Minimal — no border, no shadow, no hover lift. For dense lists
+   where every card having full elevation would be visual noise. ------------ */
+.card--minimal {
+  background: transparent;
+  border-color: transparent;
+  padding: 0;
+}
+.card--minimal:hover { transform: none; box-shadow: none; }
+
+/* ---- Gradient border — signature Lumen accent border for the single
+   most important card on a page (e.g. the highlighted pricing tier
+   already uses this technique inline; this makes it reusable). ------------- */
+.card--gradient-border {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-surface-1), var(--color-surface-1)) padding-box,
+    var(--gradient-border) border-box;
+}
+
+/* ---- Flush — removes internal padding for cards whose content
+   supplies its own (e.g. custom media compositions). ------------------------ */
+.card--flush { padding: 0; }
+
+/* ==========================================================================
+   PREMIUM HOVER EFFECTS  (v2.1 — Lumen Motion Language)
+   ========================================================================== */
+
+/* ---- Sheen — a soft diagonal light sweep on hover, the same restrained
+   "glass catching light" effect used across Lumen's flagship surfaces.
+   Opt in with .card--sheen on any card type; costs one pseudo-element. --- */
+.card--sheen { position: relative; overflow: hidden; }
+.card--sheen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(246, 245, 243, 0.06) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform var(--duration-slower) var(--ease-luxury);
+  pointer-events: none;
+}
+.card--sheen:hover::before { transform: translateX(120%); }
+
+/* ---- Image zoom — a slow, deliberate zoom for card/portfolio media,
+   distinct from quick UI hover states: long duration + quint-out reads
+   as "cinematic" rather than "clicked a button". Apply to the media
+   wrapper; the img inside should already be width:100%/object-fit:cover. */
+.img-zoom { overflow: hidden; }
+.img-zoom img,
+.img-zoom video {
+  transition: transform 1100ms var(--ease-out-quint), filter var(--duration-slow) var(--ease-luxury);
+}
+.img-zoom:hover img,
+.img-zoom:hover video {
+  transform: scale(1.06);
+}

@@ -1,0 +1,86 @@
+/* ==========================================================================
+   COMPONENT — GALLERY VARIANTS  (v2.0)
+   .gallery-grid (components/sections.css) covers the fixed masonry-ish
+   grid. These cover the fluid/interactive alternatives.
+   ========================================================================== */
+
+/* ---- CSS-columns masonry — true variable-height masonry with zero JS
+   measurement, using multi-column flow. --------------------------------------- */
+.gallery-masonry {
+  columns: 3 260px;
+  column-gap: var(--space-4);
+}
+.gallery-masonry > * {
+  break-inside: avoid;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.gallery-masonry img { width: 100%; display: block; }
+@media (max-width: 700px) { .gallery-masonry { columns: 2 180px; } }
+
+/* ---- Scroll-snap slider — horizontal gallery track, works with
+   main.js's DragScroll module for pointer-drag on desktop. -------------------- */
+.gallery-slider {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-4);
+  scrollbar-width: none;
+  cursor: grab;
+}
+.gallery-slider::-webkit-scrollbar { display: none; }
+.gallery-slider[data-dragging='true'] { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.gallery-slider > * {
+  flex: 0 0 min(360px, 75vw);
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+.gallery-slider img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- Lightbox-ready grid — plain grid where each item opens the shared
+   .lightbox overlay (see overlay.css) via [data-lightbox-src] + main.js. ---- */
+.gallery-lightbox {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+.gallery-lightbox button {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.gallery-lightbox img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-base) var(--ease-out-expo); }
+.gallery-lightbox button:hover img { transform: scale(1.08); }
+@media (max-width: 900px) { .gallery-lightbox { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .gallery-lightbox { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---- Lightbox overlay itself — a lightweight <dialog> variant distinct
+   from .modal (full-bleed image, minimal chrome). ----------------------------- */
+.lightbox {
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: 92vw;
+  max-height: 92vh;
+}
+.lightbox::backdrop { background: rgba(8, 7, 10, 0.92); backdrop-filter: blur(12px); }
+.lightbox[open] { animation: lumen-scale-in var(--duration-moderate) var(--ease-luxury) both; }
+.lightbox[data-closing='true'] { animation: lumen-scale-in var(--duration-base) var(--ease-in-out-smooth) reverse both; }
+.lightbox img { max-width: 92vw; max-height: 92vh; border-radius: var(--radius-md); }
+.lightbox__close {
+  position: fixed;
+  top: var(--space-6); right: var(--space-6);
+  width: 44px; height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur));
+  color: var(--gray-0);
+  display: grid;
+  place-items: center;
+}

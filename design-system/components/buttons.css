@@ -1,0 +1,148 @@
+/* ==========================================================================
+   COMPONENT — BUTTONS
+   Base .btn + modifiers for variant, size and state. Icon slots use
+   [data-icon] wrappers so icons inherit sizing without extra classes.
+   ========================================================================== */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-body-sm);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+  white-space: nowrap;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  cursor: pointer;
+  isolation: isolate;
+  transition: transform var(--duration-base) var(--ease-out-expo),
+              box-shadow var(--duration-base) var(--ease-out-expo),
+              background-color var(--duration-fast) var(--ease-out-quart),
+              border-color var(--duration-fast) var(--ease-out-quart),
+              color var(--duration-fast) var(--ease-out-quart);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn svg { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+
+/* ---- Primary — the signature glow button ------------------------------ */
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  box-shadow: var(--glow-gold-sm);
+}
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+  box-shadow: var(--glow-gold-md);
+  transform: translateY(-2px);
+}
+
+/* ---- Secondary — outline, quiet ---------------------------------------- */
+.btn--secondary {
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+.btn--secondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* ---- Ghost — text-only, minimal weight -------------------------------- */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  padding-inline: var(--space-3);
+}
+.btn--ghost:hover {
+  color: var(--color-text-primary);
+  background: var(--glass-bg);
+}
+
+/* ---- Glass — for use over imagery/hero backdrops ----------------------- */
+.btn--glass {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-color: var(--glass-border);
+  color: var(--color-text-primary);
+}
+.btn--glass:hover {
+  background: var(--glass-bg-strong);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* ---- Danger -------------------------------------------------------------- */
+.btn--danger {
+  background: var(--color-danger);
+  color: var(--gray-0);
+}
+.btn--danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+/* ---- Sizes ---------------------------------------------------------------- */
+.btn--sm { padding: var(--space-2) var(--space-4); font-size: var(--text-caption); }
+.btn--lg { padding: var(--space-4) var(--space-8); font-size: var(--text-body); }
+.btn--icon { padding: var(--space-3); border-radius: var(--radius-full); aspect-ratio: 1; }
+
+.btn--block { width: 100%; }
+
+/* ---- Loading state --------------------------------------------------------- */
+.btn[data-loading='true'] {
+  color: transparent;
+  pointer-events: none;
+}
+.btn[data-loading='true']::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  color: var(--color-primary-text);
+  animation: lumen-spin 0.7s linear infinite;
+}
+.btn--secondary[data-loading='true']::after,
+.btn--ghost[data-loading='true']::after {
+  color: var(--color-text-primary);
+}
+
+/* ---- Link-style text button with animated underline -------------------- */
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+  position: relative;
+  padding-bottom: 2px;
+}
+.btn-link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+.btn-link:hover::after { transform: scaleX(1); transform-origin: left; }
+.btn-link svg { transition: transform var(--duration-base) var(--ease-out-expo); }
+.btn-link:hover svg { transform: translateX(3px); }

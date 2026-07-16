@@ -1,0 +1,133 @@
+/* ==========================================================================
+   LUMEN DESIGN SYSTEM — LAYOUT PATTERNS  (v2.0)
+   Composition primitives that sit between raw CSS Grid/Flexbox and a
+   finished section. Every section variant in components/ is built by
+   dropping content into one of these — they are the reusable "skeletons"
+   that keep hundreds of pages structurally consistent while looking
+   different, because content and component styling vary on top of them.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------
+   SPLIT — two-column layout, content one side, media/visual the other.
+   Ratio is controlled by --split-ratio-* tokens or a custom --split value.
+   [data-flip] mirrors column order for zig-zag/alternating sections.
+   -------------------------------------------------------------------- */
+.layout-split {
+  display: grid;
+  grid-template-columns: var(--split, var(--split-ratio-a));
+  gap: clamp(2.5rem, 2rem + 3vw, 6rem);
+  align-items: center;
+}
+.layout-split[data-flip='true'] > :first-child { order: 2; }
+.layout-split[data-flip='true'] > :last-child { order: 1; }
+
+@media (max-width: 900px) {
+  .layout-split { grid-template-columns: 1fr; }
+  .layout-split[data-flip='true'] > :first-child,
+  .layout-split[data-flip='true'] > :last-child { order: 0; }
+}
+
+/* --------------------------------------------------------------------
+   ZIGZAG — a stack of .layout-split rows that auto-alternate direction
+   via :nth-child, so composers don't need to hand-set [data-flip] on
+   every row. Used for feature/about sections with repeating media+text.
+   -------------------------------------------------------------------- */
+.layout-zigzag {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4rem, 3rem + 4vw, 8rem);
+}
+.layout-zigzag .layout-split:nth-child(even) > :first-child { order: 2; }
+.layout-zigzag .layout-split:nth-child(even) > :last-child { order: 1; }
+@media (max-width: 900px) {
+  .layout-zigzag .layout-split:nth-child(even) > :first-child,
+  .layout-zigzag .layout-split:nth-child(even) > :last-child { order: 0; }
+}
+
+/* --------------------------------------------------------------------
+   BENTO — asymmetric grid with span utilities. Base grid is 4 columns;
+   apply .span-2/.span-3/.span-4 and .span-row-2 to individual children
+   to build unique, non-repetitive compositions from the same markup
+   pattern (the antidote to "every card is the same size" template feel).
+   -------------------------------------------------------------------- */
+.layout-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  gap: var(--space-4);
+}
+.layout-bento .span-2 { grid-column: span 2; }
+.layout-bento .span-3 { grid-column: span 3; }
+.layout-bento .span-4 { grid-column: span 4; }
+.layout-bento .span-row-2 { grid-row: span 2; }
+
+@media (max-width: 1024px) {
+  .layout-bento { grid-template-columns: repeat(2, 1fr); }
+  .layout-bento .span-3, .layout-bento .span-4 { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .layout-bento { grid-template-columns: 1fr; }
+  .layout-bento .span-2, .layout-bento .span-3, .layout-bento .span-4 { grid-column: span 1; }
+  .layout-bento .span-row-2 { grid-row: span 1; }
+}
+
+/* --------------------------------------------------------------------
+   OFFSET — staggered columns (alternating vertical translation) for
+   portfolio/gallery grids that shouldn't feel like a rigid spreadsheet.
+   Pure CSS, no JS measurement needed.
+   -------------------------------------------------------------------- */
+.layout-offset {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+.layout-offset > *:nth-child(2) { transform: translateY(clamp(24px, 4vw, 64px)); }
+.layout-offset > *:nth-child(3n+1):not(:nth-child(1)) { transform: translateY(clamp(-16px, -2vw, -32px)); }
+
+@media (max-width: 900px) {
+  .layout-offset { grid-template-columns: repeat(2, 1fr); }
+  .layout-offset > * { transform: none !important; }
+}
+@media (max-width: 560px) {
+  .layout-offset { grid-template-columns: 1fr; }
+}
+
+/* --------------------------------------------------------------------
+   SIDEBAR — fixed-ish sidebar + fluid content column. Used for FAQ
+   categories, docs-style contact pages, filterable portfolio, etc.
+   -------------------------------------------------------------------- */
+.layout-sidebar {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: clamp(2rem, 1.5rem + 2vw, 4rem);
+  align-items: start;
+}
+.layout-sidebar__aside {
+  position: sticky;
+  top: calc(var(--space-8) + 64px);
+}
+@media (max-width: 900px) {
+  .layout-sidebar { grid-template-columns: 1fr; }
+  .layout-sidebar__aside { position: static; }
+}
+
+/* --------------------------------------------------------------------
+   CLUSTER-CENTER — content capped and centered, used inside full-bleed
+   backgrounds (video hero, portfolio case-study rows) to keep text
+   readable regardless of how wide the outer section is.
+   -------------------------------------------------------------------- */
+.layout-center {
+  max-width: var(--layout-center-max, 640px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------
+   FULL-BLEED — breaks a child out of a constrained parent to span the
+   viewport edge-to-edge (for media, marquees, full-width CTA bands).
+   -------------------------------------------------------------------- */
+.layout-bleed {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}

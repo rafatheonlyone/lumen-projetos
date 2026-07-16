@@ -1,0 +1,227 @@
+/* ==========================================================================
+   COMPONENT — HERO / CTA SECTIONS
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-block: clamp(5rem, 4rem + 5vw, 10rem) var(--space-24);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-glow);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero__eyebrow { margin-bottom: var(--space-6); }
+
+.hero__title {
+  max-width: 18ch;
+  margin-bottom: var(--space-6);
+}
+
+.hero__subtitle {
+  max-width: 56ch;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-10);
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero__meta {
+  margin-top: var(--space-16);
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  color: var(--color-text-tertiary);
+  font-size: var(--text-caption);
+}
+
+/* ==========================================================================
+   HERO VARIANTS  (v2.0)
+   The base .hero above is now specifically the "centered" variant.
+   Each additional variant is a distinct first-impression pattern so a
+   portfolio of Lumen sites never opens the same way twice.
+   ========================================================================== */
+
+/* ---- Split — headline/copy one side, a media frame the other. Pairs
+   with .layout-split ([data-flip] to mirror). The default, most
+   versatile alternative to the centered hero. --------------------------- */
+.hero--split {
+  padding-block: clamp(4rem, 3rem + 4vw, 8rem) var(--space-16);
+}
+.hero--split .hero__title,
+.hero--split .hero__subtitle { max-width: none; text-align: left; }
+.hero--split .hero__actions { justify-content: flex-start; }
+.hero--split .hero__media {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-2xl);
+}
+.hero--split .hero__media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- Minimal — no glow, no meta row: just an eyebrow, a tight title
+   and one action. For campaign/landing pages where restraint reads as
+   confidence rather than a full flagship hero. ---------------------------- */
+.hero--minimal {
+  padding-block: clamp(4rem, 3rem + 3vw, 7rem);
+}
+.hero--minimal::before { display: none; }
+.hero--minimal .hero__title { max-width: 14ch; }
+.hero--minimal .hero__subtitle { max-width: 44ch; margin-bottom: var(--space-8); }
+
+/* ---- Media backdrop — full-bleed image/video behind the hero with a
+   scrim for legibility. Use .layout-bleed on the media element if the
+   hero itself sits inside a constrained container. ------------------------ */
+.hero--media {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: var(--space-20);
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  color: var(--gray-0);
+}
+.hero--media::before { display: none; }
+.hero--media .hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.hero--media .hero__bg img,
+.hero--media .hero__bg video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.hero--media .hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-scrim-top);
+  z-index: -1;
+}
+.hero--media .hero__title,
+.hero--media .hero__subtitle { text-align: left; max-width: 44ch; color: var(--gray-0); }
+.hero--media .hero__subtitle { color: rgba(255,255,255,0.78); }
+.hero--media .hero__actions { justify-content: flex-start; }
+
+/* ---- Portfolio backdrop — a grid of case-study thumbnails behind a
+   centered headline; the agency's "we already do this well" opener. ------ */
+.hero--portfolio {
+  position: relative;
+  padding-block: clamp(3rem, 2rem + 3vw, 6rem);
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+}
+.hero--portfolio .hero__grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-2);
+  opacity: 0.35;
+  z-index: -2;
+  filter: saturate(0.7);
+}
+.hero--portfolio .hero__grid img { width: 100%; height: 100%; object-fit: cover; }
+.hero--portfolio::before {
+  background: var(--gradient-scrim-top), var(--color-bg-canvas);
+  opacity: 0.9;
+}
+.hero--portfolio .hero__content { position: relative; z-index: 1; }
+
+/* ---- CTA band — full-bleed closing section ---------------------------- */
+.cta-band {
+  position: relative;
+  border-radius: var(--radius-2xl);
+  padding: var(--space-20) var(--space-container-x);
+  text-align: center;
+  overflow: hidden;
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+}
+.cta-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-mesh);
+  z-index: -1;
+}
+.cta-band__title { max-width: 24ch; margin-inline: auto; margin-bottom: var(--space-4); }
+.cta-band__subtitle { max-width: 48ch; margin-inline: auto; color: var(--color-text-secondary); margin-bottom: var(--space-8); }
+
+/* ---- Newsletter -------------------------------------------------------- */
+.newsletter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: var(--space-10);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+}
+.newsletter__form {
+  display: flex;
+  gap: var(--space-3);
+  flex: 1 1 340px;
+  min-width: 280px;
+}
+
+/* ==========================================================================
+   HERO ENTRANCE CHOREOGRAPHY  (v2.1 — Lumen Motion Language)
+   Every hero variant shares the same semantic children (__eyebrow,
+   __title, __subtitle, __actions, __meta), so one pure-CSS animation
+   sequence gives every variant a premium, choreographed entrance with
+   zero JavaScript and zero layout cost after the first paint. Because
+   these are above-the-fold elements, they animate on page load — no
+   scroll trigger needed. `both` fill-mode holds the pre-animation state
+   until the delay elapses, so nothing flashes before its turn.
+   ========================================================================== */
+@keyframes lumen-hero-rise {
+  from { opacity: 0; transform: translateY(22px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);     filter: blur(0); }
+}
+
+.hero__eyebrow,
+.hero__title,
+.hero__subtitle,
+.hero__actions,
+.hero__meta,
+.hero__media {
+  animation: lumen-hero-rise var(--duration-luxury) var(--ease-luxury) both;
+}
+.hero__eyebrow  { animation-delay: 0ms; }
+.hero__title    { animation-delay: var(--stagger-step); }
+.hero__subtitle { animation-delay: calc(var(--stagger-step) * 2); }
+.hero__actions  { animation-delay: calc(var(--stagger-step) * 3); }
+.hero__media    { animation-delay: calc(var(--stagger-step) * 2); }
+.hero__meta     { animation-delay: calc(var(--stagger-step) * 5); }
+
+/* hero--split lays out media beside text rather than beneath it — it
+   enters on its own diagonal rather than the vertical rise used above. */
+.hero--split .hero__media {
+  animation-name: lumen-hero-rise-media;
+}
+@keyframes lumen-hero-rise-media {
+  from { opacity: 0; transform: translateX(24px) scale(0.97); filter: blur(6px); }
+  to   { opacity: 1; transform: translateX(0) scale(1);       filter: blur(0); }
+}

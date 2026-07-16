@@ -1,0 +1,62 @@
+/* ==========================================================================
+   COMPONENT — CTA VARIANTS  (v2.0)
+   The original .cta-band (gradient-mesh card, hero.css) remains the
+   default closing section. These are additional patterns for CTAs that
+   appear mid-page or need a different weight than the closing band.
+   ========================================================================== */
+
+/* ---- Split — headline one side, action/form the other. For CTAs that
+   need to capture an email or open a form rather than just link out. ---- */
+.cta--split {
+  display: grid;
+  grid-template-columns: var(--split-ratio-b);
+  gap: var(--space-10);
+  align-items: center;
+  padding: var(--space-12);
+  border-radius: var(--radius-2xl);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+}
+.cta--split .cta__title { margin-bottom: var(--space-3); }
+.cta--split .cta__subtitle { color: var(--color-text-secondary); }
+@media (max-width: 900px) {
+  .cta--split { grid-template-columns: 1fr; padding: var(--space-8); }
+}
+
+/* ---- Fullbleed — edge-to-edge, huge display type, no card chrome.
+   The boldest close: use once per page, at most. -------------------------- */
+.cta--fullbleed {
+  position: relative;
+  padding-block: clamp(5rem, 4rem + 6vw, 10rem);
+  text-align: center;
+  overflow: hidden;
+}
+.cta--fullbleed::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-duotone);
+  z-index: -1;
+}
+.cta--fullbleed .cta__title {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xl);
+  max-width: 20ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-8);
+}
+
+/* ---- Minimal — a single rule of text and one link, no card, no glow.
+   For secondary CTAs nested between other sections (e.g. end of a blog
+   post, end of a case study). --------------------------------------------- */
+.cta--minimal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.cta--minimal .cta__title { font-size: var(--text-h4); font-family: var(--font-sans); font-weight: var(--weight-semibold); }

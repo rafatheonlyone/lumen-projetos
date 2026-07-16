@@ -1,0 +1,118 @@
+/* ==========================================================================
+   COMPONENT — TIMELINE  (v2.0)
+   Relocated from accordion.css for clarity as the library grew. The
+   vertical left-rail pattern is unchanged from v1.0; centered-alternating
+   and horizontal-scroll are new.
+   ========================================================================== */
+
+/* ---- Vertical (default) — left rail with dot markers. --------------------- */
+.timeline {
+  position: relative;
+  padding-left: var(--space-8);
+  border-left: 1px solid var(--color-border-default);
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: var(--space-12);
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-8) - 5px);
+  top: 4px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-bg-canvas), var(--glow-gold-sm);
+}
+.timeline-item__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-2);
+}
+
+/* ---- Centered alternating — spine down the middle, items alternate
+   left/right. For a company history / "how we work" narrative section. ----- */
+.timeline-centered {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+.timeline-centered::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--color-border-default);
+  transform: translateX(-50%);
+}
+.timeline-centered__item {
+  position: relative;
+  width: calc(50% - var(--space-8));
+}
+.timeline-centered__item:nth-child(odd) { margin-right: auto; text-align: right; }
+.timeline-centered__item:nth-child(even) { margin-left: auto; text-align: left; }
+.timeline-centered__item::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-bg-canvas), var(--glow-gold-sm);
+}
+.timeline-centered__item:nth-child(odd)::before { right: calc(-1 * var(--space-8) - 5px); }
+.timeline-centered__item:nth-child(even)::before { left: calc(-1 * var(--space-8) - 5px); }
+
+@media (max-width: 700px) {
+  .timeline-centered::before { left: 0; }
+  .timeline-centered__item,
+  .timeline-centered__item:nth-child(odd),
+  .timeline-centered__item:nth-child(even) {
+    width: 100%;
+    margin-left: var(--space-8);
+    margin-right: 0;
+    text-align: left;
+  }
+  .timeline-centered__item::before,
+  .timeline-centered__item:nth-child(odd)::before,
+  .timeline-centered__item:nth-child(even)::before {
+    left: calc(-1 * var(--space-8) - 5px);
+    right: auto;
+  }
+}
+
+/* ---- Horizontal scroll — scroll-snap track for compact "process steps"
+   or "years" sections that read left-to-right. ------------------------------- */
+.timeline-horizontal {
+  display: flex;
+  gap: var(--space-10);
+  overflow-x: auto;
+  padding-bottom: var(--space-6);
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.timeline-horizontal::-webkit-scrollbar { display: none; }
+.timeline-horizontal::before {
+  content: none;
+}
+.timeline-horizontal__item {
+  position: relative;
+  flex: 0 0 260px;
+  scroll-snap-align: start;
+  padding-top: var(--space-8);
+  border-top: 2px solid var(--color-border-default);
+}
+.timeline-horizontal__item::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: var(--glow-gold-sm);
+}

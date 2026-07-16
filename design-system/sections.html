@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumen — Section Library</title>
+<meta name="description" content="Every section variant in the Lumen Design System — the agency's internal Framer-style component library.">
+<link rel="stylesheet" href="main.css">
+<style>
+  .demo-frame { border: 1px solid var(--color-border-subtle); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6); }
+  .demo-frame__label {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-surface-2);
+    font-family: var(--font-mono); font-size: var(--text-micro);
+    letter-spacing: var(--tracking-wide); text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+  .demo-frame__body { padding: var(--space-10); }
+  .demo-frame__body--flush { padding: 0; }
+  .ph { background: var(--color-surface-3); }
+  .ph-a { background: linear-gradient(135deg, var(--gold-800), var(--gold-900)); }
+  .ph-b { background: linear-gradient(135deg, var(--violet-800), var(--violet-900)); }
+  .ph-c { background: var(--gray-800); }
+  .category-nav { position: sticky; top: 90px; display: flex; flex-direction: column; gap: var(--space-1); }
+  .category-nav a { padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); font-size: var(--text-body-sm); color: var(--color-text-secondary); }
+  .category-nav a:hover { color: var(--color-text-primary); background: var(--glass-bg); }
+  .category-block { padding-top: var(--space-8); scroll-margin-top: 100px; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="navbar navbar--solid" data-scrolled="true" data-menu-open="false">
+  <a href="index.html" class="navbar__brand"><span class="navbar__brand-mark" aria-hidden="true"></span>Lumen</a>
+  <div class="navbar__links">
+    <a class="navbar__link" href="index.html">Foundations</a>
+    <a class="navbar__link" href="sections.html" aria-current="page">Sections</a>
+    <a class="navbar__link" href="patterns.html">Patterns</a>
+    <a class="navbar__link" href="motion.html">Motion</a>
+  </div>
+  <div class="navbar__actions">
+    <button class="btn btn--icon btn--ghost" data-theme-toggle aria-label="Toggle color theme">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+    <button class="navbar__toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="navbar__mobile-panel">
+    <a class="navbar__link" href="index.html">Foundations</a>
+    <a class="navbar__link" href="sections.html">Sections</a>
+    <a class="navbar__link" href="patterns.html">Patterns</a>
+    <a class="navbar__link" href="motion.html">Motion</a>
+  </div>
+</nav>
+
+<main id="main" class="section">
+  <div class="container">
+    <div class="section-header section-header--left" style="max-width:720px;">
+      <span class="text-eyebrow">Lumen Design System v2.0</span>
+      <h1>The Section Library</h1>
+      <p>Every section category an agency site needs, in multiple handcrafted variants. Compose, don't clone — mix variants across a site so no two Lumen projects read the same.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="layout-sidebar">
+      <aside class="layout-sidebar__aside hide-mobile">
+        <nav class="category-nav" aria-label="Section categories">
+          <a href="#navigation">Navigation</a>
+          <a href="#hero">Hero</a>
+          <a href="#cta">CTA</a>
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#stats">Statistics</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#faq">FAQ</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#team">Team</a>
+          <a href="#contact">Contact</a>
+          <a href="#footer">Footer</a>
+          <a href="#blog">Blog</a>
+          <a href="#features">Features</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#timeline">Timeline</a>
+          <a href="#cards">Card modifiers</a>
+        </nav>
+      </aside>
+
+      <div>
+
+        <!-- ============ NAVIGATION ============ -->
+        <section class="category-block" id="navigation">
+          <h2 class="mb-8">Navigation</h2>
+
+          <div class="demo-frame">
+            <div class="demo-frame__label">navbar--solid + navbar--minimal</div>
+            <div class="demo-frame__body--flush">
+              <nav class="navbar navbar--solid navbar--minimal" style="position:relative; top:auto;" data-scrolled="true">
+                <a href="#" class="navbar__brand"><span class="navbar__brand-mark"></span>Northline</a>
+                <div class="navbar__actions"><a href="#" class="btn btn--primary btn--sm">Get in touch</a></div>
+              </nav>
+            </div>
+          </div>
+
+          <div class="demo-frame">
+            <div class="demo-frame__label">navbar--centered</div>
+            <div class="demo-frame__body--flush">
+              <nav class="navbar navbar--centered navbar--bordered" style="position:relative; top:auto;" data-scrolled="true">
+                <div class="navbar__links"><a class="navbar__link" href="#">Work</a><a class="navbar__link" href="#">Studio</a></div>
+                <a href="#" class="navbar__brand"><span class="navbar__brand-mark"></span>Northline</a>
+                <div class="navbar__actions"><a href="#" class="btn btn--secondary btn--sm">Contact</a></div>
+              </nav>
+            </div>
+          </div>
+
+          <div class="demo-frame">
+            <div class="demo-frame__label">navbar--bordered + megamenu (hover "Services")</div>
+            <div class="demo-frame__body--flush">
+              <nav class="navbar navbar--bordered" style="position:relative; top:auto; overflow:visible;" data-scrolled="true">
+                <a href="#" class="navbar__brand"><span class="navbar__brand-mark"></span>Northline</a>
+                <div class="navbar__links">
+                  <div class="navbar__link navbar__link--has-menu" tabindex="0">
+                    Services
+                    <div class="navbar__megamenu">
+                      <a class="navbar__megamenu-item"><strong>Design Systems</strong><span>Foundations for scale</span></a>
+                      <a class="navbar__megamenu-item"><strong>Web Design</strong><span>Flagship marketing sites</span></a>
+                      <a class="navbar__megamenu-item"><strong>Brand</strong><span>Identity &amp; positioning</span></a>
+                      <a class="navbar__megamenu-item"><strong>Motion</strong><span>Interaction &amp; prototyping</span></a>
+                    </div>
+                  </div>
+                  <a class="navbar__link" href="#">Work</a>
+                  <a class="navbar__link" href="#">About</a>
+                </div>
+                <div class="navbar__actions"><a href="#" class="btn btn--primary btn--sm">Start a project</a></div>
+              </nav>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ HERO ============ -->
+        <section class="category-block" id="hero">
+          <h2 class="mb-8">Hero</h2>
+
+          <div class="demo-frame">
+            <div class="demo-frame__label">hero--split</div>
+            <div class="demo-frame__body">
+              <div class="layout-split">
+                <div>
+                  <span class="text-eyebrow hero__eyebrow">For ambitious brands</span>
+                  <h2 class="text-display-lg hero__title">Design that compounds.</h2>
+                  <p class="text-body-lg hero__subtitle">A partner for teams who need their site to work as hard as their product does.</p>
+                  <div class="hero__actions"><a href="#" class="btn btn--primary">Book a call</a><a href="#" class="btn btn--secondary">See our work</a></div>
+                </div>
+                <div class="hero__media ph-a" style="aspect-ratio:4/5;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-frame">
+            <div class="demo-frame__label">hero--minimal</div>
+            <div class="demo-frame__body">
+              <div class="hero hero--minimal" style="padding-block: var(--space-8);">
+                <span class="text-eyebrow hero__eyebrow">Northline / 2026</span>
+                <h2 class="text-display-lg hero__title">Clarity, shipped.</h2>
+                <p class="text-body-lg hero__subtitle">One product. One story. Told well.</p>
+                <div class="hero__actions"><a href="#" class="btn btn--primary btn--lg">Get started</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-frame">
+            <div class="demo-frame__label">hero--media (video/image backdrop)</div>
+            <div class="demo-frame__body--flush">
+              <div class="hero hero--media ph-c" style="min-height:60vh; padding:var(--space-10);">
+                <div class="hero__bg ph-b"></div>
+                <div>
+                  <span class="text-eyebrow hero__eyebrow">Case study</span>
+                  <h2 class="text-display-lg hero__title">Ridgeline, reimagined.</h2>
+                  <p class="text-body-lg hero__subtitle">A full rebrand and platform redesign for a climbing gear company.</p>
+                  <div class="hero__actions"><a href="#" class="btn btn--glass btn--lg">View case study</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-frame">
+            <div class="demo-frame__label">hero--portfolio (grid backdrop)</div>
+            <div class="demo-frame__body--flush">
+              <div class="hero hero--portfolio ph-c" style="min-height:50vh; padding: var(--space-16) var(--space-8);">
+                <div class="hero__grid">
+                  <div class="ph-a"></div><div class="ph-b"></div><div class="ph-c"></div><div class="ph-a"></div><div class="ph-b"></div>
+                  <div class="ph-b"></div><div class="ph-c"></div><div class="ph-a"></div><div class="ph-b"></div><div class="ph-c"></div>
+                </div>
+                <div class="hero__content layout-center">
+                  <span class="text-eyebrow">Selected work, 2020–2026</span>
+                  <h2 class="text-display-lg">Six years of shipping premium.</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ CTA ============ -->
+        <section class="category-block" id="cta">
+          <h2 class="mb-8">CTA</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">cta--split</div><div class="demo-frame__body">
+            <div class="cta--split">
+              <div><h3 class="cta__title">Ready to talk?</h3><p class="cta__subtitle">Tell us about the project and we'll reply within one business day.</p></div>
+              <div class="input-with-action"><input class="input" type="email" placeholder="you@company.com"><button class="btn btn--primary">Notify me</button></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">cta--fullbleed</div><div class="demo-frame__body--flush">
+            <div class="cta--fullbleed"><h2 class="cta__title">Let's make something people remember.</h2><a href="#" class="btn btn--primary btn--lg">Start a project</a></div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">cta--minimal</div><div class="demo-frame__body">
+            <div class="cta--minimal"><span class="cta__title">Have a project in mind?</span><a href="#" class="btn-link">Get in touch <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+          </div></div>
+        </section>
+
+        <!-- ============ SERVICES ============ -->
+        <section class="category-block" id="services">
+          <h2 class="mb-8">Services</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">service-list (expandable rows)</div><div class="demo-frame__body--flush">
+            <div class="service-list" style="padding-inline: var(--space-8);">
+              <div class="service-row" data-open="true">
+                <span class="service-row__index">01</span>
+                <span class="service-row__title">Design Systems</span>
+                <span class="service-row__arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <div class="service-row__panel"><div class="service-row__panel-inner"><p>Tokens, components and documentation your whole product team can build from.</p></div></div>
+              </div>
+              <div class="service-row" data-open="false">
+                <span class="service-row__index">02</span>
+                <span class="service-row__title">Web Design</span>
+                <span class="service-row__arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <div class="service-row__panel"><div class="service-row__panel-inner"><p>Flagship marketing sites engineered for both conversion and craft.</p></div></div>
+              </div>
+              <div class="service-row" data-open="false">
+                <span class="service-row__index">03</span>
+                <span class="service-row__title">Brand &amp; Identity</span>
+                <span class="service-row__arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <div class="service-row__panel"><div class="service-row__panel-inner"><p>Positioning and visual identity that holds up across every touchpoint.</p></div></div>
+              </div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">service-tile bento (layout-bento)</div><div class="demo-frame__body">
+            <div class="layout-bento">
+              <div class="service-tile service-tile--accent span-2 span-row-2">
+                <div class="service-tile__title">Design Systems</div>
+                <p class="service-tile__text">The foundation every other engagement builds on.</p>
+              </div>
+              <div class="service-tile span-2"><div class="service-tile__title">Web Design</div><p class="service-tile__text">Marketing sites that convert.</p></div>
+              <div class="service-tile"><div class="service-tile__title">Brand</div></div>
+              <div class="service-tile"><div class="service-tile__title">Motion</div></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ ABOUT ============ -->
+        <section class="category-block" id="about">
+          <h2 class="mb-8">About</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">about-split + about-stats</div><div class="demo-frame__body">
+            <div class="layout-split">
+              <div>
+                <span class="text-eyebrow about-split__eyebrow">Our studio</span>
+                <h3 class="about-split__title">Six years designing for teams who care about the details.</h3>
+                <p class="about-split__text">Lumen was founded on the belief that a design system is a company's most durable asset — more durable than any single site.</p>
+                <div class="about-stats__row">
+                  <div class="about-stats__item"><span class="value">120+</span><span class="label">Projects shipped</span></div>
+                  <div class="about-stats__item"><span class="value">98%</span><span class="label">Client retention</span></div>
+                </div>
+              </div>
+              <div class="about-split__media ph-b"></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">value-item grid</div><div class="demo-frame__body">
+            <div class="grid grid--3">
+              <div class="value-item"><span class="value-item__number">01</span><h4 class="value-item__title">Restraint</h4><p class="value-item__text">Every element earns its place or it's cut.</p></div>
+              <div class="value-item"><span class="value-item__number">02</span><h4 class="value-item__title">Craft</h4><p class="value-item__text">Motion, spacing and type are never an afterthought.</p></div>
+              <div class="value-item"><span class="value-item__number">03</span><h4 class="value-item__title">Systems</h4><p class="value-item__text">We build foundations, not one-off pages.</p></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ STATS ============ -->
+        <section class="category-block" id="stats">
+          <h2 class="mb-8">Statistics</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">stats-cards</div><div class="demo-frame__body">
+            <div class="stats-cards">
+              <div class="card card--stat"><span class="card__value">120+</span><span class="card__label">Websites shipped</span></div>
+              <div class="card card--stat"><span class="card__value">14</span><span class="card__label">Design awards</span></div>
+              <div class="card card--stat"><span class="card__value">98%</span><span class="card__label">Retention</span></div>
+              <div class="card card--stat"><span class="card__value">6yr</span><span class="card__label">In practice</span></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">stats-inline</div><div class="demo-frame__body">
+            <p class="stats-inline">Lumen has shipped <strong>120+</strong> websites for <strong>60+</strong> companies, with a client retention rate of <strong>98%</strong>.</p>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">stats-featured</div><div class="demo-frame__body">
+            <div class="stats-featured">
+              <div class="stats-featured__value">14</div>
+              <div class="stats-featured__list">
+                <div class="item"><strong>Design awards</strong><span>Awwwards, CSS Design Awards, FWA</span></div>
+                <div class="item"><strong>Since 2020</strong><span>Recognized every year we've entered</span></div>
+              </div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ TESTIMONIALS ============ -->
+        <section class="category-block" id="testimonials">
+          <h2 class="mb-8">Testimonials</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">testimonial-carousel (drag / swipe / dots)</div><div class="demo-frame__body">
+            <div data-carousel data-autoplay="5000" style="position:relative;">
+              <div class="testimonial-carousel">
+                <div class="testimonial-carousel__track">
+                  <div class="card card--testimonial" style="border:none; padding:0;"><p class="card__quote">&ldquo;Lumen gave our product a visual language it never had.&rdquo;</p><div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Elena Martins</div><div class="card__author-role">CEO, Northline</div></div></div></div>
+                  <div class="card card--testimonial" style="border:none; padding:0;"><p class="card__quote">&ldquo;The system they built is still paying off two years later.&rdquo;</p><div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Marcus Chen</div><div class="card__author-role">CPO, Fauna</div></div></div></div>
+                  <div class="card card--testimonial" style="border:none; padding:0;"><p class="card__quote">&ldquo;Best design partner we've worked with, full stop.&rdquo;</p><div class="card__author"><div class="card__avatar"></div><div><div class="card__author-name">Priya Nair</div><div class="card__author-role">Founder, Solace</div></div></div></div>
+                </div>
+              </div>
+              <div class="testimonial-carousel__nav" data-carousel-dots></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">testimonial-wall</div><div class="demo-frame__body">
+            <div class="testimonial-wall">
+              <div class="card card--testimonial"><p class="card__quote">&ldquo;Fast, thoughtful, and precise.&rdquo;</p><div class="card__author"><div class="card__avatar"></div><div class="card__author-name">Dana K.</div></div></div>
+              <div class="card card--testimonial"><p class="card__quote">&ldquo;They pushed back on our bad ideas — exactly what we needed.&rdquo;</p><div class="card__author"><div class="card__avatar"></div><div class="card__author-name">Tomás R.</div></div></div>
+              <div class="card card--testimonial"><p class="card__quote">&ldquo;A rare team that's both strategic and hands-on.&rdquo;</p><div class="card__author"><div class="card__avatar"></div><div class="card__author-name">Ige O.</div></div></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">testimonial-featured</div><div class="demo-frame__body">
+            <div class="testimonial-featured">
+              <div class="testimonial-featured__mark">&ldquo;</div>
+              <p class="testimonial-featured__quote">Lumen didn't just design our site — they gave our whole product a language to speak.</p>
+              <div class="testimonial-featured__author"><div class="card__avatar"></div><div><div class="card__author-name">Elena Martins</div><div class="card__author-role">CEO, Northline</div></div></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ PRICING ============ -->
+        <section class="category-block" id="pricing">
+          <h2 class="mb-8">Pricing</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">billing-toggle (monthly / yearly)</div><div class="demo-frame__body">
+            <div class="cluster" style="justify-content:center; margin-bottom: var(--space-8);">
+              <div class="billing-toggle" data-billing-target="#pricing-toggle-demo">
+                <button class="billing-toggle__option" data-billing-value="monthly" aria-pressed="true">Monthly</button>
+                <button class="billing-toggle__option" data-billing-value="yearly" aria-pressed="false">Yearly <span class="billing-toggle__save">−20%</span></button>
+              </div>
+            </div>
+            <div id="pricing-toggle-demo" class="card card--pricing" style="max-width:340px; margin-inline:auto;">
+              <span class="text-label">Studio</span>
+              <div class="card--pricing__price"><span data-price-monthly>$1,200<span>/mo</span></span><span data-price-yearly>$960<span>/mo, billed yearly</span></span></div>
+              <button class="btn btn--primary btn--block">Choose Studio</button>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">pricing-table (comparison)</div><div class="demo-frame__body--flush">
+            <table class="pricing-table">
+              <thead><tr><th>Feature</th><th>Starter</th><th data-highlight="true">Studio</th><th>Partnership</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Pages</th><td>5</td><td>Unlimited</td><td>Unlimited</td></tr>
+                <tr><th scope="row">Design system</th><td><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
+                <tr><th scope="row">Dedicated pod</th><td>—</td><td>—</td><td><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
+              </tbody>
+            </table>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">pricing-single</div><div class="demo-frame__body">
+            <div class="pricing-single">
+              <div><h3>Partnership Retainer</h3><p class="text-body-sm text-muted mt-2">A dedicated pod for teams with ongoing, evolving design needs.</p>
+                <ul class="pricing-single__features">
+                  <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedicated designer</li>
+                  <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Weekly syncs</li>
+                  <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Quarterly audits</li>
+                  <li><svg viewBox="0 0 20 20" fill="none"><path d="M16.7 5.3 8 14l-4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority support</li>
+                </ul>
+              </div>
+              <div class="pricing-single__aside"><div class="price">Custom</div><button class="btn btn--primary btn--lg mt-4">Talk to us</button></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ FAQ ============ -->
+        <section class="category-block" id="faq">
+          <h2 class="mb-8">FAQ</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">faq-search + faq-columns</div><div class="demo-frame__body" data-faq-scope>
+            <div class="faq-search">
+              <svg viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M18 18l-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <input class="input" type="text" placeholder="Search questions...">
+            </div>
+            <div class="faq-columns">
+              <div class="accordion">
+                <details class="accordion-item" open><summary class="accordion-item__trigger">What's included in a design system engagement?<span class="accordion-item__icon"></span></summary><div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Tokens, components, documentation and a working style guide.</div></div></div></details>
+                <details class="accordion-item"><summary class="accordion-item__trigger">How long does a typical project take?<span class="accordion-item__icon"></span></summary><div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">6–10 weeks for a flagship site, depending on scope.</div></div></div></details>
+              </div>
+              <div class="accordion">
+                <details class="accordion-item"><summary class="accordion-item__trigger">Do you work with early-stage startups?<span class="accordion-item__icon"></span></summary><div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Yes — we have a Starter tier built for that.</div></div></div></details>
+                <details class="accordion-item"><summary class="accordion-item__trigger">Can you work with our existing brand?<span class="accordion-item__icon"></span></summary><div class="accordion-item__panel-wrap"><div class="accordion-item__panel"><div class="accordion-item__panel-inner">Absolutely — we regularly extend existing brand systems.</div></div></div></details>
+              </div>
+            </div>
+            <p class="faq-search__empty">No questions match your search.</p>
+          </div></div>
+        </section>
+
+        <!-- ============ PORTFOLIO ============ -->
+        <section class="category-block" id="portfolio">
+          <h2 class="mb-8">Portfolio</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">portfolio-filters + filterable grid</div><div class="demo-frame__body">
+            <div class="portfolio-filters" data-filter-group='[data-category]'>
+              <button class="chip" data-filter-value="all" aria-pressed="true">All</button>
+              <button class="chip" data-filter-value="web" aria-pressed="false">Web</button>
+              <button class="chip" data-filter-value="brand" aria-pressed="false">Brand</button>
+              <button class="chip" data-filter-value="product" aria-pressed="false">Product</button>
+            </div>
+            <div class="gallery-grid">
+              <a class="card card--portfolio ph-a" href="#" data-category="brand"><div class="card__overlay"><span class="card__overlay-tag">Branding</span><span class="card__overlay-title">Solace</span></div></a>
+              <a class="card card--portfolio ph-b" href="#" data-category="web"><div class="card__overlay"><span class="card__overlay-tag">Web</span><span class="card__overlay-title">Northline</span></div></a>
+              <a class="card card--portfolio ph-c" href="#" data-category="product"><div class="card__overlay"><span class="card__overlay-tag">Product</span><span class="card__overlay-title">Fauna</span></div></a>
+              <a class="card card--portfolio ph-c" href="#" data-category="web"><div class="card__overlay"><span class="card__overlay-tag">Web</span><span class="card__overlay-title">Ridgeline</span></div></a>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">case-study-row (fullbleed, alternating)</div><div class="demo-frame__body">
+            <div class="case-study-row layout-split" data-flip="false">
+              <div><div class="case-study-row__tags"><span class="badge badge--primary">Web</span><span class="badge">2026</span></div><h3 class="case-study-row__title">Northline</h3><p class="case-study-row__text">A full platform redesign that took conversion from 1.2% to 3.8%.</p><a href="#" class="btn-link">View case study</a></div>
+              <div class="case-study-row__media ph-b"></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">portfolio-slider (drag to scroll)</div><div class="demo-frame__body--flush">
+            <div class="portfolio-slider" style="padding-inline: var(--space-8); padding-block: var(--space-8);">
+              <a class="card card--portfolio ph-a" href="#"><div class="card__overlay"><span class="card__overlay-title">Solace</span></div></a>
+              <a class="card card--portfolio ph-b" href="#"><div class="card__overlay"><span class="card__overlay-title">Northline</span></div></a>
+              <a class="card card--portfolio ph-c" href="#"><div class="card__overlay"><span class="card__overlay-title">Fauna</span></div></a>
+              <a class="card card--portfolio ph-a" href="#"><div class="card__overlay"><span class="card__overlay-title">Ridgeline</span></div></a>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ TEAM ============ -->
+        <section class="category-block" id="team">
+          <h2 class="mb-8">Team</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">team-featured + team-dense</div><div class="demo-frame__body">
+            <div class="team-featured">
+              <div class="card card--team"><div class="card__avatar"></div><div><h4 class="card__title">Sofia Reyes</h4><p class="card__role">Creative Director</p></div></div>
+              <div class="card card--team"><div class="card__avatar"></div><div><h4 class="card__title">Marco Alves</h4><p class="card__role">Head of Engineering</p></div></div>
+            </div>
+            <div class="team-dense">
+              <div class="card card--team"><div class="card__avatar"></div><h4 class="card__title">Iris Wen</h4></div>
+              <div class="card card--team"><div class="card__avatar"></div><h4 class="card__title">Theo Park</h4></div>
+              <div class="card card--team"><div class="card__avatar"></div><h4 class="card__title">Nadia Cruz</h4></div>
+              <div class="card card--team"><div class="card__avatar"></div><h4 class="card__title">Leo Ferreira</h4></div>
+              <div class="card card--team"><div class="card__avatar"></div><h4 class="card__title">Amara Diallo</h4></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">team-list (rows)</div><div class="demo-frame__body--flush">
+            <div class="team-list" style="padding-inline: var(--space-8);">
+              <div class="team-row"><div class="team-row__avatar ph-a"></div><div><h4 class="card__title">Sofia Reyes</h4><p class="card__role">Creative Director</p><p class="team-row__bio">Leads visual direction across every Lumen engagement.</p></div><a href="#" class="btn btn--ghost btn--sm">Profile</a></div>
+              <div class="team-row"><div class="team-row__avatar ph-b"></div><div><h4 class="card__title">Marco Alves</h4><p class="card__role">Head of Engineering</p><p class="team-row__bio">Owns the design-system-to-production pipeline.</p></div><a href="#" class="btn btn--ghost btn--sm">Profile</a></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ CONTACT ============ -->
+        <section class="category-block" id="contact">
+          <h2 class="mb-8">Contact</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">contact-method cards</div><div class="demo-frame__body">
+            <div class="grid grid--3">
+              <div class="contact-method"><div class="contact-method__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5l8 6 8-6M2 5v10h16V5" stroke="currentColor" stroke-width="1.5"/></svg></div><h4 class="contact-method__title">Email</h4><p class="contact-method__text">hello@lumen.studio</p></div>
+              <div class="contact-method"><div class="contact-method__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L13 12l5 2v4a2 2 0 0 1-2 2C8.5 20 0 11.5 0 5a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.3"/></svg></div><h4 class="contact-method__title">Phone</h4><p class="contact-method__text">+1 (415) 555-0110</p></div>
+              <div class="contact-method"><div class="contact-method__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 18s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Z" stroke="currentColor" stroke-width="1.3"/><circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.3"/></svg></div><h4 class="contact-method__title">Studio</h4><p class="contact-method__text">San Francisco, CA</p></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">contact split (form + info + map)</div><div class="demo-frame__body">
+            <div class="layout-split">
+              <form class="stack" style="--stack-gap: var(--space-5);" onsubmit="return false;">
+                <div class="field"><label class="field__label" for="c-name">Name</label><input class="input" id="c-name" type="text"></div>
+                <div class="field"><label class="field__label" for="c-msg">Message</label><textarea class="textarea" id="c-msg"></textarea></div>
+                <button class="btn btn--primary" type="submit">Send message</button>
+              </form>
+              <div class="contact-map ph-c"></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ FOOTER ============ -->
+        <section class="category-block" id="footer">
+          <h2 class="mb-8">Footer</h2>
+          <div class="demo-frame"><div class="demo-frame__label">footer--minimal</div><div class="demo-frame__body--flush">
+            <footer class="footer footer--minimal" style="border-top:none;">
+              <a href="#" class="navbar__brand"><span class="navbar__brand-mark"></span>Lumen</a>
+              <div class="footer__links"><a href="#">Work</a><a href="#">Studio</a><a href="#">Contact</a></div>
+              <span class="text-caption">&copy; 2026 Lumen Studio</span>
+            </footer>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">footer--newsletter</div><div class="demo-frame__body">
+            <div class="footer footer--newsletter" style="border:none; padding:0;">
+              <div class="footer__signup">
+                <div><h4>Stay in the loop</h4><p class="text-body-sm text-muted">Occasional notes on design systems and craft.</p></div>
+                <form class="input-with-action"><input class="input" type="email" placeholder="you@company.com"><button class="btn btn--primary">Subscribe</button></form>
+              </div>
+              <div class="footer__grid" style="padding-bottom:0;">
+                <div><div class="footer__heading">Studio</div><div class="footer__links"><a href="#">Work</a><a href="#">About</a></div></div>
+                <div><div class="footer__heading">Services</div><div class="footer__links"><a href="#">Design Systems</a><a href="#">Web Design</a></div></div>
+                <div><div class="footer__heading">Connect</div><div class="footer__links"><a href="#">LinkedIn</a><a href="#">Instagram</a></div></div>
+              </div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ BLOG ============ -->
+        <section class="category-block" id="blog">
+          <h2 class="mb-8">Blog</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">blog-featured</div><div class="demo-frame__body">
+            <div class="blog-featured">
+              <article class="card card--blog"><div class="card__media ph-a"></div><div class="card__body"><div class="card__meta"><span>Systems</span><span>·</span><span>8 min</span></div><h3 class="card__title">Building a design system that outlives a rebrand</h3></div></article>
+              <div class="blog-featured__list">
+                <div class="blog-row" style="grid-template-columns: 80px 1fr;"><div class="blog-row__media ph-b"></div><div><h4 class="blog-row__title" style="font-size:var(--text-body);">Why restraint is a superpower</h4></div></div>
+                <div class="blog-row" style="grid-template-columns: 80px 1fr;"><div class="blog-row__media ph-c"></div><div><h4 class="blog-row__title" style="font-size:var(--text-body);">The 200ms hover rule</h4></div></div>
+              </div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">blog-magazine (bento)</div><div class="demo-frame__body">
+            <div class="layout-bento blog-magazine">
+              <article class="card card--blog span-2 span-row-2"><div class="card__media ph-a"></div><div class="card__body"><h3 class="card__title">The anatomy of a premium hero section</h3></div></article>
+              <article class="card card--blog span-2"><div class="card__media ph-b"></div><div class="card__body"><h4 class="card__title">Color systems for dark-first brands</h4></div></article>
+              <article class="card card--blog"><div class="card__media ph-c"></div><div class="card__body"><h4 class="card__title">Motion as meaning</h4></div></article>
+              <article class="card card--blog"><div class="card__media ph-a"></div><div class="card__body"><h4 class="card__title">Grid systems, revisited</h4></div></article>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ FEATURES ============ -->
+        <section class="category-block" id="features">
+          <h2 class="mb-8">Features</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">feature-split (zigzag)</div><div class="demo-frame__body">
+            <div class="layout-zigzag">
+              <div class="layout-split">
+                <div><span class="text-eyebrow feature-split__eyebrow">Foundation</span><h3 class="feature-split__title">Tokens that scale</h3><p class="feature-split__text">Every color, size and motion curve traces back to one file.</p></div>
+                <div class="feature-split__media ph-a"></div>
+              </div>
+              <div class="layout-split">
+                <div><span class="text-eyebrow feature-split__eyebrow">Library</span><h3 class="feature-split__title">Components that compose</h3><p class="feature-split__text">Dozens of section variants, all speaking the same visual language.</p></div>
+                <div class="feature-split__media ph-b"></div>
+              </div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">feature-checklist</div><div class="demo-frame__body">
+            <div class="feature-checklist">
+              <div class="feature-checklist__item"><div class="feature-checklist__icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="1.5"/></svg></div><div><div class="feature-checklist__title">Design tokens</div><div class="feature-checklist__text">Single source of truth</div></div></div>
+              <div class="feature-checklist__item"><div class="feature-checklist__icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="1.5"/></svg></div><div><div class="feature-checklist__title">Motion system</div><div class="feature-checklist__text">Consistent, purposeful</div></div></div>
+              <div class="feature-checklist__item"><div class="feature-checklist__icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="1.5"/></svg></div><div><div class="feature-checklist__title">Accessible by default</div><div class="feature-checklist__text">WCAG AA</div></div></div>
+              <div class="feature-checklist__item"><div class="feature-checklist__icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="1.5"/></svg></div><div><div class="feature-checklist__title">Zero dependencies</div><div class="feature-checklist__text">Vanilla HTML/CSS/JS</div></div></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ GALLERY ============ -->
+        <section class="category-block" id="gallery">
+          <h2 class="mb-8">Gallery</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">gallery-masonry (CSS columns)</div><div class="demo-frame__body">
+            <div class="gallery-masonry">
+              <div class="ph-a" style="height:180px;"></div>
+              <div class="ph-b" style="height:260px;"></div>
+              <div class="ph-c" style="height:140px;"></div>
+              <div class="ph-b" style="height:200px;"></div>
+              <div class="ph-a" style="height:160px;"></div>
+              <div class="ph-c" style="height:220px;"></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">gallery-lightbox (click to open)</div><div class="demo-frame__body">
+            <div class="gallery-lightbox">
+              <button data-lightbox-src="" data-lightbox-alt="Placeholder A" class="ph-a" style="border:none;"></button>
+              <button data-lightbox-src="" data-lightbox-alt="Placeholder B" class="ph-b" style="border:none;"></button>
+              <button data-lightbox-src="" data-lightbox-alt="Placeholder C" class="ph-c" style="border:none;"></button>
+              <button data-lightbox-src="" data-lightbox-alt="Placeholder A" class="ph-a" style="border:none;"></button>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ TIMELINE ============ -->
+        <section class="category-block" id="timeline">
+          <h2 class="mb-8">Timeline</h2>
+
+          <div class="demo-frame"><div class="demo-frame__label">timeline-centered</div><div class="demo-frame__body">
+            <div class="timeline-centered">
+              <div class="timeline-centered__item"><div class="timeline-item__date">2020</div><h4 class="card__title">Studio founded</h4></div>
+              <div class="timeline-centered__item"><div class="timeline-item__date">2022</div><h4 class="card__title">First design award</h4></div>
+              <div class="timeline-centered__item"><div class="timeline-item__date">2024</div><h4 class="card__title">Design system practice launched</h4></div>
+            </div>
+          </div></div>
+
+          <div class="demo-frame"><div class="demo-frame__label">timeline-horizontal</div><div class="demo-frame__body">
+            <div class="timeline-horizontal">
+              <div class="timeline-horizontal__item"><div class="timeline-item__date">Step 01</div><h4 class="card__title">Discovery</h4></div>
+              <div class="timeline-horizontal__item"><div class="timeline-item__date">Step 02</div><h4 class="card__title">Design</h4></div>
+              <div class="timeline-horizontal__item"><div class="timeline-item__date">Step 03</div><h4 class="card__title">Build</h4></div>
+              <div class="timeline-horizontal__item"><div class="timeline-item__date">Step 04</div><h4 class="card__title">Launch</h4></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- ============ CARD MODIFIERS ============ -->
+        <section class="category-block" id="cards">
+          <h2 class="mb-8">Card modifiers</h2>
+          <div class="grid grid--3">
+            <div class="card card--glass" style="background-image:var(--gradient-mesh);">Glass card over a gradient</div>
+            <div class="card card--gradient-border">Gradient-border card</div>
+            <div class="card card--minimal">Minimal — no chrome, dense-list friendly</div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none; padding-top:0;">
+      <span>&copy; 2026 Lumen Studio — Section Library v2.0</span>
+      <a href="index.html" class="btn-link">Back to foundations</a>
+    </div>
+  </div>
+</footer>
+
+<dialog class="lightbox"><img src="" alt=""><button class="lightbox__close" data-modal-close><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1l14 14M15 1 1 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></dialog>
+
+<script src="main.js"></script>
+</body>
+</html>

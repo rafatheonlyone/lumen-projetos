@@ -1,0 +1,185 @@
+/* ==========================================================================
+   COMPONENT — FORMS
+   Inputs, textareas, selects, checkboxes/radios and validation states.
+   Labels are always visible (never placeholder-only) for accessibility.
+   ========================================================================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-primary);
+}
+
+.field__hint {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.field__error {
+  font-size: var(--text-caption);
+  color: var(--color-danger);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.input, .textarea, .select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--text-body-sm);
+  transition: border-color var(--duration-fast) var(--ease-out-quart),
+              box-shadow var(--duration-fast) var(--ease-out-quart),
+              background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.input::placeholder, .textarea::placeholder { color: var(--color-text-disabled); }
+
+.input:hover, .textarea:hover, .select:hover {
+  border-color: var(--color-border-strong);
+}
+
+.input:focus, .textarea:focus, .select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(223, 162, 60, 0.18);
+}
+
+.input[data-state='error'], .textarea[data-state='error'] {
+  border-color: var(--color-danger);
+}
+.input[data-state='error']:focus, .textarea[data-state='error']:focus {
+  box-shadow: 0 0 0 3px rgba(239, 91, 76, 0.18);
+}
+
+.input[data-state='success'] { border-color: var(--color-success); }
+
+.input:disabled, .textarea:disabled, .select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.textarea { resize: vertical; min-height: 120px; }
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238C8880' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  padding-right: var(--space-10);
+}
+
+/* ---- Checkbox / radio ------------------------------------------------------- */
+.checkbox, .radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.checkbox input, .radio input {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface-1);
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
+  transition: background var(--duration-fast) var(--ease-out-quart), border-color var(--duration-fast) var(--ease-out-quart);
+}
+.checkbox input { border-radius: var(--radius-xs); }
+.radio input { border-radius: var(--radius-full); }
+
+.checkbox input::before, .radio input::before {
+  content: '';
+  width: 10px; height: 10px;
+  transform: scale(0);
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+.checkbox input::before {
+  border-radius: 2px;
+  background: var(--color-primary-text);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.radio input::before { border-radius: 50%; background: var(--color-primary-text); }
+
+.checkbox input:checked, .radio input:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.checkbox input:checked::before, .radio input:checked::before { transform: scale(1); }
+
+/* ---- Input group (icon-adorned) ---------------------------------------------- */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-group .input { padding-left: var(--space-10); }
+.input-group svg {
+  position: absolute;
+  left: var(--space-3);
+  width: 18px; height: 18px;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+/* ---- Newsletter-style compact input+button pairing ------------------------- */
+.input-with-action {
+  display: flex;
+  width: 100%;
+}
+.input-with-action .input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+.input-with-action .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* ==========================================================================
+   FORM MOTION  (v2.1 — Lumen Motion Language)
+   ========================================================================== */
+
+/* ---- Validation shake — a single, restrained shake for a field that
+   just failed submission. Not applied automatically (this system has
+   no validation logic of its own); a project's own form-handling JS
+   should add/remove this class on submit failure, e.g.
+   el.classList.add('input-shake'); el.addEventListener('animationend',
+   () => el.classList.remove('input-shake'), { once: true }). ------------ */
+@keyframes lumen-input-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+.input-shake { animation: lumen-input-shake 420ms var(--ease-in-out-smooth); }
+
+/* ---- Success check — a small draw-on checkmark next to a field once
+   it validates, for use alongside [data-state="success"]. -------------- */
+.field__success-icon {
+  display: inline-flex;
+  color: var(--color-success);
+}
+.field__success-icon svg path {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: lumen-draw-check var(--duration-moderate) var(--ease-out-quart) forwards;
+}
+@keyframes lumen-draw-check {
+  to { stroke-dashoffset: 0; }
+}

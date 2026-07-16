@@ -1,0 +1,275 @@
+/* ==========================================================================
+   LUMEN DESIGN SYSTEM — MOTION
+   Declarative animation primitives. Scroll-triggered reveals are driven
+   by a single [data-reveal] attribute toggled to [data-revealed] by
+   main.js (IntersectionObserver) — CSS owns the "how", JS owns the "when".
+   ========================================================================== */
+
+/* --------------------------------------------------------------------
+   SCROLL REVEAL — sections/cards fade + rise into place once. Distinct
+   variants let composers choose the right entrance for the content.
+   -------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-signature),
+              transform var(--duration-slow) var(--ease-signature),
+              filter var(--duration-slow) var(--ease-signature);
+  will-change: opacity, transform;
+}
+
+[data-reveal='up']      { transform: translateY(28px); }
+[data-reveal='down']    { transform: translateY(-28px); }
+[data-reveal='left']    { transform: translateX(-32px); }
+[data-reveal='right']   { transform: translateX(32px); }
+[data-reveal='scale']   { transform: scale(0.94); }
+[data-reveal='blur']    { filter: blur(8px); transform: translateY(16px); }
+
+[data-revealed] {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+/* Staggering: apply [data-reveal-group] to a parent; children pick up
+   incremental delay via inline --stagger-index set by main.js. Delay
+   step is tokenized (--stagger-step) so every choreography in the
+   system shares one rhythm — see tokens.css Motion Language section. */
+[data-reveal-group] > [data-reveal] {
+  transition-delay: calc(var(--stagger-index, 0) * var(--stagger-step));
+}
+[data-reveal-group='tight'] > [data-reveal] {
+  transition-delay: calc(var(--stagger-index, 0) * var(--stagger-step-tight));
+}
+[data-reveal-group='loose'] > [data-reveal] {
+  transition-delay: calc(var(--stagger-index, 0) * var(--stagger-step-loose));
+}
+
+/* --------------------------------------------------------------------
+   HOVER / INTERACTION MOTION
+   -------------------------------------------------------------------- */
+.motion-lift {
+  transition: transform var(--duration-base) var(--ease-out-expo),
+              box-shadow var(--duration-base) var(--ease-out-expo);
+}
+.motion-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.motion-press {
+  transition: transform var(--duration-fast) var(--ease-out-quart);
+}
+.motion-press:active {
+  transform: scale(0.97);
+}
+
+.motion-glow {
+  transition: box-shadow var(--duration-moderate) var(--ease-out-expo);
+}
+.motion-glow:hover {
+  box-shadow: var(--glow-gold-md);
+}
+
+.motion-underline {
+  position: relative;
+}
+.motion-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+.motion-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* --------------------------------------------------------------------
+   KEYFRAMES
+   -------------------------------------------------------------------- */
+@keyframes lumen-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes lumen-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes lumen-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes lumen-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes lumen-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lumen-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes lumen-slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lumen-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes lumen-toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes lumen-glow-pulse {
+  0%, 100% { box-shadow: var(--glow-gold-sm); }
+  50%      { box-shadow: var(--glow-gold-md); }
+}
+
+.animate-float { animation: lumen-float 6s var(--ease-in-out-quart) infinite; }
+.animate-pulse { animation: lumen-pulse 2.4s ease-in-out infinite; }
+.animate-spin  { animation: lumen-spin 1s linear infinite; }
+
+/* --------------------------------------------------------------------
+   PAGE TRANSITION (progressive enhancement — see main.js for the
+   View Transitions API hook; this is the CSS fallback layer)
+   -------------------------------------------------------------------- */
+.page-enter {
+  animation: lumen-fade-in var(--duration-slow) var(--ease-signature);
+}
+
+::view-transition-old(root) {
+  animation: lumen-fade-in var(--duration-base) var(--ease-signature) reverse;
+}
+::view-transition-new(root) {
+  animation: lumen-fade-in var(--duration-slow) var(--ease-signature);
+}
+
+/* --------------------------------------------------------------------
+   THEME SWITCH — CIRCULAR REVEAL  (v2.1 — Lumen Motion Language)
+   main.js's Theme.toggleWithTransition() sets --theme-x/--theme-y to
+   the toggle button's position and flags the transition with
+   [data-theme-transitioning] before calling document.startViewTransition.
+   These rules are more specific than the generic root-transition rules
+   above, so they take over only for the theme swap — an ordinary page
+   navigation still gets the plain cross-fade. This is the same
+   "ripple from where you clicked" technique behind the theme toggles
+   on the best-in-class product sites; it makes a binary state change
+   feel like a considered, physical event instead of a flicker.
+   -------------------------------------------------------------------- */
+:root[data-theme-transitioning]::view-transition-old(root) {
+  animation: none;
+}
+:root[data-theme-transitioning]::view-transition-new(root) {
+  animation: lumen-theme-reveal var(--duration-luxury) var(--ease-luxury);
+}
+@keyframes lumen-theme-reveal {
+  from { clip-path: circle(0% at var(--theme-x, 50%) var(--theme-y, 50%)); }
+  to   { clip-path: circle(140% at var(--theme-x, 50%) var(--theme-y, 50%)); }
+}
+
+/* ==========================================================================
+   MOTION EXPANSION  (v2.0)
+   ========================================================================== */
+
+/* ---- Additional reveal variants — same [data-reveal] contract as v1.0. --- */
+[data-reveal='rotate']   { transform: rotate(-3deg) translateY(20px); }
+[data-reveal='clip']     { clip-path: inset(0 0 100% 0); transform: none; }
+[data-revealed][data-reveal='clip'] { clip-path: inset(0 0 0% 0); }
+[data-reveal='mask']     { transform: none; clip-path: circle(0% at 50% 50%); }
+[data-revealed][data-reveal='mask'] { clip-path: circle(75% at 50% 50%); }
+
+/* ---- Parallax hook — main.js's Parallax module sets --parallax-y on
+   scroll for any [data-parallax] element (typically hero media). ----------- */
+[data-parallax] {
+  transform: translateY(var(--parallax-y, 0));
+  will-change: transform;
+}
+
+/* ---- Count-up / number tick (paired with [data-counter] in main.js) ------ */
+.motion-tick { font-variant-numeric: tabular-nums; }
+
+/* ---- Text reveal — per-word/line stagger, main.js wraps text in spans
+   with [data-reveal-word] and toggles the parent's [data-revealed]. -------- */
+[data-reveal-word] {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  transition: opacity var(--duration-moderate) var(--ease-signature),
+              transform var(--duration-moderate) var(--ease-signature);
+  transition-delay: calc(var(--word-index, 0) * 40ms);
+}
+[data-revealed] [data-reveal-word] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Marquee direction/speed modifiers --------------------------------------- */
+.marquee__track--reverse { animation-direction: reverse; }
+.marquee__track--slow { animation-duration: 55s; }
+.marquee__track--fast { animation-duration: 16s; }
+
+/* ---- Cursor-follow glow — a soft radial highlight that tracks the
+   pointer via --mx/--my custom properties set by main.js's Spotlight
+   module. Opt in per-element with [data-spotlight]. -------------------------- */
+[data-spotlight] {
+  position: relative;
+  overflow: hidden;
+}
+[data-spotlight]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(223, 162, 60, 0.14), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+  pointer-events: none;
+}
+[data-spotlight]:hover::after { opacity: 1; }
+
+/* ==========================================================================
+   MOTION LANGUAGE  (v2.1) — cursor-aware micro-interactions
+   ========================================================================== */
+
+/* ---- Magnetic — the element subtly leans toward the cursor within its
+   own bounds, driven by main.js's Magnetic module setting an inline
+   transform. Tracking is instant while the pointer is inside (no lag
+   chasing the cursor); releasing uses --ease-magnetic for a soft,
+   weighted return to rest. Best on primary buttons and small icon
+   targets — never on large surfaces, where it would feel like a bug. -- */
+[data-magnetic] {
+  transition: transform 500ms var(--ease-magnetic);
+  will-change: transform;
+}
+[data-magnetic].is-magnet-active {
+  transition: transform 60ms linear;
+}
+
+/* ---- Drag-scroll cursor affordance (portfolio-slider, gallery-slider) ---- */
+[data-drag-scroll] { cursor: grab; }
+[data-drag-scroll][data-dragging='true'] { cursor: grabbing; }
+
+/* ---- Skeleton-to-content cross-fade — pairs a .skeleton placeholder
+   with real content; toggling [data-loaded] on the parent crossfades. ------ */
+[data-loaded] .skeleton { display: none; }
+[data-loaded] [data-loaded-content] {
+  animation: lumen-fade-in var(--duration-base) var(--ease-out-quart);
+}
+[data-loaded-content] { display: none; }
+[data-loaded] [data-loaded-content] { display: block; }

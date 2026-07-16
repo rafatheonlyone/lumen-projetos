@@ -1,0 +1,114 @@
+/* ==========================================================================
+   COMPONENT — ACCORDION / FAQ
+   Uses native <details>/<summary> for zero-JS accessibility, animated via
+   the grid-rows trick (grid-template-rows: 0fr -> 1fr) so height animates
+   without JS measuring scrollHeight.
+   ========================================================================== */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.accordion-item__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  padding-block: var(--space-6);
+  cursor: pointer;
+  list-style: none;
+  font-weight: var(--weight-medium);
+  font-size: var(--text-body-lg);
+  color: var(--color-text-primary);
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+.accordion-item__trigger::-webkit-details-marker { display: none; }
+.accordion-item:not([open]) .accordion-item__trigger:hover { color: var(--color-primary); }
+
+.accordion-item__icon {
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-default);
+  position: relative;
+  transition: transform var(--duration-moderate) var(--ease-luxury), border-color var(--duration-base) var(--ease-out-quart);
+}
+.accordion-item__icon::before, .accordion-item__icon::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  transition: transform var(--duration-base) var(--ease-luxury);
+}
+.accordion-item__icon::before { width: 10px; height: 1px; }
+.accordion-item__icon::after { width: 1px; height: 10px; }
+
+.accordion-item[open] .accordion-item__icon {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: rotate(180deg);
+}
+.accordion-item[open] .accordion-item__icon::after { transform: scaleY(0); }
+
+.accordion-item__panel-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-moderate) var(--ease-luxury);
+}
+.accordion-item[open] .accordion-item__panel-wrap {
+  grid-template-rows: 1fr;
+}
+.accordion-item__panel {
+  overflow: hidden;
+}
+.accordion-item__panel-inner {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity var(--duration-fast) var(--ease-out-quart),
+              transform var(--duration-fast) var(--ease-out-quart);
+  padding-bottom: var(--space-6);
+  color: var(--color-text-secondary);
+  max-width: 68ch;
+}
+/* Content fades in slightly after the row has begun expanding (delay),
+   and fades out immediately on collapse (no delay) — opening should
+   feel considered, closing should feel responsive. */
+.accordion-item[open] .accordion-item__panel-inner {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 90ms;
+}
+
+/* ---- Tabs -------------------------------------------------------------- */
+.tabs__list {
+  display: inline-flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+}
+.tabs__trigger {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  transition: color var(--duration-fast), background var(--duration-fast);
+}
+.tabs__trigger[aria-selected='true'] {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+.tabs__panel { padding-top: var(--space-8); }
+.tabs__panel[hidden] { display: none; }
+
+/* Timeline moved to components/timeline.css (v2.0) — see that file for
+   the vertical base pattern plus centered-alternating and horizontal variants. */

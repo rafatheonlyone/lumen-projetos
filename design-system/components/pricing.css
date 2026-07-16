@@ -1,0 +1,108 @@
+/* ==========================================================================
+   COMPONENT — PRICING VARIANTS  (v2.0)
+   .card--pricing (3-tier card, cards.css) remains the default pattern.
+   These extend it for billing toggles, comparisons, and single-plan agencies.
+   ========================================================================== */
+
+/* ---- Billing toggle — monthly/yearly switch that shows/hides
+   [data-price-monthly] / [data-price-yearly] spans via main.js. ------------ */
+.billing-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  margin-inline: auto;
+}
+.billing-toggle__option {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+.billing-toggle__option[aria-pressed='true'] {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+.billing-toggle__save {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--color-success);
+}
+
+[data-price-yearly] { display: none; }
+[data-billing='yearly'] [data-price-monthly] { display: none; }
+[data-billing='yearly'] [data-price-yearly] { display: inline; }
+
+/* ---- Comparison table — full feature matrix across tiers. Semantic
+   <table> for accessibility; sticky header row for long feature lists. ----- */
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.pricing-table th, .pricing-table td {
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: var(--text-body-sm);
+}
+.pricing-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--color-surface-1);
+  font-family: var(--font-display);
+  font-size: var(--text-h5);
+  font-weight: var(--weight-medium);
+}
+.pricing-table tbody th {
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-regular);
+}
+.pricing-table td { text-align: center; color: var(--color-text-secondary); }
+.pricing-table td svg { width: 18px; height: 18px; color: var(--color-primary); }
+.pricing-table tbody tr:hover { background: var(--glass-bg); }
+.pricing-table th[data-highlight='true'] { color: var(--color-primary); }
+
+/* ---- Single plan — one large plan card for agencies that quote
+   custom-only; emphasizes what's included over a price grid. --------------- */
+.pricing-single {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-12);
+  align-items: center;
+  padding: var(--space-12);
+  border-radius: var(--radius-2xl);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+}
+.pricing-single__features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3) var(--space-8);
+  margin-top: var(--space-6);
+}
+.pricing-single__features li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+}
+.pricing-single__features svg { width: 16px; height: 16px; color: var(--color-primary); flex-shrink: 0; }
+.pricing-single__aside { text-align: center; }
+.pricing-single__aside .price {
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  font-weight: var(--weight-semibold);
+}
+@media (max-width: 900px) {
+  .pricing-single { grid-template-columns: 1fr; text-align: center; }
+  .pricing-single__features { grid-template-columns: 1fr; justify-items: center; }
+}

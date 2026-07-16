@@ -1,0 +1,175 @@
+/* ==========================================================================
+   LUMEN DESIGN SYSTEM — UTILITIES
+   Small, single-purpose helpers for spacing, glass surfaces and borders.
+   Not a full utility framework — components should carry their own
+   styles; these exist for one-off composition in page markup.
+   ========================================================================== */
+
+/* ---- Glassmorphism -------------------------------------------------- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+}
+
+.glass--strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+}
+
+/* ---- Gradient border (mask technique — no extra wrapper element) ---- */
+.gradient-border {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-bg-primary), var(--color-bg-primary)) padding-box,
+    var(--gradient-border) border-box;
+}
+
+/* ---- Surfaces --------------------------------------------------------- */
+.surface-1 { background: var(--color-surface-1); }
+.surface-2 { background: var(--color-surface-2); }
+.surface-3 { background: var(--color-surface-3); }
+
+.bordered { border: 1px solid var(--color-border-default); }
+
+/* ---- Radius ------------------------------------------------------------ */
+.radius-xs { border-radius: var(--radius-xs); }
+.radius-sm { border-radius: var(--radius-sm); }
+.radius-md { border-radius: var(--radius-md); }
+.radius-lg { border-radius: var(--radius-lg); }
+.radius-xl { border-radius: var(--radius-xl); }
+.radius-full { border-radius: var(--radius-full); }
+
+/* ---- Elevation ---------------------------------------------------------- */
+.shadow-xs { box-shadow: var(--shadow-xs); }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* ---- Spacing (margin/padding block+inline shorthand utilities) -------- */
+:where([class*='mt-'], [class*='mb-'], [class*='pt-'], [class*='pb-']) {
+  --u-1: var(--space-1); --u-2: var(--space-2); --u-3: var(--space-3);
+  --u-4: var(--space-4); --u-6: var(--space-6); --u-8: var(--space-8);
+  --u-12: var(--space-12); --u-16: var(--space-16); --u-24: var(--space-24);
+}
+.mt-1 { margin-top: var(--space-1); } .mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); } .mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); } .mt-8 { margin-top: var(--space-8); }
+.mt-12 { margin-top: var(--space-12); } .mt-16 { margin-top: var(--space-16); }
+.mb-1 { margin-bottom: var(--space-1); } .mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); } .mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); } .mb-8 { margin-bottom: var(--space-8); }
+.mb-12 { margin-bottom: var(--space-12); } .mb-16 { margin-bottom: var(--space-16); }
+
+/* ---- Responsive visibility ---------------------------------------------- */
+.hide-mobile { }
+.hide-desktop { }
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+}
+@media (min-width: 768px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* ---- Truncation ---------------------------------------------------------- */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clamp-2, .clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.clamp-2 { -webkit-line-clamp: 2; }
+.clamp-3 { -webkit-line-clamp: 3; }
+
+/* ==========================================================================
+   UTILITIES EXPANSION  (v2.0)
+   ========================================================================== */
+
+/* ---- Additional spacing steps (fill gaps in the original mt/mb set) ------ */
+.mt-5 { margin-top: var(--space-5); } .mt-10 { margin-top: var(--space-10); }
+.mt-20 { margin-top: var(--space-20); } .mt-24 { margin-top: var(--space-24); }
+.mb-5 { margin-bottom: var(--space-5); } .mb-10 { margin-bottom: var(--space-10); }
+.mb-20 { margin-bottom: var(--space-20); } .mb-24 { margin-bottom: var(--space-24); }
+
+/* ---- Padding utilities (v1.0 only shipped margin) ------------------------- */
+.p-4 { padding: var(--space-4); } .p-6 { padding: var(--space-6); }
+.p-8 { padding: var(--space-8); } .p-12 { padding: var(--space-12); }
+.py-4 { padding-block: var(--space-4); } .py-8 { padding-block: var(--space-8); }
+.py-12 { padding-block: var(--space-12); } .py-16 { padding-block: var(--space-16); }
+.px-4 { padding-inline: var(--space-4); } .px-6 { padding-inline: var(--space-6); }
+
+/* ---- Gap utilities for direct use on .grid/.cluster/flex containers ------ */
+.gap-2 { gap: var(--space-2); } .gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); } .gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); } .gap-12 { gap: var(--space-12); }
+
+/* ---- Aspect ratio helpers — for media placeholders across every new
+   section type (hero media, case-study rows, gallery tiles). --------------- */
+.aspect-square { aspect-ratio: 1; }
+.aspect-video  { aspect-ratio: 16/9; }
+.aspect-portrait { aspect-ratio: 4/5; }
+.aspect-landscape { aspect-ratio: 4/3; }
+.aspect-wide { aspect-ratio: 21/9; }
+
+/* ---- Grid span utilities (mirrors .layout-bento's spans for use in
+   plain .grid contexts without opting into the full bento pattern) --------- */
+.col-span-2 { grid-column: span 2; }
+.col-span-3 { grid-column: span 3; }
+.col-span-full { grid-column: 1 / -1; }
+.row-span-2 { grid-row: span 2; }
+
+/* ---- Section background alternation — for stacking multiple sections
+   without every one sharing the exact same canvas tone. Rotate through
+   these on successive <section> elements for subtle depth. ----------------- */
+.bg-canvas    { background: var(--color-bg-canvas); }
+.bg-primary   { background: var(--color-bg-primary); }
+.bg-secondary { background: var(--color-bg-secondary); }
+.bg-mesh      { background: var(--gradient-mesh); }
+.bg-radial    { background: var(--gradient-radial-soft); }
+.bg-duotone   { background: var(--gradient-duotone); }
+
+/* ---- Border-only radius corners (for asymmetric bento/media tiles) ------- */
+.radius-top    { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.radius-bottom { border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+
+/* ---- Divider — a short accent rule, used under eyebrows/section titles --- */
+.divider-accent {
+  width: 40px;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+/* ---- Numeric/tabular figures for stat displays and pricing tables -------- */
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+/* ---- Scroll snap container helper (paired with sliders across the
+   library so a project doesn't need to redeclare scroll-snap by hand) ----- */
+.snap-x { scroll-snap-type: x mandatory; }
+.snap-start { scroll-snap-align: start; }
+
+/* ---- Skeleton / shimmer loading state -------------------------------- */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-sm);
+  background-image: linear-gradient(
+    100deg,
+    var(--color-surface-2) 0%,
+    var(--color-surface-3) 45%,
+    var(--color-surface-3) 55%,
+    var(--color-surface-2) 100%
+  );
+  background-size: 220% 100%;
+  animation: lumen-shimmer 2.2s var(--ease-in-out-smooth) infinite;
+}

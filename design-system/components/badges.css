@@ -1,0 +1,73 @@
+/* ==========================================================================
+   COMPONENT — BADGES, CHIPS, TAGS
+   ========================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-2);
+}
+
+.badge--primary { background: rgba(223, 162, 60, 0.14); color: var(--gold-300); border-color: rgba(223, 162, 60, 0.3); }
+.badge--secondary { background: rgba(98, 73, 221, 0.14); color: var(--violet-300); border-color: rgba(98, 73, 221, 0.3); }
+.badge--success { background: var(--color-success-bg); color: var(--color-success); border-color: rgba(62, 207, 142, 0.3); }
+.badge--warning { background: var(--color-warning-bg); color: var(--color-warning); border-color: rgba(240, 152, 60, 0.3); }
+.badge--danger  { background: var(--color-danger-bg);  color: var(--color-danger);  border-color: rgba(239, 91, 76, 0.3); }
+.badge--info    { background: var(--color-info-bg);    color: var(--color-info);    border-color: rgba(76, 154, 255, 0.3); }
+
+.badge__dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ---- Chip — interactive, removable ------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-default);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out-quart),
+              border-color var(--duration-fast) var(--ease-out-quart),
+              color var(--duration-fast) var(--ease-out-quart);
+}
+.chip:hover { border-color: var(--color-border-strong); color: var(--color-text-primary); }
+.chip[aria-pressed='true'] {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  border-color: var(--color-primary);
+}
+.chip__remove {
+  width: 16px; height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.chip__remove:hover { opacity: 1; background: rgba(0,0,0,0.15); }
+
+/* ---- Tag (filter/category, square-ish) ----------------------------------- */
+.tag {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface-2);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}

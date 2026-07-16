@@ -1,0 +1,60 @@
+/* ==========================================================================
+   COMPONENT — ABOUT SECTIONS  (v2.0)
+   Compositions built on .layout-split / .layout-zigzag. These classes
+   supply the content-side styling; the layout primitive supplies structure.
+   ========================================================================== */
+
+/* ---- Split — the default about pattern: portrait/office image one
+   side, mission statement + credentials the other. ------------------------ */
+.about-split__eyebrow { margin-bottom: var(--space-4); }
+.about-split__title { margin-bottom: var(--space-5); }
+.about-split__text { color: var(--color-text-secondary); max-width: 52ch; }
+.about-split__media {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  border: 1px solid var(--color-border-subtle);
+}
+.about-split__media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- Stats-inline — mission copy with a row of supporting stats
+   directly beneath it, no separate stats-band needed. --------------------- */
+.about-stats__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border-subtle);
+}
+.about-stats__item .value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+}
+.about-stats__item .label {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+/* ---- Values grid — principles/values as a compact icon+text grid,
+   paired with .grid.grid--3 or .grid--4. ----------------------------------- */
+.value-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.value-item__number {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-primary);
+  letter-spacing: var(--tracking-widest);
+}
+.value-item__title { font-size: var(--text-h5); }
+.value-item__text { color: var(--color-text-secondary); font-size: var(--text-body-sm); }
+
+/* ---- Timeline-based about — company history. Reuses .timeline from
+   components/timeline.css; no extra CSS needed beyond a section wrapper. */
+.about-timeline .section-header { margin-bottom: var(--space-16); }

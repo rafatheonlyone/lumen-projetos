@@ -1,0 +1,375 @@
+/* ==========================================================================
+   LUMEN DESIGN SYSTEM — TOKENS
+   Single source of truth. Every value used anywhere in the system traces
+   back to a variable defined here. Never hardcode a color, size, duration
+   or radius in a component file — extend this file instead.
+   ========================================================================== */
+
+:root {
+
+  /* --------------------------------------------------------------------
+     BRAND CONCEPT
+     Lumen = light. The palette is built around a near-black canvas that
+     lets a single warm "glow" color (amber-gold) act as the signature
+     accent, contrasted with a cool violet for technological depth.
+     -------------------------------------------------------------------- */
+
+  /* ---- Neutral scale (warm-tinted gray, not pure gray) -------------- */
+  --gray-0:   #FFFFFF;
+  --gray-50:  #F6F5F3;
+  --gray-100: #EDEBE7;
+  --gray-200: #D6D3CC;
+  --gray-300: #B3AFA6;
+  --gray-400: #8C8880;
+  --gray-500: #69665F;
+  --gray-600: #4C4A45;
+  --gray-700: #363430;
+  --gray-800: #232220;
+  --gray-900: #171615;
+  --gray-950: #0D0C0B;
+  --gray-1000: #08070A;
+
+  /* ---- Primary — "Lumen Gold" (the glow) ----------------------------- */
+  --gold-50:  #FBF3E3;
+  --gold-100: #F5E3BE;
+  --gold-200: #EDCC8A;
+  --gold-300: #E5B45A;
+  --gold-400: #DFA23C;
+  --gold-500: #D6952E;   /* base */
+  --gold-600: #B87A22;
+  --gold-700: #8F5E1A;
+  --gold-800: #664315;
+  --gold-900: #402A0E;
+
+  /* ---- Secondary — "Deep Violet" (technological depth) --------------- */
+  --violet-50:  #EFEDFC;
+  --violet-100: #DAD4FA;
+  --violet-200: #B4A8F4;
+  --violet-300: #8F7DED;
+  --violet-400: #7461E6;
+  --violet-500: #6249DD;  /* base */
+  --violet-600: #4E39B5;
+  --violet-700: #3B2B89;
+  --violet-800: #291D60;
+  --violet-900: #191139;
+
+  /* ---- Semantic hues --------------------------------------------------- */
+  --green-500:  #3ECF8E;
+  --green-600:  #2CA870;
+  --orange-500: #F0983C;
+  --orange-600: #CC7A26;
+  --red-500:    #EF5B4C;
+  --red-600:    #C93E31;
+  --blue-500:   #4C9AFF;
+  --blue-600:   #2F7DDE;
+
+  /* --------------------------------------------------------------------
+     SEMANTIC COLOR ROLES (Dark mode is the default canvas for Lumen —
+     it is where the "glow" concept reads best — light mode is a full
+     mirrored alternative, toggled via [data-theme="light"]).
+     -------------------------------------------------------------------- */
+  --color-bg-canvas:      var(--gray-1000);
+  --color-bg-primary:     var(--gray-950);
+  --color-bg-secondary:   var(--gray-900);
+  --color-surface-1:      var(--gray-900);
+  --color-surface-2:      var(--gray-800);
+  --color-surface-3:      var(--gray-700);
+
+  --color-border-subtle:  rgba(246, 245, 243, 0.07);
+  --color-border-default: rgba(246, 245, 243, 0.12);
+  --color-border-strong:  rgba(246, 245, 243, 0.22);
+
+  --color-text-primary:   var(--gray-50);
+  --color-text-secondary: rgba(246, 245, 243, 0.70);
+  --color-text-tertiary:  rgba(246, 245, 243, 0.46);
+  --color-text-disabled:  rgba(246, 245, 243, 0.26);
+  --color-text-inverse:   var(--gray-950);
+
+  --color-primary:        var(--gold-400);
+  --color-primary-hover:  var(--gold-300);
+  --color-primary-active: var(--gold-500);
+  --color-primary-text:   var(--gray-950);
+
+  --color-secondary:        var(--violet-400);
+  --color-secondary-hover:  var(--violet-300);
+  --color-secondary-active: var(--violet-500);
+
+  --color-accent: var(--gold-400);
+
+  --color-success: var(--green-500);
+  --color-warning: var(--orange-500);
+  --color-danger:  var(--red-500);
+  --color-info:    var(--blue-500);
+
+  --color-success-bg: rgba(62, 207, 142, 0.12);
+  --color-warning-bg: rgba(240, 152, 60, 0.12);
+  --color-danger-bg:  rgba(239, 91, 76, 0.12);
+  --color-info-bg:    rgba(76, 154, 255, 0.12);
+
+  /* ---- Gradients -------------------------------------------------------- */
+  --gradient-glow:      radial-gradient(circle at 50% 0%, rgba(223, 162, 60, 0.35), transparent 60%);
+  --gradient-mesh:      linear-gradient(135deg, rgba(223, 162, 60, 0.18) 0%, rgba(98, 73, 221, 0.18) 100%);
+  --gradient-text:      linear-gradient(120deg, var(--gold-300) 0%, var(--gold-500) 45%, var(--violet-300) 100%);
+  --gradient-border:    linear-gradient(135deg, rgba(223, 162, 60, 0.6), rgba(98, 73, 221, 0.4));
+  --gradient-scrim:     linear-gradient(180deg, transparent 0%, rgba(8, 7, 10, 0.9) 100%);
+
+  /* ---- Glow / halo (used sparingly on primary interactive elements) --- */
+  --glow-gold-sm:  0 0 24px rgba(223, 162, 60, 0.25);
+  --glow-gold-md:  0 0 48px rgba(223, 162, 60, 0.30);
+  --glow-gold-lg:  0 0 96px rgba(223, 162, 60, 0.35);
+  --glow-violet-md: 0 0 48px rgba(98, 73, 221, 0.30);
+
+  /* ---- Glass (glassmorphism) -------------------------------------------- */
+  --glass-bg:          rgba(246, 245, 243, 0.045);
+  --glass-bg-strong:   rgba(246, 245, 243, 0.08);
+  --glass-border:      rgba(246, 245, 243, 0.10);
+  --glass-blur:        20px;
+  --glass-blur-strong: 40px;
+  --glass-saturate:    160%;
+
+  /* --------------------------------------------------------------------
+     TYPOGRAPHY
+     Fraunces (serif, variable optical size) carries the "handcrafted,
+     premium" voice for display/hero/heading moments. Inter carries every
+     functional, high-legibility role. JetBrains Mono marks technical or
+     numeric accents (labels, tags, stats) — a signature Lumen detail.
+     -------------------------------------------------------------------- */
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* Fluid type scale — clamp(min, preferred, max) so every size responds
+     smoothly between 360px and 1600px viewports without breakpoint jumps. */
+  --text-display-2xl: clamp(3.5rem, 2.2rem + 6.2vw, 8rem);     /* hero, one per page */
+  --text-display-xl:  clamp(2.75rem, 1.9rem + 4.2vw, 5.5rem);
+  --text-display-lg:  clamp(2.25rem, 1.7rem + 2.8vw, 4rem);
+  --text-h1:          clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --text-h2:          clamp(1.75rem, 1.45rem + 1.5vw, 2.5rem);
+  --text-h3:          clamp(1.375rem, 1.2rem + 0.9vw, 1.875rem);
+  --text-h4:          clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem);
+  --text-h5:          clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  --text-h6:          0.9375rem;
+  --text-body-lg:     clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-body:        1rem;
+  --text-body-sm:     0.875rem;
+  --text-caption:     0.8125rem;
+  --text-label:       0.8125rem;
+  --text-micro:       0.6875rem;
+
+  --leading-display: 1.02;
+  --leading-heading: 1.15;
+  --leading-body:    1.6;
+  --leading-tight:   1.3;
+
+  --tracking-tightest: -0.04em;
+  --tracking-tight:    -0.02em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.04em;
+  --tracking-widest:   0.14em;  /* used for eyebrow labels / mono caps */
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-black:    900;
+
+  /* --------------------------------------------------------------------
+     SPACING — 8px base unit. Odd values (2, 6) exist only for hairline
+     adjustments (icon optical alignment, border offsets).
+     -------------------------------------------------------------------- */
+  --space-0:  0;
+  --space-px: 1px;
+  --space-1:  0.25rem;  /* 4  */
+  --space-2:  0.5rem;   /* 8  */
+  --space-3:  0.75rem;  /* 12 */
+  --space-4:  1rem;     /* 16 */
+  --space-5:  1.25rem;  /* 20 */
+  --space-6:  1.5rem;   /* 24 */
+  --space-8:  2rem;     /* 32 */
+  --space-10: 2.5rem;   /* 40 */
+  --space-12: 3rem;     /* 48 */
+  --space-16: 4rem;     /* 64 */
+  --space-20: 5rem;     /* 80 */
+  --space-24: 6rem;     /* 96 */
+  --space-32: 8rem;     /* 128 */
+  --space-40: 10rem;    /* 160 */
+  --space-48: 12rem;    /* 192 */
+  --space-64: 16rem;    /* 256 */
+
+  /* Section-level rhythm tokens (semantic wrappers around the raw scale) */
+  --space-section-y:    clamp(4rem, 3rem + 4vw, 8rem);
+  --space-block-gap:    clamp(2.5rem, 2rem + 2vw, 4rem);
+  --space-container-x:  clamp(1.25rem, 1rem + 3vw, 4rem);
+
+  /* --------------------------------------------------------------------
+     RADIUS
+     -------------------------------------------------------------------- */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-3xl:  40px;  /* large bento/media tiles */
+  --radius-full: 999px;
+
+  /* --------------------------------------------------------------------
+     ELEVATION — soft, layered, warm-tinted shadows (never pure black)
+     so surfaces feel like they float on the canvas rather than being
+     cut out of it.
+     -------------------------------------------------------------------- */
+  --shadow-color: 8, 7, 10;
+  --shadow-xs: 0 1px 2px rgba(var(--shadow-color), 0.4);
+  --shadow-sm: 0 2px 8px rgba(var(--shadow-color), 0.35),
+               0 1px 2px rgba(var(--shadow-color), 0.3);
+  --shadow-md: 0 8px 24px rgba(var(--shadow-color), 0.40),
+               0 2px 6px rgba(var(--shadow-color), 0.30);
+  --shadow-lg: 0 16px 48px rgba(var(--shadow-color), 0.45),
+               0 4px 12px rgba(var(--shadow-color), 0.30);
+  --shadow-xl: 0 32px 80px rgba(var(--shadow-color), 0.50),
+               0 8px 24px rgba(var(--shadow-color), 0.35);
+  --shadow-inner: inset 0 1px 0 rgba(246, 245, 243, 0.06);
+  --shadow-2xl: 0 48px 120px rgba(var(--shadow-color), 0.55),
+                0 16px 32px rgba(var(--shadow-color), 0.40); /* full-bleed hero media, portfolio rows */
+
+  /* --------------------------------------------------------------------
+     v2.0 — additional gradients for section-level variety. Every new
+     gradient still resolves from the same two brand hues (gold/violet)
+     so pages built from different variants never feel off-family.
+     -------------------------------------------------------------------- */
+  --gradient-violet-glow: radial-gradient(circle at 50% 0%, rgba(98, 73, 221, 0.30), transparent 60%);
+  --gradient-radial-soft: radial-gradient(circle at 30% 20%, rgba(223, 162, 60, 0.16), transparent 55%);
+  --gradient-duotone:     linear-gradient(160deg, rgba(223, 162, 60, 0.22) 0%, rgba(8, 7, 10, 0) 40%, rgba(98, 73, 221, 0.22) 100%);
+  --gradient-scrim-top:   linear-gradient(0deg, transparent 0%, rgba(8, 7, 10, 0.85) 100%);
+  --gradient-scrim-left:  linear-gradient(90deg, rgba(8, 7, 10, 0.85) 0%, transparent 60%);
+
+  /* --------------------------------------------------------------------
+     MOTION
+     Durations scale with the size of what's moving; easings are custom
+     "expo-out" style curves (the same family used by Linear/Vercel) so
+     movement feels weighted and decisive rather than linear/robotic.
+     -------------------------------------------------------------------- */
+  --duration-instant: 100ms;
+  --duration-fast:    180ms;
+  --duration-base:    280ms;
+  --duration-moderate: 420ms;
+  --duration-slow:    600ms;
+  --duration-slower:  900ms;
+
+  --ease-out-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart:   cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-signature:   cubic-bezier(0.19, 1, 0.22, 1); /* Lumen's default "reveal" curve */
+  --ease-drag:        cubic-bezier(0.22, 0.61, 0.36, 1); /* carousel / drag-scroll settle */
+
+  --duration-carousel: 520ms; /* slide/track transitions in sliders and carousels */
+
+  /* --------------------------------------------------------------------
+     MOTION LANGUAGE  (v2.1) — the refined premium curve family. These
+     sit alongside the v1.0 easings rather than replacing them: reach
+     for --ease-luxury on anything meant to feel like a flagship
+     interaction (hero entrances, magnetic buttons, the theme switch);
+     the original --ease-out-expo/--ease-signature remain correct for
+     everyday hover/reveal work. Both families share the same "decisive
+     deceleration, no bounce" character so they never feel disjointed.
+     -------------------------------------------------------------------- */
+  --ease-luxury:        cubic-bezier(0.22, 1, 0.36, 1);   /* Lumen's flagship entrance curve */
+  --ease-out-quint:     cubic-bezier(0.23, 1, 0.32, 1);   /* slower-settling sibling of expo-out, for large/slow moves */
+  --ease-in-out-smooth: cubic-bezier(0.65, 0, 0.35, 1);   /* symmetric ease for state swaps (theme, tab panels) */
+  --ease-magnetic:      cubic-bezier(0.33, 1, 0.68, 1);   /* pointer-follow release */
+
+  --duration-luxury: 750ms; /* hero/page-level entrance choreography */
+
+  /* Stagger step — the base delay between siblings in a staggered
+     reveal group. A single token so every choreography in the system
+     (scroll reveals, hero entrances, dropdown items) shares one rhythm. */
+  --stagger-step:       80ms;
+  --stagger-step-tight: 45ms;  /* dense lists: megamenu items, checklists */
+  --stagger-step-loose: 110ms; /* a handful of large, deliberate elements */
+
+  /* --------------------------------------------------------------------
+     Z-INDEX SCALE
+     -------------------------------------------------------------------- */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-drawer: 150;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-tooltip: 500;
+
+  /* --------------------------------------------------------------------
+     LAYOUT
+     -------------------------------------------------------------------- */
+  --container-max: 1280px;
+  --container-max-wide: 1440px;
+  --container-max-xl: 1600px;   /* bento/portfolio full-bleed sections */
+  --container-max-narrow: 760px;
+
+  /* Split/asymmetric layout ratios — referenced by patterns/layout.css.
+     Kept as tokens so a project can retune the brand's default "split
+     feel" globally without touching every section file. */
+  --split-ratio-a: 1.2fr 1fr;
+  --split-ratio-b: 1fr 1.2fr;
+  --split-ratio-wide: 1.6fr 1fr;
+
+  /* Breakpoints (referenced in comments — CSS vars aren't usable inside
+     @media queries, so these mirror the values used throughout the system) */
+  /* xs: 0, sm: 480px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px, uw: 1920px */
+}
+
+/* ==========================================================================
+   LIGHT MODE — full mirrored surface, same semantic roles
+   ========================================================================== */
+[data-theme='light'] {
+  --color-bg-canvas:      var(--gray-50);
+  --color-bg-primary:     var(--gray-0);
+  --color-bg-secondary:   var(--gray-50);
+  --color-surface-1:      var(--gray-0);
+  --color-surface-2:      var(--gray-100);
+  --color-surface-3:      var(--gray-200);
+
+  --color-border-subtle:  rgba(23, 22, 21, 0.08);
+  --color-border-default: rgba(23, 22, 21, 0.14);
+  --color-border-strong:  rgba(23, 22, 21, 0.24);
+
+  --color-text-primary:   var(--gray-950);
+  --color-text-secondary: rgba(23, 22, 21, 0.72);
+  --color-text-tertiary:  rgba(23, 22, 21, 0.50);
+  --color-text-disabled:  rgba(23, 22, 21, 0.28);
+  --color-text-inverse:   var(--gray-50);
+
+  --color-primary:        var(--gold-600);
+  --color-primary-hover:  var(--gold-700);
+  --color-primary-active: var(--gold-500);
+  --color-primary-text:   var(--gray-0);
+
+  --glass-bg:        rgba(23, 22, 21, 0.045);
+  --glass-bg-strong: rgba(23, 22, 21, 0.07);
+  --glass-border:    rgba(23, 22, 21, 0.10);
+
+  --shadow-color: 23, 22, 21;
+  --shadow-xs: 0 1px 2px rgba(var(--shadow-color), 0.06);
+  --shadow-sm: 0 2px 8px rgba(var(--shadow-color), 0.07), 0 1px 2px rgba(var(--shadow-color), 0.05);
+  --shadow-md: 0 8px 24px rgba(var(--shadow-color), 0.08), 0 2px 6px rgba(var(--shadow-color), 0.05);
+  --shadow-lg: 0 16px 48px rgba(var(--shadow-color), 0.10), 0 4px 12px rgba(var(--shadow-color), 0.06);
+  --shadow-xl: 0 32px 80px rgba(var(--shadow-color), 0.12), 0 8px 24px rgba(var(--shadow-color), 0.07);
+  --shadow-inner: inset 0 1px 0 rgba(23, 22, 21, 0.04);
+
+  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(223, 162, 60, 0.16), transparent 60%);
+}
+
+/* Respect OS-level reduced motion at the token level: components should
+   read this rather than re-implement the check individually. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-moderate: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+  }
+}

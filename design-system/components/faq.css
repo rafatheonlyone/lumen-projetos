@@ -1,0 +1,64 @@
+/* ==========================================================================
+   COMPONENT — FAQ LAYOUT VARIANTS  (v2.0)
+   .accordion (components/accordion.css) is the reusable primitive.
+   These wrap it in different page-level compositions.
+   ========================================================================== */
+
+/* ---- Two-column — splits a long FAQ list across two accordions side
+   by side to reduce scroll depth. ------------------------------------------- */
+.faq-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--space-12);
+}
+@media (max-width: 800px) {
+  .faq-columns { grid-template-columns: 1fr; }
+}
+
+/* ---- Searchable — a filter input above the accordion; main.js's
+   FaqSearch module hides items whose question text doesn't match. --------- */
+.faq-search {
+  position: relative;
+  margin-bottom: var(--space-10);
+  max-width: 420px;
+}
+.faq-search input { padding-left: var(--space-10); }
+.faq-search svg {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  color: var(--color-text-tertiary);
+}
+.accordion-item[data-hidden='true'] { display: none; }
+.faq-search__empty {
+  display: none;
+  padding: var(--space-8) 0;
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+.faq-search__empty[data-visible='true'] { display: block; }
+
+/* ---- Sidebar categories — a sticky category list (uses .layout-sidebar)
+   next to the active category's accordion. Category switching is a plain
+   anchor-link jump by default (progressive enhancement, no JS required),
+   but main.js can upgrade it to swap panels without a page jump. ----------- */
+.faq-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.faq-categories a {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+.faq-categories a:hover { background: var(--glass-bg); color: var(--color-text-primary); }
+.faq-categories a[aria-current='true'] {
+  background: var(--color-surface-2);
+  color: var(--color-primary);
+  font-weight: var(--weight-medium);
+}

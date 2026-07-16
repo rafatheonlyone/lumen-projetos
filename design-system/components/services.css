@@ -1,0 +1,85 @@
+/* ==========================================================================
+   COMPONENT — SERVICE SECTIONS  (v2.0)
+   .card--service (numbered grid card) already exists in cards.css. These
+   are alternative compositions for presenting a service list.
+   ========================================================================== */
+
+/* ---- List — horizontal, expandable rows. Denser than a card grid;
+   reads as more editorial/confident for agencies with 5+ services. ------- */
+.service-list {
+  display: flex;
+  flex-direction: column;
+}
+.service-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--color-border-subtle);
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-out-expo);
+}
+.service-row:hover { background: var(--glass-bg); }
+.service-row__index {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+.service-row__title {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-medium);
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+.service-row:hover .service-row__title { color: var(--color-primary); }
+.service-row__arrow {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-default);
+  display: grid;
+  place-items: center;
+  transition: transform var(--duration-base) var(--ease-out-expo), background var(--duration-base);
+}
+.service-row:hover .service-row__arrow {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-text);
+  transform: rotate(45deg);
+}
+.service-row__panel {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-moderate) var(--ease-signature);
+}
+.service-row[data-open='true'] .service-row__panel { grid-template-rows: 1fr; }
+.service-row__panel-inner { overflow: hidden; }
+.service-row__panel-inner p {
+  max-width: 60ch;
+  padding-top: var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+/* ---- Bento — mixed-size tiles for services with unequal emphasis
+   (flagship offering larger, supporting services smaller). Combine with
+   .layout-bento + .span-* utilities directly in markup. -------------------- */
+.service-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+  transition: border-color var(--duration-base), transform var(--duration-base) var(--ease-out-expo);
+}
+.service-tile:hover { border-color: var(--color-border-default); transform: translateY(-4px); }
+.service-tile--accent {
+  background: var(--gradient-mesh);
+  border-color: rgba(223, 162, 60, 0.25);
+}
+.service-tile__title { font-size: var(--text-h4); margin-bottom: var(--space-2); }
+.service-tile__text { color: var(--color-text-secondary); font-size: var(--text-body-sm); max-width: 42ch; }

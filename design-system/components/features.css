@@ -1,0 +1,62 @@
+/* ==========================================================================
+   COMPONENT — FEATURE SECTION VARIANTS  (v2.0)
+   .card--feature (icon card, cards.css) covers the grid pattern. These
+   cover the others.
+   ========================================================================== */
+
+/* ---- Zigzag split — alternating media/text rows, built on
+   .layout-zigzag + .layout-split. Content-side styling only. --------------- */
+.feature-split__eyebrow { margin-bottom: var(--space-4); }
+.feature-split__title { margin-bottom: var(--space-4); }
+.feature-split__text { color: var(--color-text-secondary); max-width: 46ch; margin-bottom: var(--space-6); }
+.feature-split__list { display: flex; flex-direction: column; gap: var(--space-3); }
+.feature-split__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+}
+.feature-split__list svg { width: 18px; height: 18px; color: var(--color-primary); margin-top: 2px; flex-shrink: 0; }
+.feature-split__media {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  border: 1px solid var(--color-border-subtle);
+}
+.feature-split__media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- Bento — mixed-size feature tiles, built on .layout-bento. Reuses
+   .card--feature styling but allows spans for visual hierarchy. ------------ */
+.layout-bento .card--feature { height: 100%; }
+.layout-bento .card--feature.span-2 .card__title,
+.layout-bento .card--feature.span-row-2 .card__title { font-size: var(--text-h3); }
+
+/* ---- Checklist — dense, icon+text rows for feature-heavy product
+   pages where a card grid would take too much vertical space. -------------- */
+.feature-checklist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4) var(--space-8);
+}
+.feature-checklist__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  transition: background var(--duration-fast);
+}
+.feature-checklist__item:hover { background: var(--glass-bg); }
+.feature-checklist__icon {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+  color: var(--color-primary);
+}
+.feature-checklist__title { font-size: var(--text-body-sm); font-weight: var(--weight-semibold); }
+.feature-checklist__text { font-size: var(--text-caption); color: var(--color-text-tertiary); }
+@media (max-width: 700px) { .feature-checklist { grid-template-columns: 1fr; } }

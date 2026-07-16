@@ -1,0 +1,141 @@
+/* ==========================================================================
+   COMPONENT — MODAL & TOAST
+   Modal uses the native <dialog> element for built-in focus trapping and
+   ::backdrop support; main.js only toggles .showModal()/.close().
+   ========================================================================== */
+
+.modal {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: 0;
+  background: var(--color-surface-1);
+  color: var(--color-text-primary);
+  max-width: min(480px, 92vw);
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+}
+
+.modal::backdrop {
+  background: rgba(8, 7, 10, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+/* Entrance AND exit are both animated — via plain @keyframes rather
+   than @starting-style/allow-discrete, whose real-world browser support
+   is still too inconsistent to depend on for something as fundamental
+   as "the modal is visible when open." main.js's Modal module adds
+   [data-closing] and waits for this animation to finish before actually
+   calling .close(), which is what makes the *close* transition possible
+   at all — a plain CSS transition can't animate a native <dialog> out
+   because .close() removes it from the top layer immediately. */
+.modal[open] {
+  animation: lumen-modal-in var(--duration-moderate) var(--ease-luxury) both;
+}
+.modal[open]::backdrop {
+  animation: lumen-fade-in var(--duration-moderate) var(--ease-luxury) both;
+}
+.modal[data-closing='true'] {
+  animation: lumen-modal-in var(--duration-base) var(--ease-in-out-smooth) reverse both;
+}
+.modal[data-closing='true']::backdrop {
+  animation: lumen-fade-in var(--duration-base) var(--ease-in-out-smooth) reverse both;
+}
+@keyframes lumen-modal-in {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-8) 0;
+}
+
+.modal__close {
+  width: 32px; height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-full);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+.modal__close:hover { background: var(--color-surface-2); color: var(--color-text-primary); }
+
+.modal__body { padding: var(--space-6) var(--space-8); color: var(--color-text-secondary); }
+
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: 0 var(--space-8) var(--space-8);
+}
+
+/* --------------------------------------------------------------------
+   TOAST — stacked bottom-right, auto-dismiss handled in JS
+   -------------------------------------------------------------------- */
+.toast-region {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: min(360px, calc(100vw - 2 * var(--space-6)));
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-lg);
+  animation: lumen-toast-in var(--duration-moderate) var(--ease-luxury);
+}
+
+.toast[data-leaving='true'] {
+  animation: lumen-toast-in var(--duration-base) var(--ease-in-out-smooth) reverse;
+}
+
+.toast__icon { flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px; }
+.toast--success .toast__icon { color: var(--color-success); }
+.toast--warning .toast__icon { color: var(--color-warning); }
+.toast--danger  .toast__icon { color: var(--color-danger); }
+.toast--info    .toast__icon { color: var(--color-info); }
+
+.toast__title { font-size: var(--text-body-sm); font-weight: var(--weight-semibold); }
+.toast__text  { font-size: var(--text-caption); color: var(--color-text-secondary); }
+.toast__close { margin-left: auto; color: var(--color-text-tertiary); flex-shrink: 0; }
+
+/* --------------------------------------------------------------------
+   TOOLTIP — pure CSS, appears above/below via [data-tooltip-pos]
+   -------------------------------------------------------------------- */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--gray-900);
+  color: var(--gray-50);
+  font-size: var(--text-micro);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-out-quart), transform var(--duration-fast) var(--ease-out-quart);
+  z-index: var(--z-tooltip);
+}
+[data-tooltip]:hover::after, [data-tooltip]:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
